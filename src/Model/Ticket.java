@@ -1,25 +1,22 @@
 package Model;
 
+import Model.Enums.ConcertHall;
+import Model.Enums.StadiumSector;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.format.FormatStyle;
 
-public class Ticket {
-    private static int ticketsCounter = 1;
+public class Ticket implements ID, Printer {
     private final LocalDateTime ticketCreationTime = LocalDateTime.now();
     static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd 'at' hh:mm a");
 
     private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
     private static final DecimalFormat FORMATTER = new DecimalFormat("$#,##0.00");
 
-    private int ticketId = 0;
     private ConcertHall concertHall;
     private int eventCode;
     private Timestamp eventTime;
@@ -28,13 +25,6 @@ public class Ticket {
     private double backpackAllowedWeight;
     private BigDecimal price;
 
-    public int getTicketId() {
-        return ticketId;
-    }
-
-    public void setTicketId(int ticketId) {
-        this.ticketId = ticketId;
-    }
 
     public LocalDateTime getTicketCreationTime() {
         return ticketCreationTime;
@@ -137,8 +127,6 @@ public class Ticket {
     }
 
     public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight) {
-        ticketId = ticketsCounter;
-        ticketsCounter++;
 
         setConcertHall(concertHall);
         setEventCode(eventCode);
@@ -147,7 +135,23 @@ public class Ticket {
         setStadiumSector(stadiumSector);
         setbackpackAllowedWeight(backpackAllowedWeight);
     }
-    
+
+    @Override
+    public String toString() {
+        return "-----Ticket-----" + '\n' +
+                "Ticket ID: " + getId() + '\n' +
+                "Creation time: " + ticketCreationTime + '\n' +
+                "Concert hall: " + concertHall + '\n' +
+                "Event code: " + eventCode + '\n' +
+                "Event time: " + eventTime + '\n' +
+                "Promo: " + isPromo + '\n' +
+                "Stadium sector: " + stadiumSector + '\n' +
+                "Backpack allowed weight: " + backpackAllowedWeight + '\n' +
+                "Price: " + getPrice() + '\n' +
+                "----------------";
+    }
+
+/*
     public void printTicket() {
         System.out.println("----------------");
         System.out.println("Model.Ticket ID: " + getTicketId());
@@ -181,4 +185,6 @@ public class Ticket {
         System.out.println("----------------");
 
     }
+
+ */
 }
