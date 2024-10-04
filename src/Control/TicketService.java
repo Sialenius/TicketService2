@@ -1,14 +1,16 @@
 package Service;
 
-import Model.ConcertHall;
-import Model.StadiumSector;
+import Model.Enums.ConcertHall;
+import Model.Enums.StadiumSector;
+import Model.ID;
 import Model.Ticket;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.UUID;
 
 
-public class TicketService {
+public class TicketService implements ID {
 
     public static void main(String[] args) {
 
@@ -21,9 +23,15 @@ public class TicketService {
 
     ticket3.setPrice(50);
 
-    ticket1.printTicket();
-    ticket2.printTicket();
-    ticket3.printTicket();
+
+
+    //System.out.println(ticket3.toString());
+    ticket3.printInformation();
+
+
+
+    //TicketsStorage newStorage = new TicketsStorage(10);
+    //newStorage.
 
     }
 }
