@@ -1,11 +1,16 @@
 package Model;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Admin extends User {
 
     public void checkTicket(Ticket ticket) {
-       // if (LocalDateTime.now() > ticket.getEventTime())
+       if (Timestamp.valueOf(LocalDateTime.now()).after(ticket.getEventTime())) {
+           System.out.println("This ticket has expired");
+       } else {
+           System.out.println("This ticket is valid");
+       }
     }
 
     @Override
