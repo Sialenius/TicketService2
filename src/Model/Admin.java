@@ -13,4 +13,9 @@ public class Admin extends User {
         return "Admin: " + "\n" +
                 "ID: " + this.getId();
     }
+
+    @Override
+    public void printRole() {
+        System.out.println("You are an Admin");
+    }
 }

@@ -8,4 +8,9 @@ public class Client extends User {
                 "ID: " + this.getId();
     }
 
+    @Override
+    public void printRole() {
+        System.out.println("You are a Client");
+    }
+
 }
