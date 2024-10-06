@@ -2,6 +2,8 @@ package Model;
 
 import Model.Enums.ConcertHall;
 import Model.Enums.StadiumSector;
+import View.Printer;
+import org.graalvm.nativeimage.c.function.CMacroInfo;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -22,7 +24,11 @@ public class Ticket implements ID, Printer {
     private Timestamp eventTime;
     private boolean isPromo;
     private StadiumSector stadiumSector;
+
+    @Min(value = 0, message = "Invalid backpack weight")
     private double backpackAllowedWeight;
+
+    @Min(value = 0, message = "Invalid price")
     private BigDecimal price;
 
 
@@ -34,26 +40,8 @@ public class Ticket implements ID, Printer {
         return concertHall;
     }
 
-    public void setConcertHall(ConcertHall concertHall) {
-        this.concertHall = concertHall;
-    }
-
-
-
     public int getEventCode() {
         return eventCode;
-    }
-
-    public void setEventCode(int eventCode) {
-        if (Integer.toString(eventCode).length() > 3) {
-            System.out.println("Invalid event code");
-            System.exit(0);
-        }
-        this.eventCode = eventCode;
-    }
-
-    public void setUnnamedEventCode() {
-
     }
 
     public Timestamp getEventTime() {
@@ -74,9 +62,6 @@ public class Ticket implements ID, Printer {
         return isPromo;
     }
 
-    public void setPromo(boolean promo) {
-        isPromo = promo;
-    }
 
     public StadiumSector getStadiumSector() {
         return stadiumSector;
@@ -86,54 +71,33 @@ public class Ticket implements ID, Printer {
 
         this.stadiumSector = stadiumSector;
     }
-
- /*   public void setUnnamedStadiumSector() {
-        this.stadiumSector = '-';
-    }
-*/
+    
     public double getbackpackAllowedWeight() {
         return backpackAllowedWeight;
     }
 
-    public void setbackpackAllowedWeight(double backpackAllowedWeight) {
-        if (backpackAllowedWeight < 0) {
-            System.out.println("Invalid backpack weight.");
-            System.exit(0);
-        }
-        this.backpackAllowedWeight = backpackAllowedWeight;
-    }
 
     public String getPrice() {
         return FORMATTER.format(this.price);
     }
 
-    public void setPrice(Integer price) {
-        if (price < 0 )
-        {
-            System.out.println("Invalid price.");
-            System.exit(0);
-        }
-        else {
-            this.price = new BigDecimal(price);
-        }
-    }
-
     public Ticket() {
-        this(ConcertHall.not_specified, 3, null, false, StadiumSector.not_specified, 0); // How to create a Ticket without Event Time, not using "null"??
+        this(ConcertHall.not_specified, 3, null, false, StadiumSector.not_specified, 0, 0); // How to create a Ticket without Event Time, not using "null"??
     }
 
     public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime) {
-        this(concertHall, eventCode, eventTime, false, StadiumSector.not_specified, 0);
+        this(concertHall, eventCode, eventTime, false, StadiumSector.not_specified, 0, 0);
     }
 
-    public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight) {
+    public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight, double price ) {
 
-        setConcertHall(concertHall);
-        setEventCode(eventCode);
+        this.concertHall = concertHall;
+        this.eventCode = eventCode;
         setEventTime(eventTime);
-        setPromo(isPromo);
+        this.isPromo = isPromo;
         setStadiumSector(stadiumSector);
-        setbackpackAllowedWeight(backpackAllowedWeight);
+        this.backpackAllowedWeight = backpackAllowedWeight;
+        this.price = new BigDecimal(price);
     }
 
     @Override
