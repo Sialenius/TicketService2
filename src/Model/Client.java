@@ -1,6 +1,12 @@
 package Model;
 
 public class Client extends User {
+    private Ticket ticket;
+
+    public void buyTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
 
     @Override
     public String toString() {
