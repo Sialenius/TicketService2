@@ -7,7 +7,10 @@ public class Client extends User {
         this.ticket = ticket;
     }
 
-
+    public Ticket getTicket() {
+        return ticket;
+    }
+    
     @Override
     public String toString() {
         return "Client: " + "\n" +
