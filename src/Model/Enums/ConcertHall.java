@@ -1,8 +1,18 @@
 package Model.Enums;
 
 public enum ConcertHall {
-    Circus,
-    Theatre,
-    Sport_Palace,
-    not_specified
+    CIRCUS("Circus"),
+    THEATRE("Theatre"),
+    SPORT_PALACE("Sport_Palace"),
+    NOT_SPECIFIED("not_specified");
+
+    private String name;
+
+    ConcertHall(String concertHall) {
+        this.name = concertHall;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
