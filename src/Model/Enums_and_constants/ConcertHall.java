@@ -4,7 +4,7 @@ public enum ConcertHall {
     CIRCUS("Circus"),
     THEATRE("Theatre"),
     SPORT_PALACE("Sport_Palace"),
-    NOT_SPECIFIED("not_specified");
+    NOT_SPECIFIED("not specified");
 
     private String name;
 
