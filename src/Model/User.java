@@ -1,11 +1,9 @@
 package Model;
 
-import View.Printer;
+import View.Printable;
 
-public abstract class User implements ID, Printer {
+public abstract class User implements ID, Printable {
 
-
-    public abstract String toString();
 
     public abstract void printRole();
 

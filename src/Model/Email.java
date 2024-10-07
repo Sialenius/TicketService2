@@ -1,11 +1,11 @@
 package Model;
 
-import View.Printer;
+import View.Printable;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Email implements Printer {
+public class Email implements Printable {
     private String email;
 
     //final static Pattern emailPattern = Pattern.compile("^(\\w|[-+])+(\\.(\\w-]+)*@[\\w-]+(\\.[\\d\\p{Alpha}]+)*(\\.\\p{Alpha}{2,}]*)*k)$");

@@ -2,8 +2,7 @@ package Model;
 
 import Model.Enums.ConcertHall;
 import Model.Enums.StadiumSector;
-import View.Printer;
-import org.graalvm.nativeimage.c.function.CMacroInfo;
+import View.Printable;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -12,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Ticket implements ID, Printer {
+public class Ticket implements ID, Printable {
     static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd 'at' hh:mm a");
 
     private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");

@@ -1,6 +1,6 @@
 package View;
 
-public interface Printer {
+public interface Printable {
 
     public default void printInformation() {
         System.out.println(this.toString());

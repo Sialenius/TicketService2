@@ -1,12 +1,11 @@
 package Model;
 
-import View.Printer;
+import View.Printable;
 
-import javax.swing.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PhoneNumber implements Printer {
+public class PhoneNumber implements Printable {
     private String phoneNumber;
 
     final static Pattern phoneNumberPattern = Pattern.compile("^((\\+?375)(25|29|33|44)([0-9]{7}))");
