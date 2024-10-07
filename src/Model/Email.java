@@ -10,7 +10,7 @@ public class Email implements Printer {
 
     //final static Pattern emailPattern = Pattern.compile("^(\\w|[-+])+(\\.(\\w-]+)*@[\\w-]+(\\.[\\d\\p{Alpha}]+)*(\\.\\p{Alpha}{2,}]*)*k)$");
     final static Pattern emailPattern = Pattern.compile("@");
-    Matcher matcher;
+    private Matcher matcher;
 
     public Email(String email) {
        matcher = emailPattern.matcher(email);
@@ -29,6 +29,6 @@ public class Email implements Printer {
 
     @Override
     public String toString() {
-        return email;
+        return "Email: " + email;
     }
 }
