@@ -12,8 +12,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Ticket implements Printer {
-    //private final LocalDateTime ticketCreationTime = LocalDateTime.now();
+public class Ticket implements ID, Printer {
     static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd 'at' hh:mm a");
 
     private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
@@ -31,13 +30,6 @@ public class Ticket implements Printer {
    // @Min(value = 0, message = "Invalid price")
     private BigDecimal price;
 
-
-  /*  public LocalDateTime getTicketCreationTime() {
-        return ticketCreationTime;
-    }
-
-   */
-
     public ConcertHall getConcertHall() {
         return concertHall;
     }
@@ -53,12 +45,11 @@ public class Ticket implements Printer {
     public void setEventTime(LocalDateTime eventTime) {
         if (eventTime != null) {
 
-            /*if (eventTime.isBefore(ticketCreationTime)) {
+            if (eventTime.isBefore(LocalDateTime.now())) {
                 System.out.println("Invalid event time.");
                 System.exit(0);
             }
 
-             */
             this.eventTime = Timestamp.valueOf(eventTime);
         }
     }
@@ -109,7 +100,6 @@ public class Ticket implements Printer {
     public String toString() {
         return "-----Ticket-----" + '\n' +
                 "Ticket ID: " + //getId() + '\n' +
-              //  "Creation time: " + ticketCreationTime + '\n' +
                 "Concert hall: " + concertHall + '\n' +
                 "Event code: " + eventCode + '\n' +
                 "Event time: " + eventTime + '\n' +
@@ -134,8 +124,7 @@ public class Ticket implements Printer {
             return true;
         }
 
-        if (//ticketCreationTime == ((Ticket) object).ticketCreationTime &&
-                concertHall == ((Ticket) object).concertHall &&
+        if (concertHall == ((Ticket) object).concertHall &&
                 eventCode == ((Ticket) object).eventCode &&
                 eventTime.equals(((Ticket) object).eventTime) &&
                 isPromo == ((Ticket) object).isPromo &&
@@ -157,11 +146,11 @@ public class Ticket implements Printer {
    */
 
     public void share(PhoneNumber phoneNumber) {
-        System.out.println("Ticket " + 0 + " was shared by phone number");
+        System.out.println("Ticket "  + getId() + " was shared by phone number");
     }
 
     public void share(PhoneNumber phoneNumber, Email email) {
-        System.out.println("Ticket " + 0 + " was shared by phone number and email");
+        System.out.println("Ticket " + getId() + " was shared by phone number and email");
 
     }
 
