@@ -1,19 +1,22 @@
 package Model;
 
+import View.Printer;
+
+import javax.swing.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PhoneNumber {
+public class PhoneNumber implements Printer {
     private String phoneNumber;
 
-    final static Pattern phoneNumberPattern = Pattern.compile("^((\\+?375)(44)([0-9]{7}))");
+    final static Pattern phoneNumberPattern = Pattern.compile("^((\\+?375)(25|29|33|44)([0-9]{7}))");
     private Matcher matcher;
 
 
     public PhoneNumber (String phoneNumber) {
         matcher = phoneNumberPattern.matcher(phoneNumber);
         if (!matcher.find()) {
-            System.out.println("Enter a valid phone number, that starts with +375");
+            System.out.println("Enter a valid phone number in format '+375XXXXXXXXX'");
             System.exit(0);
         }
         else {

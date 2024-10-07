@@ -10,7 +10,7 @@ public class Client extends User {
     public Ticket getTicket() {
         return ticket;
     }
-    
+
     @Override
     public String toString() {
         return "Client: " + "\n" +
