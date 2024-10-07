@@ -25,10 +25,10 @@ public class Ticket implements ID, Printer {
     private boolean isPromo;
     private StadiumSector stadiumSector;
 
-    @Min(value = 0, message = "Invalid backpack weight")
+    //@Min(value = 0, message = "Invalid backpack weight")
     private double backpackAllowedWeight;
 
-    @Min(value = 0, message = "Invalid price")
+   // @Min(value = 0, message = "Invalid price")
     private BigDecimal price;
 
 
@@ -71,7 +71,7 @@ public class Ticket implements ID, Printer {
 
         this.stadiumSector = stadiumSector;
     }
-    
+
     public double getbackpackAllowedWeight() {
         return backpackAllowedWeight;
     }
@@ -115,40 +115,13 @@ public class Ticket implements ID, Printer {
                 "----------------";
     }
 
-/*
-    public void printTicket() {
-        System.out.println("----------------");
-        System.out.println("Model.Ticket ID: " + getTicketId());
-        System.out.println("Model.Ticket created: " + DATE_TIME_FORMATTER.format(ticketCreationTime));
+    public void share(PhoneNumber phoneNumber) {
+        System.out.println("Ticket " + id + " was shared by phone number");
+    }
 
-        System.out.println("Concert Hall: " + getConcertHall());
-        System.out.println("Event Code: " + getEventCode());
-
-        if (eventTime != null) {
-            System.out.println("Event Time: " + TIME_FORMAT.format(getEventTime()));
-        }
-        else {
-            System.out.println("Event Time: -");
-        }
-
-        if (isPromo()) {
-            System.out.println("Promo: Yes");
-        }
-        else {
-            System.out.println("Promo: No");
-        }
-        System.out.println("Stadium Sector: " + getStadiumSector());
-        System.out.println("Allowed Backpack Weight: " + getbackpackAllowedWeight() + "kg");
-
-        if (price != null) {
-            System.out.println("Price: " + getPrice());
-        }
-        else {
-            System.out.println("Price: -");
-        }
-        System.out.println("----------------");
+    public void share(PhoneNumber phoneNumber, Email email) {
+        System.out.println("Ticket " + id + " was shared by phone number and email");
 
     }
 
- */
 }
