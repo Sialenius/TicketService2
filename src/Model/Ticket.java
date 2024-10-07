@@ -99,7 +99,7 @@ public class Ticket implements ID, Printer {
     @Override
     public String toString() {
         return "-----Ticket-----" + '\n' +
-                "Ticket ID: " + //getId() + '\n' +
+                "Ticket ID: " + getId() + '\n' +
                 "Concert hall: " + concertHall + '\n' +
                 "Event code: " + eventCode + '\n' +
                 "Event time: " + eventTime + '\n' +
@@ -138,12 +138,10 @@ public class Ticket implements ID, Printer {
         }
     }
 
-  /*  @Override
+  @Override
     public int hashCode() {
-        return 0;
+        return getId().hashCode();
     }
-
-   */
 
     public void share(PhoneNumber phoneNumber) {
         System.out.println("Ticket "  + getId() + " was shared by phone number");
