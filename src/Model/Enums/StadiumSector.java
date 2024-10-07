@@ -4,5 +4,5 @@ public enum StadiumSector {
     A,
     B,
     C,
-    not_specified
+    NOT_SPECIFIED
 }
