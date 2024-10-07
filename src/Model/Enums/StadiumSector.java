@@ -1,9 +1,9 @@
 package Model.Enums;
 
 public enum StadiumSector {
-    A,
-    B,
-    C,
+    A("A"),
+    B("B"),
+    C("B"),
     NOT_SPECIFIED("not specified");
 
     private String name;
@@ -12,7 +12,7 @@ public enum StadiumSector {
         this.name = stadiumSector;
     }
 
-    public String getStadiumSector() {
+    public String getName() {
         return name;
     }
 }
