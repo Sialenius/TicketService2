@@ -4,5 +4,15 @@ public enum StadiumSector {
     A,
     B,
     C,
-    NOT_SPECIFIED
+    NOT_SPECIFIED("not specified");
+
+    private String name;
+
+    StadiumSector(String stadiumSector) {
+        this.name = stadiumSector;
+    }
+
+    public String getStadiumSector() {
+        return name;
+    }
 }
