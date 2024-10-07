@@ -2,10 +2,10 @@ package Model;
 
 import java.util.UUID;
 
-public interface ID {
+public abstract class ID {
         UUID id = UUID.randomUUID();
 
-        public default UUID getId() {
+        public UUID getId() {
             return id;
         }
 }
