@@ -29,6 +29,25 @@ public class Ticket implements ID, Printable {
    // @Min(value = 0, message = "Invalid price")
     private BigDecimal price;
 
+    public Ticket() {
+        this(ConcertHall.NOT_SPECIFIED, 3, null, false, StadiumSector.NOT_SPECIFIED, 0, 0); // How to create a Ticket without Event Time, not using "null"??
+    }
+
+    public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime) {
+        this(concertHall, eventCode, eventTime, false, StadiumSector.NOT_SPECIFIED, 0, 0);
+    }
+
+    public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight, double price ) {
+
+        this.concertHall = concertHall;
+        this.eventCode = eventCode;
+        setEventTime(eventTime);
+        this.isPromo = isPromo;
+        setStadiumSector(stadiumSector);
+        this.backpackAllowedWeight = backpackAllowedWeight;
+        this.price = new BigDecimal(price);
+    }
+
     public ConcertHall getConcertHall() {
         return concertHall;
     }
@@ -70,44 +89,11 @@ public class Ticket implements ID, Printable {
     public double getbackpackAllowedWeight() {
         return backpackAllowedWeight;
     }
-
-
+    
     public String getPrice() {
         return FORMATTER.format(this.price);
     }
 
-    public Ticket() {
-        this(ConcertHall.not_specified, 3, null, false, StadiumSector.not_specified, 0, 0); // How to create a Ticket without Event Time, not using "null"??
-    }
-
-    public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime) {
-        this(concertHall, eventCode, eventTime, false, StadiumSector.not_specified, 0, 0);
-    }
-
-    public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight, double price ) {
-
-        this.concertHall = concertHall;
-        this.eventCode = eventCode;
-        setEventTime(eventTime);
-        this.isPromo = isPromo;
-        setStadiumSector(stadiumSector);
-        this.backpackAllowedWeight = backpackAllowedWeight;
-        this.price = new BigDecimal(price);
-    }
-
-    @Override
-    public String toString() {
-        return "-----Ticket-----" + '\n' +
-                "Ticket ID: " + getId() + '\n' +
-                "Concert hall: " + concertHall + '\n' +
-                "Event code: " + eventCode + '\n' +
-                "Event time: " + eventTime + '\n' +
-                "Promo: " + isPromo + '\n' +
-                "Stadium sector: " + stadiumSector + '\n' +
-                "Backpack allowed weight: " + backpackAllowedWeight + '\n' +
-                "Price: " + getPrice() + '\n' +
-                "----------------";
-    }
 
     @Override
     public boolean equals(Object object) {
@@ -149,6 +135,20 @@ public class Ticket implements ID, Printable {
     public void share(PhoneNumber phoneNumber, Email email) {
         System.out.println("Ticket " + getId() + " was shared by phone number and email");
 
+    }
+
+    @Override
+    public String toString() {
+        return "-----Ticket-----" + '\n' +
+                "Ticket ID: " + getId() + '\n' +
+                "Concert hall: " + concertHall.getName() + '\n' +
+                "Event code: " + eventCode + '\n' +
+                "Event time: " + eventTime + '\n' +
+                "Promo: " + isPromo + '\n' +
+                "Stadium sector: " + stadiumSector + '\n' +
+                "Backpack allowed weight: " + backpackAllowedWeight + '\n' +
+                "Price: " + getPrice() + '\n' +
+                "----------------";
     }
 
 }
