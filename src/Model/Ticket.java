@@ -135,12 +135,13 @@ public class Ticket extends Entity implements Printable, AnnaotationAnalizator {
 
   @Override
     public int hashCode() {
-      int result = 1;
-
-        for (Field field: this.getClass().getFields()) {
-            result = 31 * field.hashCode();
-        }
-        return result;
+      int result = 31 * concertHall.hashCode();
+      result += 31 * eventCode;
+      result += 31 * eventTime.hashCode();
+      result += 31 * stadiumSector.hashCode();
+      result += (int) (31 * backpackAllowedWeight);
+      result += 31 * price.hashCode();
+      return result;
     }
 
 
@@ -153,7 +154,7 @@ public class Ticket extends Entity implements Printable, AnnaotationAnalizator {
                 "Event code: " + eventCode + '\n' +
                 "Event time: " + eventTime + '\n' +
                 "Promo: " + isPromo + '\n' +
-                "Stadium sector: " + stadiumSector.getName() + '\n' +
+               // "Stadium sector: " + stadiumSector.getName() + '\n' +
                 "Backpack allowed weight: " + backpackAllowedWeight + '\n' +
                 "Price: " + getPrice() + '\n' +
                 "----------------";
