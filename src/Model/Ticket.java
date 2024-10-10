@@ -125,11 +125,11 @@ public class Ticket extends Entity implements Printable, AnnaotationAnalizator {
     }
 
     public void share(PhoneNumber phoneNumber) {
-        System.out.println("Ticket "  + getId() + " was shared by phone number");
+        System.out.println("Ticket "  + getId() + " was shared by " + phoneNumber);
     }
 
     public void share(PhoneNumber phoneNumber, Email email) {
-        System.out.println("Ticket " + getId() + " was shared by phone number and email");
+        System.out.println("Ticket " + getId() + " was shared by " + phoneNumber + " and " + email);
 
     }
 
