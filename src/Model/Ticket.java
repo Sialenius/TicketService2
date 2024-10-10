@@ -1,36 +1,37 @@
 package Model;
 
-import Model.Enums.ConcertHall;
-import Model.Enums.StadiumSector;
+import Model.Enums_and_constants.AppConstants;
+import Model.Enums_and_constants.ConcertHall;
+import Model.Enums_and_constants.StadiumSector;
 import View.Printable;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-public class Ticket implements ID, Printable {
-    static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd 'at' hh:mm a");
 
-    private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
-    private static final DecimalFormat FORMATTER = new DecimalFormat("$#,##0.00");
+public class Ticket extends Entity implements Printable, AnnaotationAnalizator {
 
-    private ConcertHall concertHall;
-    private int eventCode;
+
+    private final ConcertHall concertHall;
+    private final int eventCode;
+
+    @NotEmpty(message = "Event time must be defined.")
     private Timestamp eventTime;
-    private boolean isPromo;
+    private final boolean isPromo;
+
+    @NotEmpty(message = "Stadium sector must be defined.")
     private StadiumSector stadiumSector;
 
-    //@Min(value = 0, message = "Invalid backpack weight")
-    private double backpackAllowedWeight;
+    @Min(value = 0, message = "Invalid backpack weight")
+    private final double backpackAllowedWeight;
 
-   // @Min(value = 0, message = "Invalid price")
-    private BigDecimal price;
+    @Min(value = 0, message = "Invalid price")
+    private final BigDecimal price;
 
     public Ticket() {
-        this(ConcertHall.NOT_SPECIFIED, 3, null, false, StadiumSector.NOT_SPECIFIED, 0, 0); // How to create a Ticket without Event Time, not using "null"??
+        this(ConcertHall.NOT_SPECIFIED, 3, null, false, null, 0, 0); // How to create a Ticket without Event Time, not using "null"??
     }
 
     public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime) {
@@ -89,9 +90,9 @@ public class Ticket implements ID, Printable {
     public double getbackpackAllowedWeight() {
         return backpackAllowedWeight;
     }
-    
+
     public String getPrice() {
-        return FORMATTER.format(this.price);
+        return AppConstants.FORMATTER.format(this.price);
     }
 
 
@@ -123,11 +124,6 @@ public class Ticket implements ID, Printable {
         }
     }
 
-  @Override
-    public int hashCode() {
-        return getId().hashCode();
-    }
-
     public void share(PhoneNumber phoneNumber) {
         System.out.println("Ticket "  + getId() + " was shared by phone number");
     }
@@ -137,6 +133,18 @@ public class Ticket implements ID, Printable {
 
     }
 
+  @Override
+    public int hashCode() {
+      int result = 1;
+
+        for (Field field: this.getClass().getFields()) {
+            result = 31 * field.hashCode();
+        }
+        return result;
+    }
+
+
+
     @Override
     public String toString() {
         return "-----Ticket-----" + '\n' +
@@ -145,7 +153,7 @@ public class Ticket implements ID, Printable {
                 "Event code: " + eventCode + '\n' +
                 "Event time: " + eventTime + '\n' +
                 "Promo: " + isPromo + '\n' +
-                "Stadium sector: " + stadiumSector + '\n' +
+                "Stadium sector: " + stadiumSector.getName() + '\n' +
                 "Backpack allowed weight: " + backpackAllowedWeight + '\n' +
                 "Price: " + getPrice() + '\n' +
                 "----------------";
