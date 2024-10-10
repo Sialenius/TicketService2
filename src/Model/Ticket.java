@@ -135,7 +135,8 @@ public class Ticket extends Entity implements Printable, AnnaotationAnalizator {
 
   @Override
     public int hashCode() {
-      int result = 31 * concertHall.hashCode();
+      int result = 31 * this.getId().hashCode();
+      result += 31 * concertHall.hashCode();
       result += 31 * eventCode;
       result += 31 * eventTime.hashCode();
       result += 31 * stadiumSector.hashCode();
