@@ -1,16 +1,14 @@
-package Model;
+package model;
 
-import Model.Enums_and_constants.AppConstants;
-import Model.Enums_and_constants.ConcertHall;
-import Model.Enums_and_constants.StadiumSector;
-import View.Printable;
+import model.enums.ConcertHall;
+import model.enums.StadiumSector;
+import view.Printable;
 
-import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import static Model.Enums_and_constants.AppConstants.UNSPECIFIED_DATE_TIME;
+import static model.AppConstants.UNSPECIFIED_DATE_TIME;
 
 
 public class Ticket extends Entity implements Printable, AnnaotationAnalizator {

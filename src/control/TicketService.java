@@ -1,16 +1,15 @@
-package Control;
+package control;
 
-import Model.Ticket;
-import Model.Entity;
-import Model.Admin;
-import Model.Client;
-import Model.Email;
-import Model.PhoneNumber;
-import Model.Enums_and_constants.ConcertHall;
-import Model.Enums_and_constants.StadiumSector;
-import View.Printable;
+import model.Ticket;
+import model.Entity;
+import model.Admin;
+import model.Client;
+import model.Email;
+import model.PhoneNumber;
+import model.enums.ConcertHall;
+import model.enums.StadiumSector;
+import view.Printable;
 
-import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.Month;
 
@@ -71,7 +70,7 @@ public class TicketService extends Entity implements Printable {
     ticket3.share(phoneNumber);
     ticket4.share(phoneNumber, email);
 
-    System.out.println(ticket3.hashCode());
+    System.out.println(ticket3.getId());
         System.out.println(ticket4.hashCode());
 
     }

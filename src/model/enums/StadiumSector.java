@@ -1,4 +1,4 @@
-package Model.Enums;
+package model.enums;
 
 public enum StadiumSector {
     A("A"),

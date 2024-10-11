@@ -1,6 +1,6 @@
-package Model;
+package model;
 
-import View.Printable;
+import view.Printable;
 
 public abstract class User extends Entity implements Printable {
 

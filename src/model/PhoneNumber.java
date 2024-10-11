@@ -1,6 +1,6 @@
-package Model;
+package model;
 
-import View.Printable;
+import view.Printable;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,6 +25,6 @@ public class PhoneNumber implements Printable {
 
     @Override
     public String toString() {
-        return "Phone number: " + phoneNumber;
+        return "phone number: " + phoneNumber;
     }
 }

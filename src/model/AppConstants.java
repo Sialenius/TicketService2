@@ -1,4 +1,4 @@
-package Model.Enums_and_constants;
+package model;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;

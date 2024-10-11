@@ -1,6 +1,6 @@
-package Model;
+package model;
 
-import View.Printable;
+import view.Printable;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,6 +29,6 @@ public class Email implements Printable {
 
     @Override
     public String toString() {
-        return "Email: " + email;
+        return "email: " + email;
     }
 }
