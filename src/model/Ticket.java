@@ -11,27 +11,23 @@ import java.time.LocalDateTime;
 import static model.AppConstants.UNSPECIFIED_DATE_TIME;
 
 
-public class Ticket extends Entity implements Printable, AnnaotationAnalizator {
+public class Ticket extends Entity implements Printable {
 
 
     private final ConcertHall concertHall;
     private final int eventCode;
 
-    @NotEmpty(message = "Event time must be defined.")
     private Timestamp eventTime;
     private final boolean isPromo;
 
-    @NotEmpty(message = "Stadium sector must be defined.")
     private StadiumSector stadiumSector;
 
-    @Min(value = 0, message = "Invalid backpack weight")
     private final double backpackAllowedWeight;
 
-    @Min(value = 0, message = "Invalid price")
     private final BigDecimal price;
 
     public Ticket() {
-        this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, null, 0, 0); // How to create a Ticket without Event Time, not using "null"??
+        this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, null, 0, 0);
     }
 
     public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime) {
