@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import static Model.Enums_and_constants.AppConstants.UNSPECIFIED_DATE_TIME;
+
 
 public class Ticket extends Entity implements Printable, AnnaotationAnalizator {
 
@@ -31,7 +33,7 @@ public class Ticket extends Entity implements Printable, AnnaotationAnalizator {
     private final BigDecimal price;
 
     public Ticket() {
-        this(ConcertHall.NOT_SPECIFIED, 3, null, false, null, 0, 0); // How to create a Ticket without Event Time, not using "null"??
+        this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, null, 0, 0); // How to create a Ticket without Event Time, not using "null"??
     }
 
     public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime) {
@@ -62,7 +64,7 @@ public class Ticket extends Entity implements Printable, AnnaotationAnalizator {
     }
 
     public void setEventTime(LocalDateTime eventTime) {
-        if (eventTime != null) {
+        if (eventTime != null & eventTime != UNSPECIFIED_DATE_TIME) {
 
             if (eventTime.isBefore(LocalDateTime.now())) {
                 System.out.println("Invalid event time.");
