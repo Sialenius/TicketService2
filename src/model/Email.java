@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 public class Email implements Printable {
     private String email;
 
-    //final static Pattern emailPattern = Pattern.compile("^(\\w|[-+])+(\\.(\\w-]+)*@[\\w-]+(\\.[\\d\\p{Alpha}]+)*(\\.\\p{Alpha}{2,}]*)*k)$");
     final static Pattern emailPattern = Pattern.compile("@");
     private Matcher matcher;
 
