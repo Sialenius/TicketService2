@@ -2,11 +2,12 @@ package model;
 
 import java.util.Arrays;
 
-public class CustomArrayList<T> implements Printable{
+public class CustomArrayList<T> {
     private final static int DEFAULT_CAPACITY = 10;
 
     private T[] list;
-    private int size = 0;
+    private int capacity;
+    private int filled = 0;
 
     public CustomArrayList() {
         this(DEFAULT_CAPACITY);
@@ -14,6 +15,7 @@ public class CustomArrayList<T> implements Printable{
 
     public CustomArrayList(int capacity) {
         list = (T[]) new Object[capacity];
+        this.capacity = capacity;
 
     }
 
@@ -21,37 +23,38 @@ public class CustomArrayList<T> implements Printable{
         return list;
     }
 
-    public int getSize() {
-        return size;
+    public int getFilledSpots() {
+        return filled;
     }
 
 
     private boolean checkAvailableSpots() {
         boolean isAvailable = true;
-        if (list.length == size-1) {
+        if (capacity == filled) {
             isAvailable = false;
         }
         return isAvailable;
     }
 
     private void increaseCapacity() {
-        int newSize = size * 2;
-        T[] newList = (T[]) new Object[newSize];
+        int newCapacity = capacity * 2;
+        T[] newList = (T[]) new Object[newCapacity];
         for (int i = 0; i < list.length; i++) {
             newList[i] = list[i];
         }
         list = newList;
+        capacity = newCapacity;
     }
 
     public void put(T obj) {
         if (!checkAvailableSpots()) {
             increaseCapacity();
         }
-        list[size++] = obj;
+        list[filled++] = obj;
     }
 
     public T get(int index) {
-        if (index < size) {
+        if (index < filled) {
             return list[index];
         } else {
             throw new IllegalArgumentException ("Wrong item's index.");
@@ -59,16 +62,16 @@ public class CustomArrayList<T> implements Printable{
     }
 
     public void delete(int index) {
-        if (index >= size) {
+        if (index >= filled) {
             throw new IllegalArgumentException("Wrong item's index");
         }
-        else if (index == size - 1) {
-                size--;
+        else if (index == filled - 1) {
+                filled--;
             } else {
-            for (int i = index; i < size - 1; i++) {
+            for (int i = index; i < filled - 1; i++) {
                 list[i] = list[i+1];
             }
-            size--;
+            filled--;
         }
     }
 
@@ -77,11 +80,11 @@ public class CustomArrayList<T> implements Printable{
         boolean isEqual = true;
 
         if (secondList == null |
-                this.getSize() != secondList.getSize()) {
+                this.getFilledSpots() != secondList.getFilledSpots()) {
             isEqual = false;
 
         } else {
-            for (int i = 0; i < this.size; i++) {
+            for (int i = 0; i < this.filled; i++) {
                 if (!this.get(i).equals(secondList.get(i))) {
                     isEqual = false;
                     break;
@@ -96,7 +99,7 @@ public class CustomArrayList<T> implements Printable{
         int result = 1;
 
         result += (int) 31 * Arrays.hashCode(list);
-        result += 31 * size;
+        result += 31 * filled;
 
         return result;
     }
@@ -104,7 +107,7 @@ public class CustomArrayList<T> implements Printable{
     @Override
     public String toString() {
         String returnValue = "";
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < filled; i++) {
             returnValue += list[i];
             returnValue += ' ';
         }
