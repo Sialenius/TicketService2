@@ -1,11 +1,6 @@
 package control;
 
-import model.Ticket;
-import model.Entity;
-import model.Admin;
-import model.Client;
-import model.Email;
-import model.PhoneNumber;
+import model.*;
 import model.enums.ConcertHall;
 import model.enums.StadiumSector;
 import view.Printable;
@@ -47,9 +42,40 @@ public class TicketService extends Entity implements Printable {
     ticket4.share(phoneNumber, email);
 
     System.out.println(ticket3.getId());
-        System.out.println(ticket4.hashCode());
+    System.out.println(ticket4.hashCode());
 
-    }
+    // Homework #5: Custom ArrayList & Custom HashSet
+
+    CustomArrayList<Integer> numbers = new CustomArrayList<>(4);
+
+    numbers.put(1);
+    numbers.put(2);
+    numbers.put(3);
+    numbers.put(4);
+    numbers.put(5);
+    System.out.println(numbers);
+
+
+    CustomHashSet<String> strings = new CustomHashSet<>(2);
+    strings.put("AA");
+    strings.put("BB");
+    strings.put("CC");
+    strings.put("DD");
+    System.out.println(strings);
+
+    strings.put("EE");
+    strings.put("DD");
+    strings.put("QQQQQ", 3);
+    System.out.println(strings);
+
+    strings.deleteItemFromPosition(2);
+    System.out.println(strings);
+
+
+
+
+}
+
 
     @Override
     public String toString() {
