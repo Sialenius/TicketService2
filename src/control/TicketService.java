@@ -1,8 +1,15 @@
 package control;
 
-import model.*;
 import model.enums.ConcertHall;
 import model.enums.StadiumSector;
+import model.Entity;
+import model.Ticket;
+import model.Admin;
+import model.Client;
+import model.Email;
+import model.PhoneNumber;
+import model.CustomArrayList;
+import model.CustomHashSet;
 import view.Printable;
 
 import java.time.LocalDateTime;
@@ -46,30 +53,30 @@ public class TicketService extends Entity implements Printable {
 
     // Homework #5: Custom ArrayList & Custom HashSet
 
-    CustomArrayList<Integer> numbers = new CustomArrayList<>(4);
+    CustomArrayList<Integer> numbersList = new CustomArrayList<>(4);
 
-    numbers.put(1);
-    numbers.put(2);
-    numbers.put(3);
-    numbers.put(4);
-    numbers.put(5);
-    System.out.println(numbers);
+    numbersList.put(1);
+    numbersList.put(2);
+    numbersList.put(3);
+    numbersList.put(4);
+    numbersList.put(5);
+    System.out.println(numbersList);
 
 
-    CustomHashSet<String> strings = new CustomHashSet<>(2);
-    strings.put("AA");
-    strings.put("BB");
-    strings.put("CC");
-    strings.put("DD");
-    System.out.println(strings);
+    CustomHashSet<String> stringsSet = new CustomHashSet<>(2);
+    stringsSet.put("AA");
+    stringsSet.put("BB");
+    stringsSet.put("CC");
+    stringsSet.put("DD");
+    System.out.println(stringsSet);
 
-    strings.put("EE");
-    strings.put("DD");
-    strings.put("QQQQQ", 3);
-    System.out.println(strings);
+    stringsSet.put("EE");
+    stringsSet.put("DD");
+    stringsSet.put("QQQQQ", 3);
+    System.out.println(stringsSet);
 
-    strings.deleteItemFromPosition(2);
-    System.out.println(strings);
+    stringsSet.deleteItemFromPosition(2);
+    System.out.println(stringsSet);
 
 
 
