@@ -76,16 +76,18 @@ public class CustomArrayList<T> {
     }
 
     @Override
-    public boolean equals(CustomArrayList<T> secondList) {
+    public boolean equals(Object obj) {
         boolean isEqual = true;
 
-        if (secondList == null |
-                this.getFilledSpots() != secondList.getFilledSpots()) {
+        CustomArrayList<T> testList = (CustomArrayList<T>) obj;
+
+        if (testList == null |
+                this.getFilledSpots() != testList.getFilledSpots()) {
             isEqual = false;
 
         } else {
             for (int i = 0; i < this.filled; i++) {
-                if (!this.get(i).equals(secondList.get(i))) {
+                if (!this.get(i).equals(testList.get(i))) {
                     isEqual = false;
                     break;
                 }
