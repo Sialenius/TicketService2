@@ -75,7 +75,7 @@ public class CustomArrayList<T> {
         }
     }
 
-
+    @Override
     public boolean equals(CustomArrayList<T> secondList) {
         boolean isEqual = true;
 
