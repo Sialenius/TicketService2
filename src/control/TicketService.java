@@ -1,17 +1,11 @@
 package control;
 
+import model.*;
 import model.enums.ConcertHall;
 import model.enums.StadiumSector;
-import model.Entity;
-import model.Ticket;
-import model.Admin;
-import model.Client;
-import model.Email;
-import model.PhoneNumber;
-import model.CustomArrayList;
-import model.CustomHashSet;
 import view.Printable;
 
+import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.time.Month;
 
@@ -77,6 +71,10 @@ public class TicketService extends Entity implements Printable {
 
     stringsSet.deleteItemFromPosition(2);
     System.out.println(stringsSet);
+
+    for (Iteratorable customIterator = stringsSet.getIterator(); customIterator.hasNext();) {
+        System.out.print(customIterator.iterate() + " ");
+    }
 
 
 
