@@ -1,14 +1,18 @@
-package model;
+package main.java.model;
 
-import model.enums.ConcertHall;
-import model.enums.StadiumSector;
-import view.Printable;
+import main.java.model.enums.ConcertHall;
+import main.java.model.enums.StadiumSector;
+import main.java.model.Entity;
+import main.java.view.Printable;
+
+
+
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import static model.AppConstants.UNSPECIFIED_DATE_TIME;
+import static main.java.model.AppConstants.UNSPECIFIED_DATE_TIME;
 
 
 public class Ticket extends Entity implements Printable {

@@ -1,6 +1,6 @@
-package model;
+package main.java.model;
 
-import view.Printable;
+import main.java.view.Printable;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
