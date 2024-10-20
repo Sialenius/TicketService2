@@ -1,21 +1,17 @@
-package main.java.control;
+package control;
 
-import main.java.model.Ticket;
-import main.java.model.Entity;
-import main.java.model.Admin;
-import main.java.model.Client;
-import main.java.model.Email;
-import main.java.model.PhoneNumber;
-import main.java.model.CustomArrayList;
-import main.java.model.CustomHashSet;
-import main.java.model.Iteratorable;
-
-
-
-
-import main.java.model.enums.ConcertHall;
-import main.java.model.enums.StadiumSector;
-import main.java.view.Printable;
+import model.Ticket;
+import model.Entity;
+import model.Admin;
+import model.Client;
+import model.Email;
+import model.PhoneNumber;
+import model.CustomArrayList;
+import model.CustomHashSet;
+import model.Iteratorable;
+import model.enums.ConcertHall;
+import model.enums.StadiumSector;
+import view.Printable;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -38,7 +34,7 @@ public class TicketService extends Entity implements Printable {
 
     System.out.println(ticket3.equals(ticket4));
 
-    main.java.model.Admin admin = new Admin();
+    Admin admin = new Admin();
     Client client = new Client();
 
     client.buyTicket(ticket4);
@@ -86,9 +82,6 @@ public class TicketService extends Entity implements Printable {
     for (Iteratorable customIterator = stringsSet.getIterator(); customIterator.hasNext();) {
         System.out.print(customIterator.iterate() + " ");
     }
-
-
-
 
 }
 

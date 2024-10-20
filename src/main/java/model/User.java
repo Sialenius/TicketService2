@@ -1,6 +1,7 @@
-package main.java.model;
+package model;
 
-import main.java.view.Printable;
+
+import view.Printable;
 
 public abstract class User extends Entity implements Printable {
 

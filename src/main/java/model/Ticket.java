@@ -1,9 +1,10 @@
-package main.java.model;
+package model;
 
-import main.java.model.enums.ConcertHall;
-import main.java.model.enums.StadiumSector;
-import main.java.model.Entity;
-import main.java.view.Printable;
+
+import model.enums.ConcertHall;
+import model.enums.StadiumSector;
+import model.Entity;
+import view.Printable;
 
 
 
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import static main.java.model.AppConstants.UNSPECIFIED_DATE_TIME;
+import static model.AppConstants.UNSPECIFIED_DATE_TIME;
 
 
 public class Ticket extends Entity implements Printable {
