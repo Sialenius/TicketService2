@@ -39,7 +39,7 @@ public abstract class User extends Entity implements Printable {
 
     @Override
     public String toString() {
-        return "Client: " + '\n' +
+        return this.getClass().getSimpleName() + '\n' +
                 "ID: " + this.getId() + '\n' +
                 "Name: " + this.getName() + '\n' +
                 "Creation date: " + this.getCreationDate() + '\n';
