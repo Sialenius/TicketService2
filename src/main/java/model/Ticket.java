@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static model.AppConstants.UNSPECIFIED_DATE_TIME;
 
@@ -21,20 +22,21 @@ import static model.AppConstants.UNSPECIFIED_DATE_TIME;
 public class Ticket extends Entity implements Printable {
 
 
-    private final ConcertHall concertHall;
-    private final int eventCode;
+    private  ConcertHall concertHall;
+    private  int eventCode;
 
     private Timestamp eventTime;
-    private final boolean isPromo;
+    private  boolean isPromo;
 
     private StadiumSector stadiumSector;
 
-    private final double backpackAllowedWeight;
+    private  double backpackAllowedWeight;
 
-    private final BigDecimal price;
+    private  BigDecimal price;
 
     private TicketType ticketType;
     private LocalDate creationDate = LocalDate.now();
+    private UUID userID;
 
     public Ticket() {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
@@ -58,6 +60,12 @@ public class Ticket extends Entity implements Printable {
         this.price = new BigDecimal(price);
         ticketType = TicketType.FULL;
 
+    }
+
+    public Ticket (UUID userID, TicketType ticketType, LocalDate creationDate) {
+        this.userID = userID;
+        this.ticketType = ticketType;
+        this.creationDate = creationDate;
     }
 
     public ConcertHall getConcertHall() {
@@ -114,6 +122,9 @@ public class Ticket extends Entity implements Printable {
         return creationDate;
     }
 
+    public UUID getUserID() {
+        return userID;
+    }
 
     @Override
     public boolean equals(Object object) {
