@@ -4,6 +4,7 @@ package model;
 import model.enums.ConcertHall;
 import model.enums.StadiumSector;
 import model.Entity;
+import model.enums.TicketType;
 import view.Printable;
 
 
@@ -11,6 +12,7 @@ import view.Printable;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static model.AppConstants.UNSPECIFIED_DATE_TIME;
@@ -31,12 +33,18 @@ public class Ticket extends Entity implements Printable {
 
     private final BigDecimal price;
 
+    private TicketType ticketType;
+    private LocalDate creationDate = LocalDate.now();
+
     public Ticket() {
-        this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, null, 0, 0);
+        this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
+        ticketType = TicketType.EMPTY;
     }
 
     public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime) {
         this(concertHall, eventCode, eventTime, false, StadiumSector.NOT_SPECIFIED, 0, 0);
+        ticketType = TicketType.LIMITED;
+
     }
 
     public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight, double price ) {
@@ -48,6 +56,8 @@ public class Ticket extends Entity implements Printable {
         setStadiumSector(stadiumSector);
         this.backpackAllowedWeight = backpackAllowedWeight;
         this.price = new BigDecimal(price);
+        ticketType = TicketType.FULL;
+
     }
 
     public ConcertHall getConcertHall() {
@@ -94,6 +104,14 @@ public class Ticket extends Entity implements Printable {
 
     public String getPrice() {
         return AppConstants.FORMATTER.format(this.price);
+    }
+
+    public String getTicketType() {
+        return ticketType.getType();
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
     }
 
 
@@ -161,5 +179,4 @@ public class Ticket extends Entity implements Printable {
                 "Price: " + getPrice() + '\n' +
                 "----------------";
     }
-
 }
