@@ -7,9 +7,6 @@ import model.Entity;
 import model.enums.TicketType;
 import view.Printable;
 
-
-
-
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
