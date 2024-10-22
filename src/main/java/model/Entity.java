@@ -4,9 +4,13 @@ package model;
 import java.util.UUID;
 
 public abstract class Entity {
-        private final UUID id = UUID.randomUUID();
+        private UUID id = UUID.randomUUID();
 
-        public UUID getId() {
+        public UUID getID() {
             return id;
+        }
+
+        protected void setID(UUID newID) {
+            id = newID;
         }
 }

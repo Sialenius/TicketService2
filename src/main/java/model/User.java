@@ -5,6 +5,7 @@ import model.enums.UserRole;
 import view.Printable;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public abstract class User extends Entity implements Printable {
     private String name;
@@ -27,22 +28,25 @@ public abstract class User extends Entity implements Printable {
         this.creationDate = date;
     }
 
-    public String getRole() {
-        return role.getRole();
+    public UserRole getRole() {
+        return role;
     }
 
     protected void setRole(UserRole role) {
         this.role = role;
     }
 
-    public abstract void printRole();
+    public void printRole() {}
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + '\n' +
-                "ID: " + this.getId() + '\n' +
+        return  "============= USER =============" + '\n' +
+                "ID: " + this.getID() + '\n' +
                 "Name: " + this.getName() + '\n' +
-                "Creation date: " + this.getCreationDate() + '\n';
+                "Creation date: " + this.getCreationDate() + '\n' +
+                "User role: " + this.getClass().getSimpleName();
+
     }
+
 
 }

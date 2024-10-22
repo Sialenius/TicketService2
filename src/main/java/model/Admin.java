@@ -5,10 +5,18 @@ import model.enums.UserRole;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class Admin extends User {
 
     public Admin(String name, LocalDate date) {
+        setName(name);
+        setCreationDate(date);
+        setRole(UserRole.ADMIN);
+    }
+
+    public Admin(UUID id, String name, LocalDate date) {
+        this.setID(id);
         setName(name);
         setCreationDate(date);
         setRole(UserRole.ADMIN);
@@ -20,12 +28,6 @@ public class Admin extends User {
        } else {
            System.out.println("This ticket is valid");
        }
-    }
-
-    @Override
-    public String toString() {
-        return "Admin: " + "\n" +
-                "ID: " + this.getId();
     }
 
     @Override

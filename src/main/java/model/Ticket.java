@@ -35,17 +35,17 @@ public class Ticket extends Entity implements Printable {
     private  BigDecimal price;
 
     private TicketType ticketType;
-    private LocalDate creationDate = LocalDate.now();
+    private LocalDate creationDate;
     private UUID userID;
 
     public Ticket() {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
-        ticketType = TicketType.EMPTY;
+        ticketType = TicketType.NOT_SPECIFIED;
     }
 
     public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime) {
         this(concertHall, eventCode, eventTime, false, StadiumSector.NOT_SPECIFIED, 0, 0);
-        ticketType = TicketType.LIMITED;
+        ticketType = TicketType.NOT_SPECIFIED;
 
     }
 
@@ -58,11 +58,20 @@ public class Ticket extends Entity implements Printable {
         setStadiumSector(stadiumSector);
         this.backpackAllowedWeight = backpackAllowedWeight;
         this.price = new BigDecimal(price);
-        ticketType = TicketType.FULL;
+        ticketType = TicketType.NOT_SPECIFIED;
 
     }
 
     public Ticket (UUID userID, TicketType ticketType, LocalDate creationDate) {
+        this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
+        this.userID = userID;
+        this.ticketType = ticketType;
+        this.creationDate = creationDate;
+    }
+
+    public Ticket (UUID ticketID, UUID userID, TicketType ticketType, LocalDate creationDate) {
+        this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
+        this.setID(ticketID);
         this.userID = userID;
         this.ticketType = ticketType;
         this.creationDate = creationDate;
@@ -114,9 +123,11 @@ public class Ticket extends Entity implements Printable {
         return AppConstants.FORMATTER.format(this.price);
     }
 
-    public String getTicketType() {
-        return ticketType.getType();
+
+    public TicketType getTicketType() {
+        return this.ticketType;
     }
+
 
     public LocalDate getCreationDate() {
         return creationDate;
@@ -124,6 +135,10 @@ public class Ticket extends Entity implements Printable {
 
     public UUID getUserID() {
         return userID;
+    }
+
+    public void setUserID(UUID id) {
+        this.userID = id;
     }
 
     @Override
@@ -155,17 +170,17 @@ public class Ticket extends Entity implements Printable {
     }
 
     public void share(PhoneNumber phoneNumber) {
-        System.out.println("Ticket "  + getId() + " was shared by " + phoneNumber);
+        System.out.println("Ticket "  + getID() + " was shared by " + phoneNumber);
     }
 
     public void share(PhoneNumber phoneNumber, Email email) {
-        System.out.println("Ticket " + getId() + " was shared by " + phoneNumber + " and " + email);
+        System.out.println("Ticket " + getID() + " was shared by " + phoneNumber + " and " + email);
 
     }
 
   @Override
     public int hashCode() {
-      int result = 31 * this.getId().hashCode();
+      int result = 31 * this.getID().hashCode();
       result += 31 * concertHall.hashCode();
       result += 31 * eventCode;
       result += 31 * eventTime.hashCode();
@@ -175,19 +190,19 @@ public class Ticket extends Entity implements Printable {
       return result;
     }
 
-
-
     @Override
     public String toString() {
-        return "-----Ticket-----" + '\n' +
-                "Ticket ID: " + getId() + '\n' +
+        return "============== TICKET ============" + '\n' +
+                "Ticket ID: " + getID() + '\n' +
+                "User ID: " + getUserID() + '\n' +
+                "Ticket type: " + getTicketType() + '\n' +
+                "Creation date: " + getCreationDate() + '\n' +
                 "Concert hall: " + concertHall.getName() + '\n' +
                 "Event code: " + eventCode + '\n' +
                 "Event time: " + eventTime + '\n' +
                 "Promo: " + isPromo + '\n' +
-               // "Stadium sector: " + stadiumSector.getName() + '\n' +
+                "Stadium sector: " + stadiumSector.getName() + '\n' +
                 "Backpack allowed weight: " + backpackAllowedWeight + '\n' +
-                "Price: " + getPrice() + '\n' +
-                "----------------";
+               "Price: " + getPrice() + '\n';
     }
 }
