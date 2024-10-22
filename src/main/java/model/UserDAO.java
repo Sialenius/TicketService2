@@ -23,7 +23,7 @@ public class UserDAO implements DAO<User>, Printable {
     }
 
     public void deleteAll() {
-        String sql = "DELETE FROM users";
+        String sql = "DELETE FROM users_info";
 
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -36,7 +36,7 @@ public class UserDAO implements DAO<User>, Printable {
 
     @Override
     public void save(User user) {
-        String sql = "INSERT INTO users (id, name, creation_date, user_role) VALUES (?, ?, ?, ?::user_role)";
+        String sql = "INSERT INTO users_info (id, name, creation_date, user_role) VALUES (?, ?, ?, ?::user_role)";
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user.getID().toString());
@@ -51,7 +51,7 @@ public class UserDAO implements DAO<User>, Printable {
 
     @Override
     public Optional<User> fetchByID(UUID id)  {
-        String sql = "SELECT * FROM users WHERE id = ?";
+        String sql = "SELECT * FROM users_info WHERE id = ?";
 
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -78,7 +78,7 @@ public class UserDAO implements DAO<User>, Printable {
     }
 
     public Optional<User> fetchByName(String name) {
-        String sql = "SELECT * FROM users WHERE name = ?";
+        String sql = "SELECT * FROM users_info WHERE name = ?";
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, name);
@@ -106,7 +106,7 @@ public class UserDAO implements DAO<User>, Printable {
 
     @Override
     public ArrayList<User> getAll() {
-        String sql = "SELECT * FROM users";
+        String sql = "SELECT * FROM users_info";
 
         users.clear();
 
@@ -134,11 +134,9 @@ public class UserDAO implements DAO<User>, Printable {
     }
 
 
-
-
     @Override
     public void delete(UUID userID) {
-        String sql = "DELETE FROM users WHERE id = ?";
+        String sql = "DELETE FROM users_info WHERE id = ?";
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, userID.toString());
@@ -158,7 +156,7 @@ public class UserDAO implements DAO<User>, Printable {
     public void printInformation() {
         users = this.getAll();
 
-        System.out.println("============================= TABLE 'USERS' =============================\n" +
+        System.out.println("=========================== TABLE 'USERS_INFO' ==========================\n" +
                 "                  id                 |  name  | creation_date | user_role  \n" +
                 "--------------------------------------------------------------");
         if (users.isEmpty()) {
