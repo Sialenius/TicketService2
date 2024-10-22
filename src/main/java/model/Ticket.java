@@ -18,7 +18,6 @@ import static model.AppConstants.UNSPECIFIED_DATE_TIME;
 
 public class Ticket extends Entity implements Printable {
 
-
     private  ConcertHall concertHall;
     private  int eventCode;
 
@@ -200,6 +199,6 @@ public class Ticket extends Entity implements Printable {
                 "Promo: " + isPromo + '\n' +
                 "Stadium sector: " + stadiumSector.getName() + '\n' +
                 "Backpack allowed weight: " + backpackAllowedWeight + '\n' +
-               "Price: " + getPrice() + '\n';
+                "Price: " + getPrice() + '\n';
     }
 }
