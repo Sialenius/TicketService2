@@ -6,6 +6,9 @@ import model.Admin;
 import model.Client;
 import model.Email;
 import model.PhoneNumber;
+import model.CustomArrayList;
+import model.CustomHashSet;
+import model.Iteratorable;
 import model.enums.ConcertHall;
 import model.enums.StadiumSector;
 import view.Printable;
@@ -47,9 +50,41 @@ public class TicketService extends Entity implements Printable {
     ticket4.share(phoneNumber, email);
 
     System.out.println(ticket3.getId());
-        System.out.println(ticket4.hashCode());
+    System.out.println(ticket4.hashCode());
 
+    // Homework #5: Custom ArrayList & Custom HashSet
+
+    CustomArrayList<Integer> numbersList = new CustomArrayList<>(4);
+
+    numbersList.put(1);
+    numbersList.put(2);
+    numbersList.put(3);
+    numbersList.put(4);
+    numbersList.put(5);
+    System.out.println(numbersList);
+
+
+    CustomHashSet<String> stringsSet = new CustomHashSet<>(2);
+    stringsSet.put("AA");
+    stringsSet.put("BB");
+    stringsSet.put("CC");
+    stringsSet.put("DD");
+    System.out.println(stringsSet);
+
+    stringsSet.put("EE");
+    stringsSet.put("DD");
+    stringsSet.put("QQQQQ", 3);
+    System.out.println(stringsSet);
+
+    stringsSet.deleteItemFromPosition(2);
+    System.out.println(stringsSet);
+
+    for (Iteratorable customIterator = stringsSet.getIterator(); customIterator.hasNext();) {
+        System.out.print(customIterator.iterate() + " ");
     }
+
+}
+
 
     @Override
     public String toString() {
