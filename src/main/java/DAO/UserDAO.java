@@ -22,7 +22,7 @@ public class UserDAO implements DAO<User>, Printable {
     private static final String DELETE_ALL_USERS_SQL = "DELETE FROM users_info";
     private static final String SAVE_USER_SQL = "INSERT INTO users_info (id, name, creation_date, user_role) VALUES (?, ?, ?, ?::user_role)";
     private static final String FETCH_USER_BY_ID_SQL = "SELECT * FROM users_info WHERE id = ?";
-    private static final String FETCH_ALL_USERS_SQL = "SELECT * FROM users_info WHERE id = ?";
+    private static final String FETCH_ALL_USERS_SQL = "SELECT * FROM users_info";
     private static final String DELETE_USER_BY_ID_SQL = "DELETE FROM users_info WHERE id = ?";
 
     private Connection connection;
@@ -135,11 +135,12 @@ public class UserDAO implements DAO<User>, Printable {
             }
 
         } catch (SQLException e) {
-            System.out.println(e);
+           // System.out.println(e);
+            throw new RuntimeException(e);
         }
         finally {
             try {
-                resultSet.close();
+                //resultSet.close();
                 preparedStatement.close();
                 connection.close();
             } catch (SQLException e) {
