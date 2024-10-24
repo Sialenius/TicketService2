@@ -1,4 +1,5 @@
-package main.java.model;
+package model;
+
 
 
 public class CustomHashSet<T> implements Container {
