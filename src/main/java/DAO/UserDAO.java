@@ -24,7 +24,7 @@ public class UserDAO implements DAO<User>, Printable {
     private static final String FETCH_USER_BY_ID_SQL = "SELECT * FROM users_info WHERE id = ?";
     private static final String FETCH_ALL_USERS_SQL = "SELECT * FROM users_info WHERE id = ?";
     private static final String DELETE_USER_BY_ID_SQL = "DELETE FROM users_info WHERE id = ?";
-    
+
     private Connection connection;
     
     private ArrayList<User> users = new ArrayList<>();
