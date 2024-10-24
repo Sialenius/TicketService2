@@ -15,6 +15,4 @@ public interface DAO<T> {
 
     void delete(UUID uuid);
 
-    void close() throws SQLException;
-
 }

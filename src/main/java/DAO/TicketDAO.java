@@ -1,5 +1,6 @@
 package DAO;
 
+import config.ConnectionConfiguration;
 import model.Ticket;
 import model.enums.TicketType;
 import view.Printable;
@@ -11,20 +12,20 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class TicketDAO implements DAO<Ticket>, Printable {
-    private final Connection connection;
+    private Connection connection;
 
     private ArrayList<Ticket> tickets = new ArrayList<>();
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
 
-    public TicketDAO(Connection connection) {
-        this.connection = connection;
+    public TicketDAO() {
     }
 
     @Override
     public void save(Ticket ticket) {
         String sql = "INSERT INTO tickets (id, user_id, ticket_type, creation_date) VALUES (?, ?, ?::ticket_type, ?)";
         try {
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, ticket.getID().toString());
             preparedStatement.setString(2, ticket.getUserID().toString());
@@ -34,14 +35,23 @@ public class TicketDAO implements DAO<Ticket>, Printable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        tickets.add(ticket);
+        finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
+        }
+        tickets.add(ticket);
     }
 
     @Override
     public Optional<Ticket> fetchByID(UUID id) {
         String sql = "SELECT * FROM tickets WHERE id = ?";
         try {
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, id.toString());
             resultSet = preparedStatement.executeQuery();
@@ -58,13 +68,22 @@ public class TicketDAO implements DAO<Ticket>, Printable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return Optional.empty();
     }
 
     public Optional<Ticket> fetchByTicketAndUserID(UUID ticketID, UUID userID) {
         String sql = "SELECT * FROM tickets WHERE id = ? AND user_id = ? ";
         try {
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, ticketID.toString());
             preparedStatement.setString(2, userID.toString());
@@ -81,7 +100,16 @@ public class TicketDAO implements DAO<Ticket>, Printable {
 
         } catch (SQLException e) {
             System.out.println(e);
-            //throw new RuntimeException(e);
+            throw new RuntimeException(e);
+        }
+        finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         System.out.println("Invalid ticket or user UUID");
         return Optional.empty();
@@ -94,6 +122,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
         tickets.clear();
 
         try {
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
 
@@ -110,6 +139,15 @@ public class TicketDAO implements DAO<Ticket>, Printable {
         } catch (SQLException e) {
             System.out.println(e);
         }
+        finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return tickets;
     }
 
@@ -117,6 +155,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
         String sql =  "UPDATE tickets SET ticket_type = ?::ticket_type WHERE id = ?";
 
         try {
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, newType.name());
             preparedStatement.setString(2, id.toString());
@@ -124,26 +163,35 @@ public class TicketDAO implements DAO<Ticket>, Printable {
         } catch (SQLException e) {
             System.out.println(e);
         }
+        finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override
     public void delete(UUID uuid) {
         String sql = "DELETE FROM tickets WHERE id = ?";
         try {
+            connection = ConnectionConfiguration.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, uuid.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-    }
-
-    @Override
-    public void close() throws SQLException {
-        resultSet.close();
-        preparedStatement.close();
-        connection.close();
+        finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override
