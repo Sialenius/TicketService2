@@ -1,6 +1,8 @@
-package model;
+package DAO;
 
-import model.enums.TicketType;
+import model.Admin;
+import model.Client;
+import model.User;
 import model.enums.UserRole;
 import view.Printable;
 

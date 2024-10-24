@@ -1,5 +1,6 @@
-package model;
+package DAO;
 
+import model.Ticket;
 import model.enums.TicketType;
 import view.Printable;
 
