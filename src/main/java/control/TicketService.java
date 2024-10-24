@@ -1,18 +1,18 @@
 package control;
 
-import model.Entity;
-import model.User;
-import model.Client;
-import model.Admin;
-import model.Ticket;
+import model.*;
 import DAO.UserDAO;
 import DAO.TicketDAO;
 
+import model.enums.ConcertHall;
+import model.enums.StadiumSector;
 import model.enums.TicketType;
 import view.Printable;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -21,11 +21,15 @@ public class TicketService extends Entity implements Printable {
 
     public static void main(String[] args) throws ClassNotFoundException {
 
+      showDBsTask();
+
+
+    }
+
+    private static void showDBsTask () throws ClassNotFoundException {
         //Homework #8: DBs
 
-
         Class.forName("org.postgresql.Driver"); // WHAT IS THIS LINE FOR?
-
 
         UserDAO userDAO = new UserDAO();
         TicketDAO ticketDAO = new TicketDAO();
@@ -75,7 +79,7 @@ public class TicketService extends Entity implements Printable {
 
 
         // FETCH THE USER BY ID
-       Optional<User> newUser = userDAO.fetchByID(user3.getID());
+        Optional<User> newUser = userDAO.fetchByID(user3.getID());
         if (newUser.isEmpty()) {
             System.out.println("Invalid user UUID");
         } else {
@@ -95,7 +99,56 @@ public class TicketService extends Entity implements Printable {
         userDAO.printInformation();
         ticketDAO.printInformation();
 
+    }
 
+    private static void showCollectionsTask () {
+
+        // Homework #5: Custom ArrayList & Custom HashSet
+
+        CustomArrayList<Integer> numbersList = new CustomArrayList<>(4);
+
+        numbersList.put(1);
+        numbersList.put(2);
+        numbersList.put(3);
+        numbersList.put(4);
+        numbersList.put(5);
+        System.out.println(numbersList);
+
+
+        CustomHashSet<String> stringsSet = new CustomHashSet<>(2);
+        stringsSet.put("AA");
+        stringsSet.put("BB");
+        stringsSet.put("CC");
+        stringsSet.put("DD");
+        System.out.println(stringsSet);
+
+        stringsSet.put("EE");
+        stringsSet.put("DD");
+        stringsSet.put("QQQQQ", 3);
+        System.out.println(stringsSet);
+
+        stringsSet.deleteItemFromPosition(2);
+        System.out.println(stringsSet);
+
+
+        // Iterator
+        for (Iteratorable customIterator = stringsSet.getIterator(); customIterator.hasNext();) {
+            System.out.print(customIterator.iterate() + " ");
+        }
+
+    }
+
+    private static void showOOPTask() {
+        Ticket ticket1 = new Ticket();
+
+        LocalDateTime eventDateTime = LocalDateTime.of(2024, Month.NOVEMBER, 14, 18, 00);
+
+        Ticket ticket2 = new Ticket(ConcertHall.THEATRE, 123, eventDateTime);
+        Ticket ticket3 = new Ticket(ConcertHall.CIRCUS, 56, eventDateTime, true, StadiumSector.B, 2.5, 50);
+
+        ticket1.printInformation();
+        ticket2.printInformation();
+        ticket3.printInformation();
     }
 
     @Override
