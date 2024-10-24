@@ -19,6 +19,12 @@ import java.util.UUID;
 
 
 public class UserDAO implements DAO<User>, Printable {
+    private static final String DELETE_ALL_USERS_SQL = "DELETE FROM users_info";
+    private static final String SAVE_USER_SQL = "INSERT INTO users_info (id, name, creation_date, user_role) VALUES (?, ?, ?, ?::user_role)";
+    private static final String FETCH_USER_BY_ID_SQL = "SELECT * FROM users_info WHERE id = ?";
+    private static final String FETCH_ALL_USERS_SQL = "SELECT * FROM users_info WHERE id = ?";
+    private static final String DELETE_USER_BY_ID_SQL = "DELETE FROM users_info WHERE id = ?";
+    
     private Connection connection;
     
     private ArrayList<User> users = new ArrayList<>();
@@ -29,11 +35,9 @@ public class UserDAO implements DAO<User>, Printable {
     }
 
     public void deleteAll() {
-        String sql = "DELETE FROM users_info";
-
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(DELETE_ALL_USERS_SQL);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -51,10 +55,9 @@ public class UserDAO implements DAO<User>, Printable {
 
     @Override
     public void save(User user) {
-        String sql = "INSERT INTO users_info (id, name, creation_date, user_role) VALUES (?, ?, ?, ?::user_role)";
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(SAVE_USER_SQL);
             preparedStatement.setString(1, user.getID().toString());
             preparedStatement.setString(2, user.getName());
             preparedStatement.setDate(3, Date.valueOf(user.getCreationDate()));
@@ -75,11 +78,9 @@ public class UserDAO implements DAO<User>, Printable {
 
     @Override
     public Optional<User> fetchByID(UUID id)  {
-        String sql = "SELECT * FROM users_info WHERE id = ?";
-
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(FETCH_USER_BY_ID_SQL);
             preparedStatement.setString(1, id.toString());
             resultSet = preparedStatement.executeQuery();
 
@@ -113,13 +114,11 @@ public class UserDAO implements DAO<User>, Printable {
 
     @Override
     public ArrayList<User> getAll() {
-        String sql = "SELECT * FROM users_info";
-
         users.clear();
 
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(FETCH_ALL_USERS_SQL);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -153,10 +152,9 @@ public class UserDAO implements DAO<User>, Printable {
 
     @Override
     public void delete(UUID userID) {
-        String sql = "DELETE FROM users_info WHERE id = ?";
         try {
             connection = ConnectionConfiguration.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(DELETE_USER_BY_ID_SQL);
             preparedStatement.setString(1, userID.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
