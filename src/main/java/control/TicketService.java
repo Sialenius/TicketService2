@@ -31,7 +31,6 @@ public class TicketService extends Entity implements Printable {
 
       showDBsTask();
 
-
     }
 
     private static void showDBsTask () throws ClassNotFoundException {
