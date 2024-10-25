@@ -13,9 +13,9 @@ CREATE TABLE users_info
 CREATE TABLE tickets
 (
     id VARCHAR(36) PRIMARY KEY NOT NULL,
-    user_id VARCHAR(36)
+    user_id VARCHAR(36) NOT NULL,
     ticket_type ticket_type NOT NULL,
     creation_date date,
-    FOREIGN KEY (user_id) REFERENCES users_info (id) ON DELETE CASCADE, NOT NULL
+    FOREIGN KEY (user_id) REFERENCES users_info (id) ON DELETE CASCADE
 );
 
