@@ -1,5 +1,6 @@
 package DAO;
 
+import config.ConfigurationObject;
 import config.ConnectionConfiguration;
 import model.Ticket;
 import model.enums.TicketType;
@@ -23,25 +24,22 @@ public class TicketDAO implements DAO<Ticket>, Printable {
     private static final String UPDATE_TICKET_TYPE_SQL =  "UPDATE tickets SET ticket_type = ?::ticket_type WHERE id = ?";
     private static final String DELETE_TICKET_BY_ID_SQL = "DELETE FROM tickets WHERE id = ?";
 
-
-
-
-
-
-
     private Connection connection;
 
     private ArrayList<Ticket> tickets = new ArrayList<>();
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
 
-    public TicketDAO() {
+    ConfigurationObject configuration;
+
+    public TicketDAO(ConfigurationObject configuration) {
+        this.configuration = configuration;
     }
 
     @Override
     public void save(Ticket ticket) {
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = ConnectionConfiguration.getConnection(configuration);
             preparedStatement = connection.prepareStatement(SAVE_TICKET_SQL);
             preparedStatement.setString(1, ticket.getID().toString());
             preparedStatement.setString(2, ticket.getUserID().toString());
@@ -66,7 +64,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
     @Override
     public Optional<Ticket> fetchByID(UUID id) {
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = ConnectionConfiguration.getConnection(configuration);
             preparedStatement = connection.prepareStatement(FETCH_TICKET_BY_ID_SQL);
             preparedStatement.setString(1, id.toString());
             resultSet = preparedStatement.executeQuery();
@@ -97,7 +95,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
 
     public Optional<Ticket> fetchByTicketAndUserID(UUID ticketID, UUID userID) {
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = ConnectionConfiguration.getConnection(configuration);
             preparedStatement = connection.prepareStatement(FETCH_TICKET_BY_ID_AND_USER_SQL);
             preparedStatement.setString(1, ticketID.toString());
             preparedStatement.setString(2, userID.toString());
@@ -134,7 +132,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
         tickets.clear();
 
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = ConnectionConfiguration.getConnection(configuration);
             preparedStatement = connection.prepareStatement(SELECT_ALL_TICKETS_SQL);
             resultSet = preparedStatement.executeQuery();
 
@@ -165,7 +163,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
 
     public void update(UUID id, TicketType newType) {
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = ConnectionConfiguration.getConnection(configuration);
             preparedStatement = connection.prepareStatement(UPDATE_TICKET_TYPE_SQL);
             preparedStatement.setString(1, newType.name());
             preparedStatement.setString(2, id.toString());
@@ -186,7 +184,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
     @Override
     public void delete(UUID uuid) {
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = ConnectionConfiguration.getConnection(configuration);
             preparedStatement = connection.prepareStatement(DELETE_TICKET_BY_ID_SQL);
             preparedStatement.setString(1, uuid.toString());
             preparedStatement.executeUpdate();

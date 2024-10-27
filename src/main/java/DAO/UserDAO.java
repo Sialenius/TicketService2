@@ -1,5 +1,6 @@
 package DAO;
 
+import config.ConfigurationObject;
 import config.ConnectionConfiguration;
 import model.Admin;
 import model.Client;
@@ -31,17 +32,25 @@ public class UserDAO implements DAO<User>, Printable {
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
 
-    public UserDAO() {
+    private ConfigurationObject configuration;
+
+    public UserDAO(ConfigurationObject configuration) {
+        this.configuration = configuration;
     }
 
     public void deleteAll() {
         try {
-            connection = ConnectionConfiguration.getConnection();
+            System.out.println("Hi");
+
+            connection = ConnectionConfiguration.getConnection(configuration);
+            System.out.println(connection);
             preparedStatement = connection.prepareStatement(DELETE_ALL_USERS_SQL);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             System.out.println(e);
+            throw new RuntimeException(e);
+
         }
         finally {
             try {
@@ -56,7 +65,7 @@ public class UserDAO implements DAO<User>, Printable {
     @Override
     public void save(User user) {
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = ConnectionConfiguration.getConnection(configuration);
             preparedStatement = connection.prepareStatement(SAVE_USER_SQL);
             preparedStatement.setString(1, user.getID().toString());
             preparedStatement.setString(2, user.getName());
@@ -79,7 +88,7 @@ public class UserDAO implements DAO<User>, Printable {
     @Override
     public Optional<User> fetchByID(UUID id)  {
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = ConnectionConfiguration.getConnection(configuration);
             preparedStatement = connection.prepareStatement(FETCH_USER_BY_ID_SQL);
             preparedStatement.setString(1, id.toString());
             resultSet = preparedStatement.executeQuery();
@@ -117,7 +126,7 @@ public class UserDAO implements DAO<User>, Printable {
         users.clear();
 
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = ConnectionConfiguration.getConnection(configuration);
             preparedStatement = connection.prepareStatement(FETCH_ALL_USERS_SQL);
             resultSet = preparedStatement.executeQuery();
 
@@ -140,7 +149,7 @@ public class UserDAO implements DAO<User>, Printable {
         }
         finally {
             try {
-                //resultSet.close();
+                resultSet.close();
                 preparedStatement.close();
                 connection.close();
             } catch (SQLException e) {
@@ -154,7 +163,7 @@ public class UserDAO implements DAO<User>, Printable {
     @Override
     public void delete(UUID userID) {
         try {
-            connection = ConnectionConfiguration.getConnection();
+            connection = ConnectionConfiguration.getConnection(configuration);
             preparedStatement = connection.prepareStatement(DELETE_USER_BY_ID_SQL);
             preparedStatement.setString(1, userID.toString());
             preparedStatement.executeUpdate();

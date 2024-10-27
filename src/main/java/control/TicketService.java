@@ -1,5 +1,6 @@
 package control;
 
+import config.ConfigurationReader;
 import model.Entity;
 import model.User;
 import model.Client;
@@ -17,6 +18,7 @@ import model.enums.StadiumSector;
 import model.enums.TicketType;
 import view.Printable;
 
+import java.io.File;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,19 +29,28 @@ import java.util.Optional;
 
 public class TicketService extends Entity implements Printable {
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) throws Exception {
 
       showDBsTask();
 
     }
 
-    private static void showDBsTask () throws ClassNotFoundException {
+    private static void showDBsTask () throws Exception {
         //Homework #8: DBs
+
+
+        ConfigurationReader cr = new ConfigurationReader();
+
+        File file = new File("src/main/resources/ConnectionConfiguration.txt");
+       System.out.println(ConfigurationReader.read(file).toString());
+
+
+
 
         Class.forName("org.postgresql.Driver"); // WHAT IS THIS LINE FOR?
 
-        UserDAO userDAO = new UserDAO();
-        TicketDAO ticketDAO = new TicketDAO();
+        UserDAO userDAO = new UserDAO(ConfigurationReader.read(file));
+        TicketDAO ticketDAO = new TicketDAO(ConfigurationReader.read(file));
 
         // CLEAR THE DATABASE BEFORE THE SHOWCASE
         userDAO.deleteAll();
@@ -105,6 +116,8 @@ public class TicketService extends Entity implements Printable {
 
         userDAO.printInformation();
         ticketDAO.printInformation();
+
+
 
     }
 
