@@ -38,16 +38,9 @@ public class TicketService extends Entity implements Printable {
     private static void showDBsTask () throws Exception {
         //Homework #8: DBs
 
-
-        ConfigurationReader cr = new ConfigurationReader();
-
         File file = new File("src/main/resources/ConnectionConfiguration.txt");
-       System.out.println(ConfigurationReader.read(file).toString());
 
-
-
-
-        Class.forName("org.postgresql.Driver"); // WHAT IS THIS LINE FOR?
+        Class.forName("org.postgresql.Driver");
 
         UserDAO userDAO = new UserDAO(ConfigurationReader.read(file));
         TicketDAO ticketDAO = new TicketDAO(ConfigurationReader.read(file));
