@@ -1,47 +1,65 @@
 package model;
 
 
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
+import lombok.Data;
 import model.enums.UserRole;
+import org.hibernate.annotations.CreationTimestamp;
 import view.Printable;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-public abstract class User extends Entity implements Printable {
+@Data
+@Entity
+@Table(name = "users_info")
+public class User implements Printable {
+
+    @Id
+    @Column(name = "id", nullable = false)
+    private String id = UUID.randomUUID().toString();
+
+    @Column (name = "name", nullable = false)
     private String name;
-    private LocalDate creationDate;
+
+    @Column (name = "creation_date", nullable = false)
+    private Timestamp creationDate = Timestamp.valueOf(LocalDateTime.now());
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Ticket> tickets = new ArrayList<>();
+
+    @Transient
     private UserRole role;
 
-    public  String getName() {
-        return name;
+    public User() {
     }
 
-    protected void setName(String name) {
+    public User (String name) {
         this.name = name;
     }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
-    protected void setCreationDate(LocalDate date) {
-        this.creationDate = date;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    protected void setRole(UserRole role) {
-        this.role = role;
+    public User (String name, Timestamp creationDate) {
+        this.name = name;
+        this.creationDate = creationDate;
     }
 
     public void printRole() {}
 
+
     @Override
     public String toString() {
         return  "============= USER =============" + '\n' +
-                "ID: " + this.getID() + '\n' +
+                "ID: " + this.getId() + '\n' +
                 "Name: " + this.getName() + '\n' +
                 "Creation date: " + this.getCreationDate() + '\n' +
                 "User role: " + this.getClass().getSimpleName();

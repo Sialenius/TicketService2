@@ -1,51 +1,93 @@
 package model;
 
 
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
+import lombok.Data;
 import model.enums.ConcertHall;
 import model.enums.StadiumSector;
-import model.Entity;
 import model.enums.TicketType;
 import view.Printable;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static model.AppConstants.UNSPECIFIED_DATE_TIME;
 
+@Data
+@Entity
+@Table (name = "tickets")
+public class Ticket implements Printable {
 
-public class Ticket extends Entity implements Printable {
+    @Id
+    @Column (name = "id", nullable = false)
+    private String id = UUID.randomUUID().toString();
 
+    @ManyToOne
+    @JoinColumn (name = "user_id")
+    private User user;
+
+    @Enumerated (EnumType.STRING)
+    @Column (name = "ticket_type") // HOW TO SET THE DEFAULT VALUE FROM THE ENUM USING ANNOTATIONS?
+    private TicketType ticketType = TicketType.MONTH;
+
+    @Column (name = "creation_date", nullable = false)
+    private Timestamp creationDate = Timestamp.valueOf(LocalDateTime.now());
+
+    @Transient
     private  ConcertHall concertHall;
+
+    @Transient
     private  int eventCode;
 
+    @Transient
+
     private Timestamp eventTime;
+
+    @Transient
     private  boolean isPromo;
 
+    @Transient
     private StadiumSector stadiumSector;
+
+    @Transient
 
     private  double backpackAllowedWeight;
 
+    @Transient
     private  BigDecimal price;
 
-    private TicketType ticketType;
-    private LocalDate creationDate;
-    private UUID userID;
+
 
     public Ticket() {
-        this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
+        this(ConcertHall.NOT_SPECIFIED, 3, Timestamp.valueOf(LocalDateTime.now()), false, StadiumSector.NOT_SPECIFIED, 0, 0);
         ticketType = TicketType.NOT_SPECIFIED;
     }
 
-    public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime) {
+    public Ticket(User user) {
+        this.user = user;
+    }
+
+    public Ticket(User user, TicketType ticketType) {
+        this.user = user;
+        this.ticketType = ticketType;
+    }
+
+    public Ticket(ConcertHall concertHall, int eventCode, Timestamp eventTime) {
         this(concertHall, eventCode, eventTime, false, StadiumSector.NOT_SPECIFIED, 0, 0);
         ticketType = TicketType.NOT_SPECIFIED;
 
     }
 
-    public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight, double price ) {
+    public Ticket(ConcertHall concertHall, int eventCode, Timestamp eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight, double price ) {
 
         this.concertHall = concertHall;
         this.eventCode = eventCode;
@@ -58,20 +100,21 @@ public class Ticket extends Entity implements Printable {
 
     }
 
-    public Ticket (UUID userID, TicketType ticketType, LocalDate creationDate) {
-        this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
-        this.userID = userID;
+    public Ticket (UUID userID, TicketType ticketType, Timestamp creationDate) {
+        this(ConcertHall.NOT_SPECIFIED, 3, Timestamp.valueOf(LocalDateTime.now()), false, StadiumSector.NOT_SPECIFIED, 0, 0);
+        //this.userID = userID.toString();
         this.ticketType = ticketType;
         this.creationDate = creationDate;
     }
 
-    public Ticket (UUID ticketID, UUID userID, TicketType ticketType, LocalDate creationDate) {
-        this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
-        this.setID(ticketID);
-        this.userID = userID;
+    public Ticket (UUID ticketID, UUID userID, TicketType ticketType, Timestamp creationDate) {
+        this(ConcertHall.NOT_SPECIFIED, 3, Timestamp.valueOf(LocalDateTime.now()), false, StadiumSector.NOT_SPECIFIED, 0, 0);
+        this.setId(ticketID.toString());
+        //this.userID = userID.toString();
         this.ticketType = ticketType;
         this.creationDate = creationDate;
     }
+
 
     public ConcertHall getConcertHall() {
         return concertHall;
@@ -85,17 +128,6 @@ public class Ticket extends Entity implements Printable {
         return eventTime;
     }
 
-    public void setEventTime(LocalDateTime eventTime) {
-        if (eventTime != null & eventTime != UNSPECIFIED_DATE_TIME) {
-
-            if (eventTime.isBefore(LocalDateTime.now())) {
-                System.out.println("Invalid event time.");
-                System.exit(0);
-            }
-
-            this.eventTime = Timestamp.valueOf(eventTime);
-        }
-    }
 
     public boolean isPromo() {
         return isPromo;
@@ -125,19 +157,6 @@ public class Ticket extends Entity implements Printable {
     }
 
 
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
-    public UUID getUserID() {
-        return userID;
-    }
-
-    public void setUserID(UUID id) {
-        this.userID = id;
-    }
-
-    @Override
     public boolean equals(Object object) {
         if (object == null) {
             return false;
@@ -166,17 +185,17 @@ public class Ticket extends Entity implements Printable {
     }
 
     public void share(PhoneNumber phoneNumber) {
-        System.out.println("Ticket "  + getID() + " was shared by " + phoneNumber);
+        System.out.println("Ticket "  + getId() + " was shared by " + phoneNumber);
     }
 
     public void share(PhoneNumber phoneNumber, Email email) {
-        System.out.println("Ticket " + getID() + " was shared by " + phoneNumber + " and " + email);
+        System.out.println("Ticket " + getId() + " was shared by " + phoneNumber + " and " + email);
 
     }
 
   @Override
     public int hashCode() {
-      int result = 31 * this.getID().hashCode();
+      int result = 31 * this.getId().hashCode();
       result += 31 * concertHall.hashCode();
       result += 31 * eventCode;
       result += 31 * eventTime.hashCode();
@@ -189,8 +208,8 @@ public class Ticket extends Entity implements Printable {
     @Override
     public String toString() {
         return "============== TICKET ============" + '\n' +
-                "Ticket ID: " + getID() + '\n' +
-                "User ID: " + getUserID() + '\n' +
+                "Ticket ID: " + getId() + '\n' +
+                "User ID: " + user.getId() + '\n' +
                 "Ticket type: " + getTicketType() + '\n' +
                 "Creation date: " + getCreationDate() + '\n' +
                 "Concert hall: " + concertHall.getName() + '\n' +

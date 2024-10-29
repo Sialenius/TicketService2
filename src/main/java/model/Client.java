@@ -1,22 +1,27 @@
 package model;
 
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Data;
 import model.enums.UserRole;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.UUID;
 
-public class Client extends User {
-    private Ticket ticket;
 
-    public Client(String name, LocalDate date) {
+public class Client extends User {
+    private ArrayList<Ticket> tickets = new ArrayList<>();
+
+    public Client(String name, Timestamp date) {
         setName(name);
         setCreationDate(date);
         setRole(UserRole.CLIENT);
     }
 
-    public Client(UUID id, String name, LocalDate date) {
-        this.setID(id);
+    public Client(UUID id, String name, Timestamp date) {
+        this.setId(id.toString());
         setName(name);
         setCreationDate(date);
         setRole(UserRole.CLIENT);
@@ -24,12 +29,12 @@ public class Client extends User {
 
 
     public void buyTicket(Ticket ticket) {
-        this.ticket = ticket;
-        ticket.setUserID(this.getID());
+        this.tickets.add(ticket);
+        ticket.setUser(this);
     }
 
-    public Ticket getTicket() {
-        return ticket;
+    public ArrayList<Ticket> getTickets() {
+        return tickets;
     }
 
     @Override
