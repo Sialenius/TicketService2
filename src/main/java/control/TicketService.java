@@ -1,7 +1,6 @@
 package control;
 
 import config.ConfigurationReader;
-import model.Entity;
 import model.User;
 import model.Client;
 import model.Admin;
@@ -19,21 +18,89 @@ import model.enums.TicketType;
 import view.Printable;
 
 import java.io.File;
-import java.sql.Date;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
-public class TicketService extends Entity implements Printable {
+public class TicketService implements Printable {
 
     public static void main(String[] args) throws Exception {
 
-      showDBsTask();
+      showHibernateTask();
 
     }
+
+    private static void showHibernateTask() {
+
+
+        // CREATE AND SAVE USERS
+        UserDAO userDAO = new UserDAO();
+
+        ArrayList<User> users = new ArrayList<>();
+        users.add(new User("First"));
+        users.add(new User("Second"));
+        users.add(new User("Third"));
+
+        for (User u: users) {
+            userDAO.save(u);
+        }
+
+
+        //CREATE AND SAVE TICKETS
+        TicketDAO ticketDAO = new TicketDAO();
+
+        ArrayList<Ticket> tickets = new ArrayList<>();
+
+        tickets.add(new Ticket(users.get(0)));
+        tickets.add(new Ticket(users.get(0)));
+        tickets.add(new Ticket(users.get(1)));
+        tickets.add(new Ticket(users.get(1)));
+        tickets.add(new Ticket(users.get(2)));
+        tickets.add(new Ticket(users.get(2)));
+
+        for (Ticket t: tickets) {
+            ticketDAO.save(t);
+        }
+
+
+        //SHOW TICKETS
+        ticketDAO.printInformation();
+
+
+        //FETCH THE USER BY ID
+        User newUser = userDAO.fetchUser(users.get(0).getId());
+        System.out.println(newUser);
+
+
+        //FETCH THE TICKET BY TICKET' AND USER' ID
+        List<Ticket> ticketsFromDB = ticketDAO.fetchByTicketAndUserID(tickets.get(0).getId(), users.get(0));
+        ticketsFromDB.forEach(System.out::println);
+
+
+        //UPDATE THE TICKET TYPE
+        ticketDAO.updateType(tickets.get(0).getId(), TicketType.YEAR);
+
+        //DELETE TICKET
+        ticketDAO.delete(tickets.get(1).getId());
+
+
+        //DELETE USER AND SHOW ThE RESULT
+        userDAO.delete(users.get(0));
+        userDAO.printInformation();
+        ticketDAO.printInformation();
+
+
+        //UPDATE THE USER
+        userDAO.updateUserID(users.get(1).getId(), "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+        userDAO.printInformation();
+        ticketDAO.printInformation();
+    }
+
 
     private static void showDBsTask () throws Exception {
         //Homework #8: DBs
@@ -42,20 +109,20 @@ public class TicketService extends Entity implements Printable {
 
         Class.forName("org.postgresql.Driver");
 
-        UserDAO userDAO = new UserDAO(ConfigurationReader.read(file));
-        TicketDAO ticketDAO = new TicketDAO(ConfigurationReader.read(file));
+        UserDAO userDAO = new UserDAO();
+        TicketDAO ticketDAO = new TicketDAO();
 
         // CLEAR THE DATABASE BEFORE THE SHOWCASE
-        userDAO.deleteAll();
+       // userDAO.deleteAll();
 
         userDAO.printInformation();
         ticketDAO.printInformation();
 
 
         // SAVE USERS
-        User user1 = new Client("Henry", Date.valueOf("2024-08-10").toLocalDate());
-        User user2 = new Client("Mike", Date.valueOf("2024-05-15").toLocalDate());
-        User user3 = new Admin("Lee", LocalDate.now());
+        User user1 = new Client("Henry", Timestamp.valueOf("2024-08-10"));
+        User user2 = new Client("Mike", Timestamp.valueOf("2024-05-15"));
+        User user3 = new Admin("Lee", Timestamp.valueOf(LocalDateTime.now()));
 
         userDAO.save(user1);
         userDAO.save(user2);
@@ -64,12 +131,13 @@ public class TicketService extends Entity implements Printable {
 
         // SAVE TICKETS
         ArrayList<Ticket> tickets = new ArrayList<>();
-        tickets.add(new Ticket(user1.getID(), TicketType.DAY, LocalDate.now()));
-        tickets.add(new Ticket(user1.getID(), TicketType.WEEK, LocalDate.now()));
-        tickets.add(new Ticket(user2.getID(), TicketType.MONTH, LocalDate.now()));
-        tickets.add(new Ticket(user2.getID(), TicketType.YEAR, LocalDate.now()));
-        tickets.add(new Ticket(user1.getID(), TicketType.YEAR, LocalDate.now()));
-        tickets.add(new Ticket(user3.getID(), TicketType.DAY, LocalDate.now()));
+        tickets.add(new Ticket(UUID.fromString(user1.getId()), TicketType.DAY, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(UUID.fromString(user1.getId()), TicketType.WEEK, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(UUID.fromString(user2.getId()), TicketType.MONTH, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(UUID.fromString(user2.getId()), TicketType.MONTH, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(UUID.fromString(user3.getId()), TicketType.YEAR, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(UUID.fromString(user3.getId()), TicketType.DAY, Timestamp.valueOf(LocalDateTime.now())));
+
 
         for (Ticket t: tickets) {
             ticketDAO.save(t);
@@ -80,7 +148,8 @@ public class TicketService extends Entity implements Printable {
 
 
         // FETCH THE TICKET BY ID AND USER' ID
-        Optional<Ticket> newTicket = ticketDAO.fetchByTicketAndUserID(tickets.get(0).getID(), user1.getID());
+       /*
+        Optional<Ticket> newTicket = ticketDAO.fetchByTicketAndUserID(UUID.fromString(tickets.get(0).getId()), UUID.fromString(user1.getId()));
         if (newTicket.isEmpty()) {
             System.out.println("Invalid ticket or user UUID");
         } else {
@@ -89,8 +158,9 @@ public class TicketService extends Entity implements Printable {
         }
 
 
+
         // FETCH THE USER BY ID
-        Optional<User> newUser = userDAO.fetchByID(user3.getID());
+        Optional<User> newUser = userDAO.fetchByID(UUID.fromString(user3.getId()));
         if (newUser.isEmpty()) {
             System.out.println("Invalid user UUID");
         } else {
@@ -100,17 +170,17 @@ public class TicketService extends Entity implements Printable {
 
         // UPDATE THE TICKET TYPE
         ticketDAO.printInformation();
-        ticketDAO.update(tickets.get(0).getID(), TicketType.MONTH);
+       // ticketDAO.update(UUID.fromString(tickets.get(0).getId()), TicketType.MONTH);
         ticketDAO.printInformation(); //WHY DID THE RECORDS IN THE TABLE ROTATE UP BY 1 LINE?
 
 
         // DELETE USERS AND THEIR TICKETS
-        userDAO.delete(user1.getID());
+        userDAO.delete(UUID.fromString(user1.getId()));
 
         userDAO.printInformation();
         ticketDAO.printInformation();
 
-
+        */
 
     }
 
@@ -156,12 +226,15 @@ public class TicketService extends Entity implements Printable {
 
         LocalDateTime eventDateTime = LocalDateTime.of(2024, Month.NOVEMBER, 14, 18, 00);
 
+       /*
         Ticket ticket2 = new Ticket(ConcertHall.THEATRE, 123, eventDateTime);
         Ticket ticket3 = new Ticket(ConcertHall.CIRCUS, 56, eventDateTime, true, StadiumSector.B, 2.5, 50);
 
         ticket1.printInformation();
         ticket2.printInformation();
         ticket3.printInformation();
+
+        */
     }
 
     @Override
