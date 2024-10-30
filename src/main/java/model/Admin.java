@@ -9,13 +9,13 @@ import java.util.UUID;
 
 public class Admin extends User {
 
-    public Admin(String name, LocalDate date) {
+    public Admin(String name, Timestamp date) {
         setName(name);
         setCreationDate(date);
         setRole(UserRole.ADMIN);
     }
 
-    public Admin(UUID id, String name, LocalDate date) {
+    public Admin(UUID id, String name, Timestamp date) {
         this.setID(id);
         setName(name);
         setCreationDate(date);

@@ -3,19 +3,20 @@ package model;
 
 import model.enums.UserRole;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.UUID;
 
 public class Client extends User {
     private Ticket ticket;
 
-    public Client(String name, LocalDate date) {
+    public Client(String name, Timestamp date) {
         setName(name);
         setCreationDate(date);
         setRole(UserRole.CLIENT);
     }
 
-    public Client(UUID id, String name, LocalDate date) {
+    public Client(UUID id, String name, Timestamp date) {
         this.setID(id);
         setName(name);
         setCreationDate(date);

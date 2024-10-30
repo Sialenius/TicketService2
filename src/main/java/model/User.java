@@ -4,12 +4,13 @@ package model;
 import model.enums.UserRole;
 import view.Printable;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.UUID;
 
 public abstract class User extends Entity implements Printable {
     private String name;
-    private LocalDate creationDate;
+    private Timestamp creationDate;
     private UserRole role;
 
     public  String getName() {
@@ -20,11 +21,11 @@ public abstract class User extends Entity implements Printable {
         this.name = name;
     }
 
-    public LocalDate getCreationDate() {
+    public Timestamp getCreationDate() {
         return creationDate;
     }
 
-    protected void setCreationDate(LocalDate date) {
+    protected void setCreationDate(Timestamp date) {
         this.creationDate = date;
     }
 

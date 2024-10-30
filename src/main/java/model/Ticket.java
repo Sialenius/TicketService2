@@ -31,7 +31,7 @@ public class Ticket extends Entity implements Printable {
     private  BigDecimal price;
 
     private TicketType ticketType;
-    private LocalDate creationDate;
+    private Timestamp creationDate;
     private UUID userID;
 
     public Ticket() {
@@ -49,7 +49,7 @@ public class Ticket extends Entity implements Printable {
 
         this.concertHall = concertHall;
         this.eventCode = eventCode;
-        setEventTime(eventTime);
+        //setEventTime(eventTime);
         this.isPromo = isPromo;
         setStadiumSector(stadiumSector);
         this.backpackAllowedWeight = backpackAllowedWeight;
@@ -58,14 +58,14 @@ public class Ticket extends Entity implements Printable {
 
     }
 
-    public Ticket (UUID userID, TicketType ticketType, LocalDate creationDate) {
+    public Ticket (UUID userID, TicketType ticketType, Timestamp creationDate) {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
         this.userID = userID;
         this.ticketType = ticketType;
         this.creationDate = creationDate;
     }
 
-    public Ticket (UUID ticketID, UUID userID, TicketType ticketType, LocalDate creationDate) {
+    public Ticket (UUID ticketID, UUID userID, TicketType ticketType, Timestamp creationDate) {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
         this.setID(ticketID);
         this.userID = userID;
@@ -85,6 +85,7 @@ public class Ticket extends Entity implements Printable {
         return eventTime;
     }
 
+    /*
     public void setEventTime(LocalDateTime eventTime) {
         if (eventTime != null & eventTime != UNSPECIFIED_DATE_TIME) {
 
@@ -96,6 +97,8 @@ public class Ticket extends Entity implements Printable {
             this.eventTime = Timestamp.valueOf(eventTime);
         }
     }
+
+     */
 
     public boolean isPromo() {
         return isPromo;
@@ -125,7 +128,7 @@ public class Ticket extends Entity implements Printable {
     }
 
 
-    public LocalDate getCreationDate() {
+    public Timestamp getCreationDate() {
         return creationDate;
     }
 
