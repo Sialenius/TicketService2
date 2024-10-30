@@ -6,19 +6,19 @@ import model.Admin;
 import model.Client;
 import model.User;
 import model.enums.UserRole;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import view.Printable;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.sql.DataSource;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
 
+@Component
 public class UserDAO implements DAO<User>, Printable {
     private static final String DELETE_ALL_USERS_SQL = "DELETE FROM users_info";
     private static final String SAVE_USER_SQL = "INSERT INTO users_info (id, name, creation_date, user_role) VALUES (?, ?, ?, ?::user_role)";
@@ -34,15 +34,19 @@ public class UserDAO implements DAO<User>, Printable {
 
     private ConfigurationObject configuration;
 
+    private DataSource dataSource;
+
     public UserDAO(ConfigurationObject configuration) {
         this.configuration = configuration;
     }
 
+    public UserDAO(@Autowired DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     public void deleteAll() {
         try {
-            System.out.println("Hi");
-
-            connection = ConnectionConfiguration.getConnection(configuration);
+            connection = dataSource.getConnection();
             System.out.println(connection);
             preparedStatement = connection.prepareStatement(DELETE_ALL_USERS_SQL);
             preparedStatement.executeUpdate();
@@ -65,11 +69,11 @@ public class UserDAO implements DAO<User>, Printable {
     @Override
     public void save(User user) {
         try {
-            connection = ConnectionConfiguration.getConnection(configuration);
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(SAVE_USER_SQL);
             preparedStatement.setString(1, user.getID().toString());
             preparedStatement.setString(2, user.getName());
-            preparedStatement.setDate(3, Date.valueOf(user.getCreationDate()));
+            preparedStatement.setTimestamp(3, user.getCreationDate());
             preparedStatement.setString(4, user.getRole().name());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -88,7 +92,7 @@ public class UserDAO implements DAO<User>, Printable {
     @Override
     public Optional<User> fetchByID(UUID id)  {
         try {
-            connection = ConnectionConfiguration.getConnection(configuration);
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(FETCH_USER_BY_ID_SQL);
             preparedStatement.setString(1, id.toString());
             resultSet = preparedStatement.executeQuery();
@@ -96,7 +100,7 @@ public class UserDAO implements DAO<User>, Printable {
             while (resultSet.next()) {
                 UUID columnID = UUID.fromString(resultSet.getString("id"));
                 String columnName = resultSet.getString("name");
-                LocalDate columnCreationDate = Date.valueOf(resultSet.getString("creation_date")).toLocalDate();
+                Timestamp columnCreationDate = resultSet.getTimestamp("creation_date");
 
                 switch (resultSet.getString("user_role")) {
                     case "CLIENT" :
@@ -126,7 +130,8 @@ public class UserDAO implements DAO<User>, Printable {
         users.clear();
 
         try {
-            connection = ConnectionConfiguration.getConnection(configuration);
+            connection = dataSource.getConnection();
+
             preparedStatement = connection.prepareStatement(FETCH_ALL_USERS_SQL);
             resultSet = preparedStatement.executeQuery();
 
@@ -134,13 +139,16 @@ public class UserDAO implements DAO<User>, Printable {
 
                 UUID columnID = UUID.fromString(resultSet.getString("id"));
                 String columnName = resultSet.getString("name");
-                LocalDate columnCreationDate = Date.valueOf(resultSet.getString("creation_date")).toLocalDate();
-                UserRole columnRole = UserRole.valueOf(resultSet.getString("user_role"));
+                Timestamp columnCreationDate = resultSet.getTimestamp("creation_date");
+               /* UserRole columnRole = UserRole.valueOf(resultSet.getString("user_role"));
 
                 switch (columnRole) {
                     case CLIENT -> users.add(new Client(columnID, columnName, columnCreationDate));
                     case ADMIN -> users.add(new Admin(columnID, columnName, columnCreationDate));
                 }
+
+                */
+                users.add(new Client(columnID, columnName, columnCreationDate));
             }
 
         } catch (SQLException e) {
@@ -163,7 +171,7 @@ public class UserDAO implements DAO<User>, Printable {
     @Override
     public void delete(UUID userID) {
         try {
-            connection = ConnectionConfiguration.getConnection(configuration);
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(DELETE_USER_BY_ID_SQL);
             preparedStatement.setString(1, userID.toString());
             preparedStatement.executeUpdate();
