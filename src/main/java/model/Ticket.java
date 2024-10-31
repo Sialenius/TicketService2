@@ -39,17 +39,17 @@ public class Ticket extends Entity implements Printable {
         ticketType = TicketType.NOT_SPECIFIED;
     }
 
-    public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime) {
+    public Ticket(ConcertHall concertHall, int eventCode, Timestamp eventTime) {
         this(concertHall, eventCode, eventTime, false, StadiumSector.NOT_SPECIFIED, 0, 0);
         ticketType = TicketType.NOT_SPECIFIED;
 
     }
 
-    public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight, double price ) {
+    public Ticket(ConcertHall concertHall, int eventCode, Timestamp eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight, double price ) {
 
         this.concertHall = concertHall;
         this.eventCode = eventCode;
-        //setEventTime(eventTime);
+        setEventTime(eventTime);
         this.isPromo = isPromo;
         setStadiumSector(stadiumSector);
         this.backpackAllowedWeight = backpackAllowedWeight;
@@ -85,20 +85,18 @@ public class Ticket extends Entity implements Printable {
         return eventTime;
     }
 
-    /*
-    public void setEventTime(LocalDateTime eventTime) {
+
+    public void setEventTime(Timestamp eventTime) {
         if (eventTime != null & eventTime != UNSPECIFIED_DATE_TIME) {
 
-            if (eventTime.isBefore(LocalDateTime.now())) {
+            if (eventTime.before(Timestamp.valueOf(LocalDateTime.now()))) {
                 System.out.println("Invalid event time.");
                 System.exit(0);
             }
 
-            this.eventTime = Timestamp.valueOf(eventTime);
+            this.eventTime = eventTime;
         }
     }
-
-     */
 
     public boolean isPromo() {
         return isPromo;
