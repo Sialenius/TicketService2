@@ -8,6 +8,7 @@ import model.User;
 import model.enums.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import view.Printable;
 
 import javax.sql.DataSource;
@@ -18,7 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 
-@Component
+@Repository
 public class UserDAO implements DAO<User>, Printable {
     private static final String DELETE_ALL_USERS_SQL = "DELETE FROM users_info";
     private static final String SAVE_USER_SQL = "INSERT INTO users_info (id, name, creation_date, user_role) VALUES (?, ?, ?, ?::user_role)";

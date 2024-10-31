@@ -6,6 +6,7 @@ import model.Ticket;
 import model.enums.TicketType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import view.Printable;
 
 import javax.sql.DataSource;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
-@Component
+@Repository
 public class TicketDAO implements DAO<Ticket>, Printable {
     private static final String SAVE_TICKET_SQL = "INSERT INTO tickets (id, user_id, ticket_type, creation_date) VALUES (?, ?, ?::ticket_type, ?)";
     private static final String FETCH_TICKET_BY_ID_SQL = "SELECT * FROM tickets WHERE id = ?";
