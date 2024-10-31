@@ -1,6 +1,10 @@
 package model;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import model.enums.UserRole;
 import view.Printable;
 
@@ -8,34 +12,15 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.UUID;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
 public abstract class User extends Entity implements Printable {
     private String name;
     private Timestamp creationDate;
     private UserRole role;
 
-    public  String getName() {
-        return name;
-    }
-
-    protected void setName(String name) {
-        this.name = name;
-    }
-
-    public Timestamp getCreationDate() {
-        return creationDate;
-    }
-
-    protected void setCreationDate(Timestamp date) {
-        this.creationDate = date;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    protected void setRole(UserRole role) {
-        this.role = role;
-    }
 
     public void printRole() {}
 

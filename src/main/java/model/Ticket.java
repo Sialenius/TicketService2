@@ -1,6 +1,9 @@
 package model;
 
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import model.enums.ConcertHall;
 import model.enums.StadiumSector;
 import model.Entity;
@@ -16,28 +19,27 @@ import java.util.UUID;
 import static model.AppConstants.UNSPECIFIED_DATE_TIME;
 
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class Ticket extends Entity implements Printable {
 
-    private  ConcertHall concertHall;
-    private  int eventCode;
+    private  ConcertHall concertHall = ConcertHall.NOT_SPECIFIED;
+    private  int eventCode = 0;
 
-    private Timestamp eventTime;
-    private  boolean isPromo;
+    private Timestamp eventTime = UNSPECIFIED_DATE_TIME;
+    private  boolean isPromo = false;
 
-    private StadiumSector stadiumSector;
+    private StadiumSector stadiumSector = StadiumSector.NOT_SPECIFIED;
 
-    private  double backpackAllowedWeight;
+    private  double backpackAllowedWeight = 0;
 
-    private  BigDecimal price;
+    private  BigDecimal price = BigDecimal.ZERO;
 
-    private TicketType ticketType;
+    private TicketType ticketType = TicketType.NOT_SPECIFIED;
     private Timestamp creationDate;
-    private UUID userID;
+    private User user;
 
-    public Ticket() {
-        this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
-        ticketType = TicketType.NOT_SPECIFIED;
-    }
 
     public Ticket(ConcertHall concertHall, int eventCode, Timestamp eventTime) {
         this(concertHall, eventCode, eventTime, false, StadiumSector.NOT_SPECIFIED, 0, 0);
@@ -58,84 +60,19 @@ public class Ticket extends Entity implements Printable {
 
     }
 
-    public Ticket (UUID userID, TicketType ticketType, Timestamp creationDate) {
+    public Ticket (User user, TicketType ticketType, Timestamp creationDate) {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
-        this.userID = userID;
+        this.user = user;
         this.ticketType = ticketType;
         this.creationDate = creationDate;
     }
 
-    public Ticket (UUID ticketID, UUID userID, TicketType ticketType, Timestamp creationDate) {
+    public Ticket (UUID ticketID, User user, TicketType ticketType, Timestamp creationDate) {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
         this.setID(ticketID);
-        this.userID = userID;
+        this.user = user;
         this.ticketType = ticketType;
         this.creationDate = creationDate;
-    }
-
-    public ConcertHall getConcertHall() {
-        return concertHall;
-    }
-
-    public int getEventCode() {
-        return eventCode;
-    }
-
-    public Timestamp getEventTime() {
-        return eventTime;
-    }
-
-
-    public void setEventTime(Timestamp eventTime) {
-        if (eventTime != null & eventTime != UNSPECIFIED_DATE_TIME) {
-
-            if (eventTime.before(Timestamp.valueOf(LocalDateTime.now()))) {
-                System.out.println("Invalid event time.");
-                System.exit(0);
-            }
-
-            this.eventTime = eventTime;
-        }
-    }
-
-    public boolean isPromo() {
-        return isPromo;
-    }
-
-
-    public StadiumSector getStadiumSector() {
-        return stadiumSector;
-    }
-
-    public void setStadiumSector(StadiumSector stadiumSector) {
-
-        this.stadiumSector = stadiumSector;
-    }
-
-    public double getbackpackAllowedWeight() {
-        return backpackAllowedWeight;
-    }
-
-    public String getPrice() {
-        return AppConstants.FORMATTER.format(this.price);
-    }
-
-
-    public TicketType getTicketType() {
-        return this.ticketType;
-    }
-
-
-    public Timestamp getCreationDate() {
-        return creationDate;
-    }
-
-    public UUID getUserID() {
-        return userID;
-    }
-
-    public void setUserID(UUID id) {
-        this.userID = id;
     }
 
     @Override
@@ -191,7 +128,7 @@ public class Ticket extends Entity implements Printable {
     public String toString() {
         return "============== TICKET ============" + '\n' +
                 "Ticket ID: " + getID() + '\n' +
-                "User ID: " + getUserID() + '\n' +
+                "User ID: " + user.getID() + '\n' +
                 "Ticket type: " + getTicketType() + '\n' +
                 "Creation date: " + getCreationDate() + '\n' +
                 "Concert hall: " + concertHall.getName() + '\n' +
