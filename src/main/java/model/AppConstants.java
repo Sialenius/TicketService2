@@ -11,5 +11,5 @@ public class AppConstants {
 
     public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
     public static final DecimalFormat FORMATTER = new DecimalFormat("$#,##0.00");
-    public static final LocalDateTime UNSPECIFIED_DATE_TIME = new Timestamp(0).toLocalDateTime();
+    public static final Timestamp UNSPECIFIED_DATE_TIME = new Timestamp(0);
 }
