@@ -31,7 +31,7 @@ public class Ticket extends Entity implements Printable {
     private  BigDecimal price;
 
     private TicketType ticketType;
-    private LocalDate creationDate;
+    private Timestamp creationDate;
     private UUID userID;
 
     public Ticket() {
@@ -39,13 +39,13 @@ public class Ticket extends Entity implements Printable {
         ticketType = TicketType.NOT_SPECIFIED;
     }
 
-    public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime) {
+    public Ticket(ConcertHall concertHall, int eventCode, Timestamp eventTime) {
         this(concertHall, eventCode, eventTime, false, StadiumSector.NOT_SPECIFIED, 0, 0);
         ticketType = TicketType.NOT_SPECIFIED;
 
     }
 
-    public Ticket(ConcertHall concertHall, int eventCode, LocalDateTime eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight, double price ) {
+    public Ticket(ConcertHall concertHall, int eventCode, Timestamp eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight, double price ) {
 
         this.concertHall = concertHall;
         this.eventCode = eventCode;
@@ -58,14 +58,14 @@ public class Ticket extends Entity implements Printable {
 
     }
 
-    public Ticket (UUID userID, TicketType ticketType, LocalDate creationDate) {
+    public Ticket (UUID userID, TicketType ticketType, Timestamp creationDate) {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
         this.userID = userID;
         this.ticketType = ticketType;
         this.creationDate = creationDate;
     }
 
-    public Ticket (UUID ticketID, UUID userID, TicketType ticketType, LocalDate creationDate) {
+    public Ticket (UUID ticketID, UUID userID, TicketType ticketType, Timestamp creationDate) {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
         this.setID(ticketID);
         this.userID = userID;
@@ -85,15 +85,16 @@ public class Ticket extends Entity implements Printable {
         return eventTime;
     }
 
-    public void setEventTime(LocalDateTime eventTime) {
+
+    public void setEventTime(Timestamp eventTime) {
         if (eventTime != null & eventTime != UNSPECIFIED_DATE_TIME) {
 
-            if (eventTime.isBefore(LocalDateTime.now())) {
+            if (eventTime.before(Timestamp.valueOf(LocalDateTime.now()))) {
                 System.out.println("Invalid event time.");
                 System.exit(0);
             }
 
-            this.eventTime = Timestamp.valueOf(eventTime);
+            this.eventTime = eventTime;
         }
     }
 
@@ -125,7 +126,7 @@ public class Ticket extends Entity implements Printable {
     }
 
 
-    public LocalDate getCreationDate() {
+    public Timestamp getCreationDate() {
         return creationDate;
     }
 

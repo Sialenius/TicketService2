@@ -4,18 +4,19 @@ import config.ConfigurationObject;
 import config.ConnectionConfiguration;
 import model.Ticket;
 import model.enums.TicketType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import view.Printable;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.sql.DataSource;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
 public class TicketDAO implements DAO<Ticket>, Printable {
     private static final String SAVE_TICKET_SQL = "INSERT INTO tickets (id, user_id, ticket_type, creation_date) VALUES (?, ?, ?::ticket_type, ?)";
     private static final String FETCH_TICKET_BY_ID_SQL = "SELECT * FROM tickets WHERE id = ?";
@@ -32,19 +33,27 @@ public class TicketDAO implements DAO<Ticket>, Printable {
 
     ConfigurationObject configuration;
 
+    private DataSource dataSource;
+
+
+
     public TicketDAO(ConfigurationObject configuration) {
         this.configuration = configuration;
+    }
+
+    public TicketDAO(@Autowired  DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Override
     public void save(Ticket ticket) {
         try {
-            connection = ConnectionConfiguration.getConnection(configuration);
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(SAVE_TICKET_SQL);
             preparedStatement.setString(1, ticket.getID().toString());
             preparedStatement.setString(2, ticket.getUserID().toString());
             preparedStatement.setString(3, ticket.getTicketType().name());
-            preparedStatement.setDate(4, Date.valueOf(ticket.getCreationDate()));
+            preparedStatement.setTimestamp(4, ticket.getCreationDate());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -64,7 +73,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
     @Override
     public Optional<Ticket> fetchByID(UUID id) {
         try {
-            connection = ConnectionConfiguration.getConnection(configuration);
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(FETCH_TICKET_BY_ID_SQL);
             preparedStatement.setString(1, id.toString());
             resultSet = preparedStatement.executeQuery();
@@ -73,7 +82,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
                 UUID columnTicketID = UUID.fromString(resultSet.getString("id"));
                 UUID columnUserID = UUID.fromString(resultSet.getString("user_id"));
                 TicketType columnTicketType =  TicketType.valueOf(resultSet.getString("ticket_type"));
-                LocalDate columnCreationDate = resultSet.getDate("creation_date").toLocalDate();
+                Timestamp columnCreationDate = resultSet.getTimestamp("creation_date");
 
                 return Optional.of(new Ticket(columnTicketID, columnUserID, columnTicketType, columnCreationDate));
             }
@@ -95,7 +104,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
 
     public Optional<Ticket> fetchByTicketAndUserID(UUID ticketID, UUID userID) {
         try {
-            connection = ConnectionConfiguration.getConnection(configuration);
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(FETCH_TICKET_BY_ID_AND_USER_SQL);
             preparedStatement.setString(1, ticketID.toString());
             preparedStatement.setString(2, userID.toString());
@@ -105,7 +114,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
                 UUID columnTicketID = UUID.fromString(resultSet.getString("id"));
                 UUID columnUserID = UUID.fromString(resultSet.getString("user_id"));
                 TicketType columnTicketType =  TicketType.valueOf(resultSet.getString("ticket_type"));
-                LocalDate columnCreationDate = resultSet.getDate("creation_date").toLocalDate();
+                Timestamp columnCreationDate = resultSet.getTimestamp("creation_date");
 
                 return Optional.of(new Ticket(columnTicketID, columnUserID, columnTicketType, columnCreationDate));
             }
@@ -132,7 +141,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
         tickets.clear();
 
         try {
-            connection = ConnectionConfiguration.getConnection(configuration);
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(SELECT_ALL_TICKETS_SQL);
             resultSet = preparedStatement.executeQuery();
 
@@ -141,7 +150,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
                 UUID columnID = UUID.fromString(resultSet.getString("id"));
                 UUID columnUserID = UUID.fromString(resultSet.getString("user_id"));
                 TicketType columnTicketType = TicketType.valueOf(resultSet.getString("ticket_type"));
-                LocalDate columnCreationDate = resultSet.getDate("creation_date").toLocalDate();
+                Timestamp columnCreationDate = resultSet.getTimestamp("creation_date");
 
                 tickets.add(new Ticket(columnID, columnUserID, columnTicketType, columnCreationDate));
             }
@@ -163,7 +172,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
 
     public void update(UUID id, TicketType newType) {
         try {
-            connection = ConnectionConfiguration.getConnection(configuration);
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(UPDATE_TICKET_TYPE_SQL);
             preparedStatement.setString(1, newType.name());
             preparedStatement.setString(2, id.toString());
@@ -184,7 +193,7 @@ public class TicketDAO implements DAO<Ticket>, Printable {
     @Override
     public void delete(UUID uuid) {
         try {
-            connection = ConnectionConfiguration.getConnection(configuration);
+            connection = dataSource.getConnection();
             preparedStatement = connection.prepareStatement(DELETE_TICKET_BY_ID_SQL);
             preparedStatement.setString(1, uuid.toString());
             preparedStatement.executeUpdate();
