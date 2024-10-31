@@ -141,15 +141,12 @@ public class UserDAO implements DAO<User>, Printable {
                 UUID columnID = UUID.fromString(resultSet.getString("id"));
                 String columnName = resultSet.getString("name");
                 Timestamp columnCreationDate = resultSet.getTimestamp("creation_date");
-               /* UserRole columnRole = UserRole.valueOf(resultSet.getString("user_role"));
+                UserRole columnRole = UserRole.valueOf(resultSet.getString("user_role"));
 
                 switch (columnRole) {
                     case CLIENT -> users.add(new Client(columnID, columnName, columnCreationDate));
                     case ADMIN -> users.add(new Admin(columnID, columnName, columnCreationDate));
                 }
-
-                */
-                users.add(new Client(columnID, columnName, columnCreationDate));
             }
 
         } catch (SQLException e) {
