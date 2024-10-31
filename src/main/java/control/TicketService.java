@@ -56,7 +56,7 @@ public class TicketService extends Entity implements Printable {
         // SAVE USERS
         User user1 = new Client("Henry", Timestamp.valueOf(LocalDateTime.now()));
         User user2 = new Client("Mike", Timestamp.valueOf(LocalDateTime.now()));
-        User user3 = new Admin("Lee", Timestamp.valueOf(LocalDateTime.now()));
+        User user3 = new Admin("Lee", Timestamp.valueOf("2024-11-14 18:00:00"));
 
         userDAO.save(user1);
         userDAO.save(user2);
@@ -232,7 +232,7 @@ public class TicketService extends Entity implements Printable {
     private static void showOOPTask() {
         Ticket ticket1 = new Ticket();
 
-        LocalDateTime eventDateTime = LocalDateTime.of(2024, Month.NOVEMBER, 14, 18, 00);
+        Timestamp eventDateTime = Timestamp.valueOf("2024-11-14 18:00");
 
         Ticket ticket2 = new Ticket(ConcertHall.THEATRE, 123, eventDateTime);
         Ticket ticket3 = new Ticket(ConcertHall.CIRCUS, 56, eventDateTime, true, StadiumSector.B, 2.5, 50);
