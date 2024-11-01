@@ -3,7 +3,6 @@ package model;
 import model.enums.UserRole;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -16,7 +15,7 @@ public class Admin extends User {
     }
 
     public Admin(UUID id, String name, Timestamp date) {
-        this.setID(id);
+        this.setId(id);
         setName(name);
         setCreationDate(date);
         setRole(UserRole.ADMIN);

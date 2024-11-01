@@ -17,7 +17,7 @@ public class Client extends User {
     }
 
     public Client(UUID id, String name, Timestamp date) {
-        this.setID(id);
+        this.setId(id);
         setName(name);
         setCreationDate(date);
         setRole(UserRole.CLIENT);
@@ -26,7 +26,7 @@ public class Client extends User {
 
     public void buyTicket(Ticket ticket) {
         this.ticket = ticket;
-        ticket.setUserID(this.getID());
+        ticket.setUserID(this.getId().toString());
     }
 
     public Ticket getTicket() {
