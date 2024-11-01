@@ -1,28 +1,41 @@
 package model;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import model.enums.ConcertHall;
 import model.enums.StadiumSector;
-import model.Entity;
 import model.enums.TicketType;
 import view.Printable;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static model.AppConstants.UNSPECIFIED_DATE_TIME;
 
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Ticket extends Entity implements Printable {
+public class Ticket implements Printable {
+
+    @Id
+    private UUID id = UUID.randomUUID();
+
+    @Column (name = "ticket_type")
+    private TicketType ticketType = TicketType.NOT_SPECIFIED;
+
+    @Column (name = "creation_date")
+    private Timestamp creationDate;
+
+    @Column (name = "userID_id")
+    private String userID;
 
     private  ConcertHall concertHall = ConcertHall.NOT_SPECIFIED;
     private  int eventCode = 0;
@@ -35,10 +48,6 @@ public class Ticket extends Entity implements Printable {
     private  double backpackAllowedWeight = 0;
 
     private  BigDecimal price = BigDecimal.ZERO;
-
-    private TicketType ticketType = TicketType.NOT_SPECIFIED;
-    private Timestamp creationDate;
-    private User user;
 
 
     public Ticket(ConcertHall concertHall, int eventCode, Timestamp eventTime) {
@@ -60,17 +69,17 @@ public class Ticket extends Entity implements Printable {
 
     }
 
-    public Ticket (User user, TicketType ticketType, Timestamp creationDate) {
+    public Ticket (String userID, TicketType ticketType, Timestamp creationDate) {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
-        this.user = user;
+        this.userID = userID;
         this.ticketType = ticketType;
         this.creationDate = creationDate;
     }
 
-    public Ticket (UUID ticketID, User user, TicketType ticketType, Timestamp creationDate) {
+    public Ticket (UUID ticketID, String userID, TicketType ticketType, Timestamp creationDate) {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
-        this.setID(ticketID);
-        this.user = user;
+        this.setId(ticketID);
+        this.userID = userID;
         this.ticketType = ticketType;
         this.creationDate = creationDate;
     }
@@ -104,17 +113,17 @@ public class Ticket extends Entity implements Printable {
     }
 
     public void share(PhoneNumber phoneNumber) {
-        System.out.println("Ticket "  + getID() + " was shared by " + phoneNumber);
+        System.out.println("Ticket "  + getId() + " was shared by " + phoneNumber);
     }
 
     public void share(PhoneNumber phoneNumber, Email email) {
-        System.out.println("Ticket " + getID() + " was shared by " + phoneNumber + " and " + email);
+        System.out.println("Ticket " + getId() + " was shared by " + phoneNumber + " and " + email);
 
     }
 
   @Override
     public int hashCode() {
-      int result = 31 * this.getID().hashCode();
+      int result = 31 * this.getId().hashCode();
       result += 31 * concertHall.hashCode();
       result += 31 * eventCode;
       result += 31 * eventTime.hashCode();
@@ -127,8 +136,8 @@ public class Ticket extends Entity implements Printable {
     @Override
     public String toString() {
         return "============== TICKET ============" + '\n' +
-                "Ticket ID: " + getID() + '\n' +
-                "User ID: " + user.getID() + '\n' +
+                "Ticket ID: " + getId() + '\n' +
+                "userID ID: " + userID + '\n' +
                 "Ticket type: " + getTicketType() + '\n' +
                 "Creation date: " + getCreationDate() + '\n' +
                 "Concert hall: " + concertHall.getName() + '\n' +
