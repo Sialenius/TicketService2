@@ -1,5 +1,6 @@
 package model;
 
+import lombok.AllArgsConstructor;
 import model.enums.UserRole;
 
 import java.sql.Timestamp;

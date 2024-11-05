@@ -26,7 +26,7 @@ public class Client extends User {
 
     public void buyTicket(Ticket ticket) {
         this.ticket = ticket;
-        ticket.setUserID(this.getId().toString());
+        ticket.setUserID(this.getId());
     }
 
     public Ticket getTicket() {
