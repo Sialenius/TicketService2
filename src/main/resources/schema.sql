@@ -6,16 +6,16 @@ CREATE TABLE users_info
 (
     id VARCHAR(36) PRIMARY KEY NOT NULL,
     name VARCHAR(15) NOT NULL,
-    creation_date date,
+    creation_date TIMESTAMP WITH TIME ZONE,
     user_role USER_ROLE NOT NULL DEFAULT 'CLIENT'
 );
 
 CREATE TABLE tickets
 (
     id VARCHAR(36) PRIMARY KEY NOT NULL,
-    user_id VARCHAR(36) NOT NULL,
+    user_ID VARCHAR(36) NOT NULL,
     ticket_type ticket_type NOT NULL,
-    creation_date date,
-    FOREIGN KEY (user_id) REFERENCES users_info (id) ON DELETE CASCADE
+    creation_date TIMESTAMP WITH TIME ZONE,
+    FOREIGN KEY (user_ID) REFERENCES users_info (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
