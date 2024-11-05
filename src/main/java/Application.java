@@ -1,4 +1,7 @@
+import DAO.TicketDAO;
+import DAO.UserDAO;
 import config.MyApplicationContextConfiguration;
+import org.springframework.context.ApplicationContext;
 import service.UserService;
 import service.TicketService;
 import model.*;
@@ -8,8 +11,10 @@ import model.enums.TicketType;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import service.TicketDataReader;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -68,6 +73,7 @@ public class Application {
         //UPDATE TICKET TYPE
         ticketService.updateTicketType(ticket2.getId(), TicketType.WEEK);
 
+
         //REMOVE USER AND HIS TICKETS
         userService.removeUser(user3.getId());
         ticketService.printInformation();
@@ -80,20 +86,15 @@ public class Application {
         ticketService.printInformation();
 
 
-
-
         //READ JSON
         List<BusTicket> busTicketList = TicketDataReader.readTicketsData();
         busTicketList.forEach(System.out::println);
-
-
-
 
     }
 
     private static void showSpringTask() {
 
-        /*
+
         //Homework #10: Spring
         ApplicationContext ctx = new AnnotationConfigApplicationContext(MyApplicationContextConfiguration.class);
 
@@ -103,9 +104,6 @@ public class Application {
         // CLEAR THE DATABASE BEFORE THE SHOWCASE
         ticketDAO.getAll();
         userDAO.deleteAll();
-
-        userDAO.printInformation();
-        ticketDAO.printInformation();
 
 
         // SAVE USERS
@@ -117,63 +115,43 @@ public class Application {
         userDAO.save(user2);
         userDAO.save(user3);
 
-        userDAO.printInformation();
 
         // SAVE TICKETS
         ArrayList<Ticket> tickets = new ArrayList<>();
-        tickets.add(new Ticket(user1.getId().toString(), TicketType.DAY, Timestamp.valueOf(LocalDateTime.now())));
-        tickets.add(new Ticket(user1.getId().toString(), TicketType.WEEK, Timestamp.valueOf(LocalDateTime.now())));
-        tickets.add(new Ticket(user2.getId().toString(), TicketType.MONTH, Timestamp.valueOf(LocalDateTime.now())));
-        tickets.add(new Ticket(user2.getId().toString(), TicketType.YEAR, Timestamp.valueOf(LocalDateTime.now())));
-        tickets.add(new Ticket(user1.getId().toString(), TicketType.YEAR, Timestamp.valueOf(LocalDateTime.now())));
-        tickets.add(new Ticket(user3.getId().toString(), TicketType.DAY, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(user1.getId(), TicketType.DAY, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(user1.getId(), TicketType.WEEK, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(user2.getId(), TicketType.MONTH, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(user2.getId(), TicketType.YEAR, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(user1.getId(), TicketType.YEAR, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(user3.getId(), TicketType.DAY, Timestamp.valueOf(LocalDateTime.now())));
 
 
         for (Ticket t: tickets) {
             ticketDAO.save(t);
         }
 
-        userDAO.printInformation();
-        ticketDAO.printInformation();
-
-
         // FETCH THE TICKET BY ID AND USER' ID
-        Optional<Ticket> newTicket = ticketDAO.fetchByTicketAndUserID(tickets.get(0).getId(), user1.getId());
-        if (newTicket.isEmpty()) {
-            System.out.println("Invalid ticket or user UUID");
-        } else {
-            System.out.println(newTicket.get().toString());
-
-        }
+        Ticket newTicket = ticketDAO.fetchByTicketAndUserID(tickets.get(0).getId(), user1.getId());
+        System.out.println(newTicket.toString());
 
 
         // FETCH THE USER BY ID
-        Optional<User> newUser = userDAO.fetchByID(user3.getId());
-        if (newUser.isEmpty()) {
-            System.out.println("Invalid user UUID");
-        } else {
-            System.out.println(newUser.get().toString());
-        }
+        User newUser = userDAO.fetchByID(user3.getId());
+        System.out.println(newUser.toString());
 
 
         // UPDATE THE TICKET TYPE
-        ticketDAO.printInformation();
         ticketDAO.update(tickets.get(0).getId(), TicketType.MONTH);
-        ticketDAO.printInformation(); //WHY DID THE RECORDS IN THE TABLE ROTATE UP BY 1 LINE?
 
 
         // DELETE USERS AND THEIR TICKETS
         userDAO.delete(user1.getId());
 
-        userDAO.printInformation();
-        ticketDAO.printInformation();
-
-
-
     }
 
     private static void showDBsTask () throws Exception {
         //Homework #8: DBs
+
 
         /*
         File file = new File("src/main/resources/ConnectionConfiguration.txt");
@@ -183,9 +161,6 @@ public class Application {
 
         // CLEAR THE DATABASE BEFORE THE SHOWCASE
         userDAO.deleteAll();
-
-        userDAO.printInformation();
-        ticketDAO.printInformation();
 
 
         // SAVE USERS
@@ -200,51 +175,35 @@ public class Application {
 
         // SAVE TICKETS
         ArrayList<Ticket> tickets = new ArrayList<>();
-        tickets.add(new Ticket(user1.getId().toString(), TicketType.DAY, Timestamp.valueOf(LocalDateTime.now())));
-        tickets.add(new Ticket(user1.getId().toString(), TicketType.WEEK, Timestamp.valueOf(LocalDateTime.now())));
-        tickets.add(new Ticket(user2.getId().toString(), TicketType.MONTH, Timestamp.valueOf(LocalDateTime.now())));
-        tickets.add(new Ticket(user2.getId().toString(), TicketType.YEAR, Timestamp.valueOf(LocalDateTime.now())));
-        tickets.add(new Ticket(user1.getId().toString(), TicketType.YEAR, Timestamp.valueOf(LocalDateTime.now())));
-        tickets.add(new Ticket(user3.getId().toString(), TicketType.DAY, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(user1.getId(), TicketType.DAY, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(user1.getId(), TicketType.WEEK, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(user2.getId(), TicketType.MONTH, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(user2.getId(), TicketType.YEAR, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(user1.getId(), TicketType.YEAR, Timestamp.valueOf(LocalDateTime.now())));
+        tickets.add(new Ticket(user3.getId(), TicketType.DAY, Timestamp.valueOf(LocalDateTime.now())));
 
         for (Ticket t: tickets) {
             ticketDAO.save(t);
         }
 
-        userDAO.printInformation();
-        ticketDAO.printInformation();
-
 
         // FETCH THE TICKET BY ID AND USER' ID
-        Optional<Ticket> newTicket = ticketDAO.fetchByTicketAndUserID(tickets.get(0).getId(), user1.getId());
-        if (newTicket.isEmpty()) {
-            System.out.println("Invalid ticket or user UUID");
-        } else {
-            System.out.println(newTicket.get().toString());
-
-        }
+        Ticket newTicket = ticketDAO.fetchByTicketAndUserID(tickets.get(0).getId(), user1.getId());
+        System.out.println(newTicket.toString());
 
 
         // FETCH THE USER BY ID
-        Optional<User> newUser = userDAO.fetchByID(user3.getId());
-        if (newUser.isEmpty()) {
-            System.out.println("Invalid user UUID");
-        } else {
-            System.out.println(newUser.get().toString());
-        }
+        User newUser = userDAO.fetchByID(user3.getId());
+        System.out.println(newUser.toString());
 
 
         // UPDATE THE TICKET TYPE
-        ticketDAO.printInformation();
         ticketDAO.update(tickets.get(0).getId(), TicketType.MONTH);
-        ticketDAO.printInformation(); //WHY DID THE RECORDS IN THE TABLE ROTATE UP BY 1 LINE?
 
 
         // DELETE USERS AND THEIR TICKETS
         userDAO.delete(user1.getId());
 
-        userDAO.printInformation();
-        ticketDAO.printInformation();
 
 
 
@@ -287,7 +246,8 @@ public class Application {
             System.out.print(customIterator.iterate() + " ");
         }
 
-         */
+        */
+
 
     }
 
