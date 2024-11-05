@@ -3,6 +3,7 @@ package service;
 import DAO.UserDAO;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import view.Printable;
@@ -16,6 +17,9 @@ public class UserService implements Printable {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Value("${isUsersUpdateAndTicketsCreationAvailable}")
+    private boolean isUsersUpadeAvailable;
 
     public List<User> getAll() {
         return userDAO.getAll();
@@ -38,10 +42,15 @@ public class UserService implements Printable {
         return userDAO.fetchByName(name);
     }
 
-    public void updateUserID(UUID userID, UUID newID) {
-       fetchByUserID(userID);
+    public void updateUserID(UUID userID, UUID newID) throws IllegalAccessException {
+       if (isUsersUpadeAvailable == true) {
+           fetchByUserID(userID);
 
-       userDAO.updateID(userID, newID);
+           userDAO.updateID(userID, newID);
+       } else {
+           throw new IllegalAccessException("Updating users is no available");
+       }
+
     }
 
     public void removeUser(UUID userID) {

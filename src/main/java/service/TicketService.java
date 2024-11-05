@@ -5,6 +5,7 @@ import model.*;
 
 import model.enums.TicketType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import view.Printable;
@@ -20,13 +21,20 @@ public class TicketService implements Printable {
     @Autowired
     private TicketDAO ticketDAO;
 
+    @Value("${isUsersUpdateAndTicketsCreationAvailable}")
+    private boolean isTicketsCreationAvailable;
+
 
     public List<Ticket> getAll() {
         return ticketDAO.getAll();
     }
 
     public void register(Ticket ticket) {
-        ticketDAO.save(ticket);
+        if (isTicketsCreationAvailable == true) {
+            ticketDAO.save(ticket);
+        } else {
+            throw new IllegalAccessError("Creating new tickets is not availanle");
+        }
     }
 
 
