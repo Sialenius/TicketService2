@@ -21,7 +21,7 @@ public class Application {
 
     }
 
-    private static void show11Task() {
+    private static void show11Task() throws IllegalAccessException {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(MyApplicationContextConfiguration.class);
         UserService userService = ctx.getBean(UserService.class);
 
