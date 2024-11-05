@@ -1,6 +1,7 @@
 package DAO;
 
 import model.User;
+import model.enums.TicketType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,6 +10,7 @@ import view.Printable;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +26,8 @@ public class UserDAO implements DAO<User> {
     private static final String FETCH_ALL_USERS_SQL = "SELECT * FROM users_info";
     private static final String DELETE_USER_BY_ID_SQL = "DELETE FROM users_info WHERE id = ?";
     private static final String UPDATE_USER_ID = "UPDATE users_info SET id = ? WHERE id = ?";
+    private static final String CREATE_NEW_TICKET = "INSERT INTO tickets (id, user_id, ticket_type, creation_date) VALUES (?, ?, ?::ticket_type, ?)";
+
 
     private DataSource dataSource;
     private final JdbcTemplate jdbcTemplate;
@@ -50,6 +54,8 @@ public class UserDAO implements DAO<User> {
 
     public void updateID(UUID userID, UUID newID) {
         jdbcTemplate.update(UPDATE_USER_ID, newID.toString(), userID.toString());
+
+        jdbcTemplate.update(CREATE_NEW_TICKET, UUID.randomUUID().toString(), newID.toString(), TicketType.DAY.name(), Timestamp.valueOf(LocalDateTime.now())); //Is it OKAY to work with 'Tickets' DBs through UserDAO?
     }
 
     @Override
