@@ -1,5 +1,6 @@
-package DAO;
+package service;
 
+import DAO.TicketDAO;
 import model.*;
 
 import model.enums.TicketType;
