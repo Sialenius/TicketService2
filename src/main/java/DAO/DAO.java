@@ -2,14 +2,15 @@ package DAO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public interface DAO<T> {
 
-    Optional<T> fetchByID(UUID id);
+    T fetchByID(UUID id);
 
-    ArrayList<T> getAll();
+    List<T> getAll();
 
     void save(T t);
 
