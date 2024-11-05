@@ -1,12 +1,11 @@
 package model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import model.enums.ConcertHall;
 import model.enums.StadiumSector;
 import model.enums.TicketType;
@@ -23,30 +22,40 @@ import static model.AppConstants.UNSPECIFIED_DATE_TIME;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Ticket implements Printable {
 
     @Id
     private UUID id = UUID.randomUUID();
 
-    @Column (name = "ticket_type")
+    @Column
     private TicketType ticketType = TicketType.NOT_SPECIFIED;
 
-    @Column (name = "creation_date")
+    @Column
     private Timestamp creationDate;
 
-    @Column (name = "userID_id")
-    private String userID;
+    @Column
+    private UUID userID;
 
+    @Transient
     private  ConcertHall concertHall = ConcertHall.NOT_SPECIFIED;
+
+    @Transient
     private  int eventCode = 0;
 
+    @Transient
     private Timestamp eventTime = UNSPECIFIED_DATE_TIME;
+
+    @Transient
     private  boolean isPromo = false;
 
+    @Transient
     private StadiumSector stadiumSector = StadiumSector.NOT_SPECIFIED;
 
+    @Transient
     private  double backpackAllowedWeight = 0;
 
+    @Transient
     private  BigDecimal price = BigDecimal.ZERO;
 
 
@@ -69,14 +78,14 @@ public class Ticket implements Printable {
 
     }
 
-    public Ticket (String userID, TicketType ticketType, Timestamp creationDate) {
+    public Ticket (UUID userID, TicketType ticketType, Timestamp creationDate) {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
         this.userID = userID;
         this.ticketType = ticketType;
         this.creationDate = creationDate;
     }
 
-    public Ticket (UUID ticketID, String userID, TicketType ticketType, Timestamp creationDate) {
+    public Ticket (UUID ticketID, UUID userID, TicketType ticketType, Timestamp creationDate) {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
         this.setId(ticketID);
         this.userID = userID;
@@ -133,19 +142,4 @@ public class Ticket implements Printable {
       return result;
     }
 
-    @Override
-    public String toString() {
-        return "============== TICKET ============" + '\n' +
-                "Ticket ID: " + getId() + '\n' +
-                "userID ID: " + userID + '\n' +
-                "Ticket type: " + getTicketType() + '\n' +
-                "Creation date: " + getCreationDate() + '\n' +
-                "Concert hall: " + concertHall.getName() + '\n' +
-                "Event code: " + eventCode + '\n' +
-                "Event time: " + eventTime + '\n' +
-                "Promo: " + isPromo + '\n' +
-                "Stadium sector: " + stadiumSector.getName() + '\n' +
-                "Backpack allowed weight: " + backpackAllowedWeight + '\n' +
-                "Price: " + getPrice() + '\n';
-    }
 }
