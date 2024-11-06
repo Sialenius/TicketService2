@@ -11,8 +11,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
-import service.TicketService;
-import service.UserService;
+import service.ApplicationService;
 
 import java.io.File;
 
@@ -53,18 +52,8 @@ public class MyApplicationContextConfiguration {
     }
 
     @Bean
-    public UserService userService() {
-        return new UserService();
-    }
-
-    @Bean
     public UserDAO userDAO() {
         return new UserDAO(dataSource(), jdbcTemplate());
-    }
-
-    @Bean
-    public TicketService ticketService() {
-        return new TicketService();
     }
 
     @Bean
@@ -72,6 +61,9 @@ public class MyApplicationContextConfiguration {
         return new TicketDAO(dataSource(), jdbcTemplate());
     }
 
-
+    @Bean
+    public ApplicationService applicationService() {
+        return new ApplicationService();
+    }
 
 }
