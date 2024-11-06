@@ -2,8 +2,7 @@ import DAO.TicketDAO;
 import DAO.UserDAO;
 import config.MyApplicationContextConfiguration;
 import org.springframework.context.ApplicationContext;
-import service.UserService;
-import service.TicketService;
+import service.ApplicationService;
 import model.*;
 import model.enums.ConcertHall;
 import model.enums.StadiumSector;
@@ -11,7 +10,6 @@ import model.enums.TicketType;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import service.TicketDataReader;
 
-import java.io.File;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,10 +26,11 @@ public class Application {
 
     private static void show11Task() throws IllegalAccessException {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(MyApplicationContextConfiguration.class);
-        UserService userService = ctx.getBean(UserService.class);
+        ApplicationService applicationService = ctx.getBean(ApplicationService.class);
 
         //CLEAR DATABASE
-        userService.deleteAllUsers();
+        applicationService.deleteAllUsers();
+        applicationService.printInformation();
 
 
         //CREATE AND PUT USERS INTO DATABASE
@@ -40,50 +39,48 @@ public class Application {
         User user3 = new Client("Mike", Timestamp.valueOf(LocalDateTime.now()));
         User user4 = new Admin("Lee", Timestamp.valueOf(LocalDateTime.now()));
 
-        userService.register(user1);
-        userService.register(user2);
-        userService.register(user3);
-        userService.register(user4);
-
-        userService.printInformation();
-
-
-        //FETCH USER BY ID
-        System.out.println(userService.fetchByUserID(user1.getId())); //THE FIELD 'TICKETS' STILL null?
+        applicationService.registerUser(user1);
+        applicationService.registerUser(user2);
+        applicationService.registerUser(user3);
+        applicationService.registerUser(user4);
 
 
         //CREATE AND PUT TICKETS INTO DATABASE
-        TicketService ticketService = ctx.getBean(TicketService.class);
-
         Ticket ticket1 = new Ticket(user1.getId(), TicketType.YEAR, Timestamp.valueOf(LocalDateTime.now()));
         Ticket ticket2 = new Ticket(user2.getId(), TicketType.MONTH, Timestamp.valueOf(LocalDateTime.now()));
         Ticket ticket3 = new Ticket(user3.getId(), TicketType.MONTH, Timestamp.valueOf(LocalDateTime.now()));
 
-        ticketService.register(ticket1);
-        ticketService.register(ticket2);
-        ticketService.register(ticket3);
+        applicationService.registerTicket(ticket1);
+        applicationService.registerTicket(ticket2);
+        applicationService.registerTicket(ticket3);
 
-        ticketService.printInformation();
+
+        //SHOW ALL USERS AND TICKETS
+        applicationService.printInformation();
+
+
+
+        //FETCH USER BY ID
+        System.out.println(applicationService.fetchByUserID(user1.getId())); //THE FIELD 'TICKETS' STILL null?
 
 
         //FETCH TICKET BY ID AND USER ID
-        System.out.println(ticketService.fetchByUserAndTicketID(user1.getId(), ticket1.getId()));
+        System.out.println(applicationService.fetchTicketByUserAndTicketID(user1.getId(), ticket1.getId()));
 
 
         //UPDATE TICKET TYPE
-        ticketService.updateTicketType(ticket2.getId(), TicketType.WEEK);
+        applicationService.updateTicketType(ticket2.getId(), TicketType.WEEK);
 
 
         //REMOVE USER AND HIS TICKETS
-        userService.removeUser(user3.getId());
-        ticketService.printInformation();
+        applicationService.removeUser(user3.getId());
+        applicationService.printTicketInformation();
 
 
-        //UPDATE USER ID
-        userService.updateUserID(user2.getId(), UUID.fromString("bbbbbbbb-bbbbb-bbbb-bbbb-bbbbbbbbb"));
+        //UPDATE USER ID AND CREATE NEW TICKET
+        applicationService.updateUserIDAndCreateTicket(user2.getId(), UUID.fromString("bbbbbbbb-bbbbb-bbbb-bbbb-bbbbbbbbb"));
 
-        userService.printInformation();
-        ticketService.printInformation();
+        applicationService.printInformation();
 
 
         //READ JSON
