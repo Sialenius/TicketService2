@@ -7,6 +7,7 @@ import model.enums.TicketType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import view.Printable;
 
@@ -14,8 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-@Component
-@Transactional
+@Service
 public class TicketService implements Printable {
 
     @Autowired
@@ -29,6 +29,7 @@ public class TicketService implements Printable {
         return ticketDAO.getAll();
     }
 
+    @Transactional
     public void register(Ticket ticket) {
         if (isTicketsCreationAvailable == true) {
             ticketDAO.save(ticket);
@@ -36,6 +37,7 @@ public class TicketService implements Printable {
             throw new IllegalAccessError("Creating new tickets is not availanle");
         }
     }
+
 
 
     public Ticket fetchByID(UUID ticketID) {
@@ -47,6 +49,7 @@ public class TicketService implements Printable {
         return ticket;
     }
 
+
     public Ticket fetchByUserAndTicketID(UUID userID, UUID ticketID) {
         Ticket ticket = ticketDAO.fetchByTicketAndUserID(userID, ticketID);
         if (ticket == null) {
@@ -56,6 +59,7 @@ public class TicketService implements Printable {
         return ticket;
     }
 
+    @Transactional
     public void updateTicketType(UUID ticketID, TicketType newTicketType) {
         fetchByID(ticketID);
 

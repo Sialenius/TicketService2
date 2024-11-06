@@ -5,14 +5,14 @@ import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import view.Printable;
 
 import java.util.List;
 import java.util.UUID;
 
-@Component
-@Transactional
+@Service
 public class UserService implements Printable {
 
     @Autowired
@@ -21,14 +21,18 @@ public class UserService implements Printable {
     @Value("${isUsersUpdateAndTicketsCreationAvailable}")
     private boolean isUsersUpadeAvailable;
 
+
     public List<User> getAll() {
         return userDAO.getAll();
     }
 
+
+    @Transactional
     public void register(User user) {
         userDAO.save(user);
     }
 
+    @Transactional
     public User fetchByUserID(UUID userID) {
         User user = userDAO.fetchByID(userID);
         if (user == null) {
@@ -38,10 +42,12 @@ public class UserService implements Printable {
         return user;
     }
 
+
     public User fetchByName(String name) {
         return userDAO.fetchByName(name);
     }
 
+    @Transactional
     public void updateUserID(UUID userID, UUID newID) throws IllegalAccessException {
        if (isUsersUpadeAvailable == true) {
            fetchByUserID(userID);
@@ -53,12 +59,14 @@ public class UserService implements Printable {
 
     }
 
+    @Transactional
     public void removeUser(UUID userID) {
         fetchByUserID(userID);
 
         userDAO.delete(userID);
     }
 
+    @Transactional
     public void deleteAllUsers() {
         userDAO.deleteAll();
     }
