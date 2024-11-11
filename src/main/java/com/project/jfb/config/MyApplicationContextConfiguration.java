@@ -51,14 +51,4 @@ public class MyApplicationContextConfiguration {
         return new JdbcTemplate(dataSource());
     }
 
-    @Bean
-    public UserDAO userDAO() {
-        return new UserDAO(dataSource(), jdbcTemplate());
-    }
-
-    @Bean
-    public TicketDAO ticketDAO() {
-        return new TicketDAO(dataSource(), jdbcTemplate());
-    }
-    
 }
