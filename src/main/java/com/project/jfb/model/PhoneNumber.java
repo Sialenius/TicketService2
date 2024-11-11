@@ -1,7 +1,7 @@
-package model;
+package com.project.jfb.model;
 
 
-import view.Printable;
+import com.project.jfb.view.Printable;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,7 +1,6 @@
-package model;
+package com.project.jfb.model;
 
-import lombok.AllArgsConstructor;
-import model.enums.UserRole;
+import com.project.jfb.model.enums.UserRole;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

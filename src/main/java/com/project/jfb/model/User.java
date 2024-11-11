@@ -1,14 +1,12 @@
-package model;
+package com.project.jfb.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import jakarta.persistence.*;
 import lombok.*;
-import model.enums.UserRole;
-import view.Printable;
+import com.project.jfb.model.enums.UserRole;
+import com.project.jfb.view.Printable;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 

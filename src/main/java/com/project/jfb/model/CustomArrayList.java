@@ -1,4 +1,4 @@
-package model;
+package com.project.jfb.model;
 
 
 import java.util.Arrays;

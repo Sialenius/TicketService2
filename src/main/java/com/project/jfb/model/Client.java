@@ -1,10 +1,9 @@
-package model;
+package com.project.jfb.model;
 
 
-import model.enums.UserRole;
+import com.project.jfb.model.enums.UserRole;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.UUID;
 
 public class Client extends User {

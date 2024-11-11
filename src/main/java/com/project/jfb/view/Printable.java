@@ -1,4 +1,4 @@
-package view;
+package com.project.jfb.view;
 
 public interface Printable {
 

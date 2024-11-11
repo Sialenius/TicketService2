@@ -1,4 +1,4 @@
-package model.enums;
+package com.project.jfb.model.enums;
 
 public enum ConcertHall {
     CIRCUS("Circus"),

@@ -1,15 +1,14 @@
-package service;
+package com.project.jfb.service;
 
-import DAO.TicketDAO;
-import DAO.UserDAO;
-import model.Ticket;
-import model.User;
-import model.enums.TicketType;
+import com.project.jfb.DAO.TicketDAO;
+import com.project.jfb.DAO.UserDAO;
+import com.project.jfb.model.Ticket;
+import com.project.jfb.model.User;
+import com.project.jfb.model.enums.TicketType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import view.Printable;
+import com.project.jfb.view.Printable;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

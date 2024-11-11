@@ -1,9 +1,8 @@
-package model;
+package com.project.jfb.model;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import model.enums.TicketType;
 
 @Getter
 @Setter

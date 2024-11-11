@@ -1,7 +1,7 @@
-package DAO;
+package com.project.jfb.DAO;
 
-import model.Ticket;
-import model.enums.TicketType;
+import com.project.jfb.model.Ticket;
+import com.project.jfb.model.enums.TicketType;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

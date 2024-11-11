@@ -1,7 +1,7 @@
-package config;
+package com.project.jfb.config;
 
-import DAO.TicketDAO;
-import DAO.UserDAO;
+import com.project.jfb.DAO.TicketDAO;
+import com.project.jfb.DAO.UserDAO;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
-import service.ApplicationService;
+import com.project.jfb.service.ApplicationService;
 
 import java.io.File;
 

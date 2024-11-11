@@ -1,4 +1,4 @@
-package DAO;
+package com.project.jfb.DAO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

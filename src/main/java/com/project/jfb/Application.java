@@ -1,20 +1,24 @@
-import DAO.TicketDAO;
-import DAO.UserDAO;
-import config.MyApplicationContextConfiguration;
+package com.project.jfb;
+
+import com.project.jfb.DAO.TicketDAO;
+import com.project.jfb.DAO.UserDAO;
+import com.project.jfb.config.MyApplicationContextConfiguration;
+import com.project.jfb.model.*;
 import org.springframework.context.ApplicationContext;
-import service.ApplicationService;
-import model.*;
-import model.enums.ConcertHall;
-import model.enums.StadiumSector;
-import model.enums.TicketType;
+import com.project.jfb.service.ApplicationService;
+import com.project.jfb.model.enums.ConcertHall;
+import com.project.jfb.model.enums.StadiumSector;
+import com.project.jfb.model.enums.TicketType;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import service.TicketDataReader;
+import com.project.jfb.service.TicketDataReader;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
@@ -22,6 +26,7 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
+
 
     private static void show11Task() throws IllegalAccessException {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(MyApplicationContextConfiguration.class);

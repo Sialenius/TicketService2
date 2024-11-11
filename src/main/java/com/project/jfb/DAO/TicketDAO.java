@@ -1,19 +1,13 @@
-package DAO;
+package com.project.jfb.DAO;
 
-import model.Ticket;
-import model.User;
-import model.enums.TicketType;
+import com.project.jfb.model.Ticket;
+import com.project.jfb.model.enums.TicketType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import view.Printable;
 
 import javax.sql.DataSource;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository

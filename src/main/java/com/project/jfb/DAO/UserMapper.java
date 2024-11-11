@@ -1,9 +1,9 @@
-package DAO;
+package com.project.jfb.DAO;
 
-import model.Admin;
-import model.Client;
-import model.User;
-import model.enums.UserRole;
+import com.project.jfb.model.Admin;
+import com.project.jfb.model.Client;
+import com.project.jfb.model.User;
+import com.project.jfb.model.enums.UserRole;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

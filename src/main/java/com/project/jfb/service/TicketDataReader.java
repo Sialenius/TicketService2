@@ -1,11 +1,7 @@
-package service;
+package com.project.jfb.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import model.BusTicket;
-import model.Ticket;
-import org.springframework.beans.factory.annotation.Value;
+import com.project.jfb.model.BusTicket;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
