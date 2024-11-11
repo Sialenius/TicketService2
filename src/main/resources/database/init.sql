@@ -1,7 +1,3 @@
-CREATE TYPE user_role AS ENUM ('CLIENT', 'ADMIN');
-
-CREATE TYPE ticket_type AS ENUM ('DAY', 'WEEK', 'MONTH', 'YEAR');
-
 CREATE TABLE users_info
 (
     id VARCHAR(36) PRIMARY KEY NOT NULL,
@@ -18,4 +14,3 @@ CREATE TABLE tickets
     creation_date TIMESTAMP WITH TIME ZONE,
     FOREIGN KEY (user_ID) REFERENCES users_info (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
