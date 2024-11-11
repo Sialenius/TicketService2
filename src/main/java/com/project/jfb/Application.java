@@ -16,12 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+
+@SpringBootApplication
 public class Application {
-
-    public static void main(String[] args) throws Exception {
-
-        show11Task();
-
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
     }
 
     private static void show11Task() throws IllegalAccessException {
