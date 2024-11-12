@@ -2,10 +2,7 @@ package com.project.jfb.io.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import com.project.jfb.io.entity.enums.ConcertHall;
 import com.project.jfb.io.entity.enums.StadiumSector;
 import com.project.jfb.io.entity.enums.TicketType;
@@ -19,22 +16,23 @@ import static com.project.jfb.io.entity.AppConstants.UNSPECIFIED_DATE_TIME;
 
 
 @Entity
-@Getter
-@Setter
+@Data
+@Table(name="tickets_info")
 @NoArgsConstructor
-@ToString
 public class TicketEntity implements Printable {
 
     @Id
-    private UUID id = UUID.randomUUID();
+    @Setter(AccessLevel.NONE)
+    private UUID ticketId = UUID.randomUUID();
 
-    @Column
+    @Column(name="ticket_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private TicketType ticketType = TicketType.NOT_SPECIFIED;
 
-    @Column
+    @Column(nullable = false)
     private Timestamp creationDate;
 
-    @Column
+    @Column(nullable = false)
     private UUID userID;
 
     @Transient
@@ -85,14 +83,6 @@ public class TicketEntity implements Printable {
         this.creationDate = creationDate;
     }
 
-    public TicketEntity(UUID ticketID, UUID userID, TicketType ticketType, Timestamp creationDate) {
-        this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
-        this.setId(ticketID);
-        this.userID = userID;
-        this.ticketType = ticketType;
-        this.creationDate = creationDate;
-    }
-
     @Override
     public boolean equals(Object object) {
         if (object == null) {
@@ -122,17 +112,17 @@ public class TicketEntity implements Printable {
     }
 
     public void share(PhoneNumber phoneNumber) {
-        System.out.println("Ticket "  + getId() + " was shared by " + phoneNumber);
+        System.out.println("Ticket "  + getTicketId() + " was shared by " + phoneNumber);
     }
 
     public void share(PhoneNumber phoneNumber, Email email) {
-        System.out.println("Ticket " + getId() + " was shared by " + phoneNumber + " and " + email);
+        System.out.println("Ticket " + getTicketId() + " was shared by " + phoneNumber + " and " + email);
 
     }
 
   @Override
     public int hashCode() {
-      int result = 31 * this.getId().hashCode();
+      int result = 31 * this.getTicketId().hashCode();
       result += 31 * concertHall.hashCode();
       result += 31 * eventCode;
       result += 31 * eventTime.hashCode();

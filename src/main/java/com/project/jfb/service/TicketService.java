@@ -4,5 +4,5 @@ import com.project.jfb.shared.dto.TicketDto;
 
 public interface TicketService {
 
-    TicketDto createTicket(TicketDto ticketDto);
+    TicketDto saveTicket(TicketDto ticketDto);
 }

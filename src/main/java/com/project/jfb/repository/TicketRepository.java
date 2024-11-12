@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface TicketRepository extends CrudRepository<TicketEntity, Long> {
+public interface TicketRepository extends CrudRepository<TicketEntity, UUID> {
 }

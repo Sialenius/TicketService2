@@ -1,5 +1,6 @@
 package com.project.jfb.shared.dto;
 
+import com.project.jfb.io.entity.enums.TicketType;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -10,7 +11,7 @@ public class TicketDto {
 
     private UUID ticketId;
     private UUID userId;
-    private String ticketType = "DAY";
+    private TicketType ticketType = TicketType.DAY;
     private Timestamp creationDate;
 
 }

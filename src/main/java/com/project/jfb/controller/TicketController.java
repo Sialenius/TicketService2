@@ -1,5 +1,6 @@
 package com.project.jfb.controller;
 
+import com.project.jfb.model.request.TicketDetailsRequestModel;
 import com.project.jfb.model.request.UserDetailsRequestModel;
 import com.project.jfb.model.response.TicketRest;
 import com.project.jfb.model.response.UserRest;
@@ -23,13 +24,13 @@ public class TicketController {
     }
 
     @PostMapping
-    public TicketRest createTicket(@RequestBody UserDetailsRequestModel ticketDetails) {
+    public TicketRest saveTicket(@RequestBody TicketDetailsRequestModel ticketDetails) {
         TicketRest returnValue = new TicketRest();
 
         TicketDto ticketDto = new TicketDto();
         BeanUtils.copyProperties(ticketDetails, ticketDto);
 
-        TicketDto createTicket = ticketService.createTicket(ticketDto);
+        TicketDto createTicket = ticketService.saveTicket(ticketDto);
         BeanUtils.copyProperties(ticketDto, returnValue);
 
         return returnValue;
@@ -41,7 +42,7 @@ public class TicketController {
     }
 
     @DeleteMapping
-    public String deldeteTicket() {
+    public String deleteTicket() {
         return "delete ticket was called";
     }
 }

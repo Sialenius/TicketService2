@@ -13,14 +13,13 @@ import java.util.UUID;
 
 @Entity
 @Data
+@Table(name="users_info")
 public class UserEntity {
 
     @Id
-    @GeneratedValue
-    private long id;
-
     @Column(nullable = false)
-    private UUID userId = UUID.randomUUID();
+    @Setter(AccessLevel.NONE)
+    private UUID id = UUID.randomUUID();
 
     @Column(nullable = false)
     private String name;
@@ -29,8 +28,8 @@ public class UserEntity {
     private Timestamp creationDate;
 
     @Column(nullable = false)
-    //private UserRole role = UserRole.CLIENT;
-    private String userRole = "Client";
+    @Enumerated(EnumType.STRING)
+    private UserRole role = UserRole.CLIENT;
 
 /*
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

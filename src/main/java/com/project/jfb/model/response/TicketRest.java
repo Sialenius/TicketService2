@@ -1,5 +1,6 @@
 package com.project.jfb.model.response;
 
+import com.project.jfb.io.entity.enums.TicketType;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -9,7 +10,7 @@ import java.util.UUID;
 public class TicketRest {
     private UUID ticketId;
     private UUID userId;
-    private String ticketType;
+    private TicketType ticketType;
     private Timestamp creationDate;
 
 }
