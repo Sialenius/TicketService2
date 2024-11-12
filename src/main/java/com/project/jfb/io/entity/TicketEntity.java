@@ -23,7 +23,7 @@ import static com.project.jfb.io.entity.AppConstants.UNSPECIFIED_DATE_TIME;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Ticket implements Printable {
+public class TicketEntity implements Printable {
 
     @Id
     private UUID id = UUID.randomUUID();
@@ -59,13 +59,13 @@ public class Ticket implements Printable {
     private  BigDecimal price = BigDecimal.ZERO;
 
 
-    public Ticket(ConcertHall concertHall, int eventCode, Timestamp eventTime) {
+    public TicketEntity(ConcertHall concertHall, int eventCode, Timestamp eventTime) {
         this(concertHall, eventCode, eventTime, false, StadiumSector.NOT_SPECIFIED, 0, 0);
         ticketType = TicketType.NOT_SPECIFIED;
 
     }
 
-    public Ticket(ConcertHall concertHall, int eventCode, Timestamp eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight, double price ) {
+    public TicketEntity(ConcertHall concertHall, int eventCode, Timestamp eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight, double price ) {
 
         this.concertHall = concertHall;
         this.eventCode = eventCode;
@@ -78,14 +78,14 @@ public class Ticket implements Printable {
 
     }
 
-    public Ticket (UUID userID, TicketType ticketType, Timestamp creationDate) {
+    public TicketEntity(UUID userID, TicketType ticketType, Timestamp creationDate) {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
         this.userID = userID;
         this.ticketType = ticketType;
         this.creationDate = creationDate;
     }
 
-    public Ticket (UUID ticketID, UUID userID, TicketType ticketType, Timestamp creationDate) {
+    public TicketEntity(UUID ticketID, UUID userID, TicketType ticketType, Timestamp creationDate) {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
         this.setId(ticketID);
         this.userID = userID;
@@ -99,7 +99,7 @@ public class Ticket implements Printable {
             return false;
         }
 
-        if (!(object instanceof Ticket)) {
+        if (!(object instanceof TicketEntity)) {
             return false;
         }
 
@@ -107,13 +107,13 @@ public class Ticket implements Printable {
             return true;
         }
 
-        if (concertHall == ((Ticket) object).concertHall &&
-                eventCode == ((Ticket) object).eventCode &&
-                eventTime.equals(((Ticket) object).eventTime) &&
-                isPromo == ((Ticket) object).isPromo &&
-                stadiumSector == ((Ticket) object).stadiumSector &&
-                backpackAllowedWeight == ((Ticket) object).backpackAllowedWeight &&
-               price.equals(((Ticket) object).price)) {
+        if (concertHall == ((TicketEntity) object).concertHall &&
+                eventCode == ((TicketEntity) object).eventCode &&
+                eventTime.equals(((TicketEntity) object).eventTime) &&
+                isPromo == ((TicketEntity) object).isPromo &&
+                stadiumSector == ((TicketEntity) object).stadiumSector &&
+                backpackAllowedWeight == ((TicketEntity) object).backpackAllowedWeight &&
+               price.equals(((TicketEntity) object).price)) {
             return true;
         }
         else {

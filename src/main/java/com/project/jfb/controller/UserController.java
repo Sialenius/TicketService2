@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("users") //http://localhost:8082/users
+@RequestMapping("users") //http://localhost:8081/users
 public class UserController {
 
     @Autowired
@@ -17,7 +17,7 @@ public class UserController {
 
     @GetMapping
     public String getUser() {
-        return "get user was called";
+        return "get user was called from TicketService";
     }
 
     @PostMapping

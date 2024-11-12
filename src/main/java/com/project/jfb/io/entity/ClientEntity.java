@@ -1,13 +1,11 @@
 package com.project.jfb.io.entity;
 
 
-import com.project.jfb.io.entity.enums.UserRole;
-
 import java.sql.Timestamp;
 import java.util.UUID;
 
 public class ClientEntity extends UserEntity {
-    private Ticket ticket;
+    private TicketEntity ticketEntity;
 
     public ClientEntity(String name, Timestamp date) {
         setName(name);
@@ -23,13 +21,13 @@ public class ClientEntity extends UserEntity {
     }
 
 
-    public void buyTicket(Ticket ticket) {
-        this.ticket = ticket;
-        ticket.setUserID(this.getUserId());
+    public void buyTicket(TicketEntity ticketEntity) {
+        this.ticketEntity = ticketEntity;
+        ticketEntity.setUserID(this.getUserId());
     }
 
-    public Ticket getTicket() {
-        return ticket;
+    public TicketEntity getTicket() {
+        return ticketEntity;
     }
 
 }
