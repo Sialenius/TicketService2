@@ -18,6 +18,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    /*
     @GetMapping
     public UserRest getUserById(@RequestBody UserIdRequestModel userId) {
 
@@ -32,7 +33,14 @@ public class UserController {
         return returnValue;
     }
 
-    
+     */
+
+    @GetMapping
+    public String getUser() {
+        return "get user was called";
+
+    }
+
 
     @PostMapping
     public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
