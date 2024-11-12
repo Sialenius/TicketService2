@@ -1,12 +1,9 @@
 package com.project.jfb.controller;
 
 import com.project.jfb.model.request.TicketDetailsRequestModel;
-import com.project.jfb.model.request.UserDetailsRequestModel;
 import com.project.jfb.model.response.TicketRest;
-import com.project.jfb.model.response.UserRest;
 import com.project.jfb.service.TicketService;
 import com.project.jfb.shared.dto.TicketDto;
-import com.project.jfb.shared.dto.UserDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
