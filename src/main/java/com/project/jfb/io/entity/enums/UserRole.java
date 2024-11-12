@@ -1,4 +1,4 @@
-package com.project.jfb.model.enums;
+package com.project.jfb.io.entity.enums;
 
 public enum UserRole {
     CLIENT("Client"),

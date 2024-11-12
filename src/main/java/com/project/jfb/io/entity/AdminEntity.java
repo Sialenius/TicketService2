@@ -1,24 +1,24 @@
-package com.project.jfb.model;
+package com.project.jfb.io.entity;
 
-import com.project.jfb.model.enums.UserRole;
+import com.project.jfb.io.entity.enums.UserRole;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Admin extends User {
+public class AdminEntity extends UserEntity {
 
-    public Admin(String name, Timestamp date) {
+    public AdminEntity(String name, Timestamp date) {
         setName(name);
         setCreationDate(date);
-        setRole(UserRole.ADMIN);
+        setUserRole("Admin");
     }
 
-    public Admin(UUID id, String name, Timestamp date) {
-        this.setId(id);
+    public AdminEntity(UUID id, String name, Timestamp date) {
+        this.setUserId(id);
         setName(name);
         setCreationDate(date);
-        setRole(UserRole.ADMIN);
+        setUserRole("Admin");
     }
 
     public void checkTicket(Ticket ticket) {
@@ -27,10 +27,5 @@ public class Admin extends User {
        } else {
            System.out.println("This ticket is valid");
        }
-    }
-
-    @Override
-    public void printRole() {
-        System.out.println("You are an Admin");
     }
 }

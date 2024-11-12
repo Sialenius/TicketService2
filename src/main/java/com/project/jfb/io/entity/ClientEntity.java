@@ -1,40 +1,35 @@
-package com.project.jfb.model;
+package com.project.jfb.io.entity;
 
 
-import com.project.jfb.model.enums.UserRole;
+import com.project.jfb.io.entity.enums.UserRole;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public class Client extends User {
+public class ClientEntity extends UserEntity {
     private Ticket ticket;
 
-    public Client(String name, Timestamp date) {
+    public ClientEntity(String name, Timestamp date) {
         setName(name);
         setCreationDate(date);
-        setRole(UserRole.CLIENT);
+        setUserRole("Client");
     }
 
-    public Client(UUID id, String name, Timestamp date) {
-        this.setId(id);
+    public ClientEntity(UUID id, String name, Timestamp date) {
+        this.setUserId(id);
         setName(name);
         setCreationDate(date);
-        setRole(UserRole.CLIENT);
+        setUserRole("Client");
     }
 
 
     public void buyTicket(Ticket ticket) {
         this.ticket = ticket;
-        ticket.setUserID(this.getId());
+        ticket.setUserID(this.getUserId());
     }
 
     public Ticket getTicket() {
         return ticket;
-    }
-
-    @Override
-    public void printRole() {
-        System.out.println("You are a Client");
     }
 
 }

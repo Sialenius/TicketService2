@@ -1,7 +1,7 @@
 package com.project.jfb.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.jfb.model.BusTicket;
+import com.project.jfb.io.entity.BusTicket;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 

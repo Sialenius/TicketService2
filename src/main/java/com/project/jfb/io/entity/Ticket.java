@@ -1,4 +1,4 @@
-package com.project.jfb.model;
+package com.project.jfb.io.entity;
 
 
 import jakarta.persistence.*;
@@ -6,16 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import com.project.jfb.model.enums.ConcertHall;
-import com.project.jfb.model.enums.StadiumSector;
-import com.project.jfb.model.enums.TicketType;
+import com.project.jfb.io.entity.enums.ConcertHall;
+import com.project.jfb.io.entity.enums.StadiumSector;
+import com.project.jfb.io.entity.enums.TicketType;
 import com.project.jfb.view.Printable;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-import static com.project.jfb.model.AppConstants.UNSPECIFIED_DATE_TIME;
+import static com.project.jfb.io.entity.AppConstants.UNSPECIFIED_DATE_TIME;
 
 
 @Entity

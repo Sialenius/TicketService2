@@ -1,9 +1,9 @@
-package com.project.jfb.model;
+package com.project.jfb.io.entity;
 
 
 import jakarta.persistence.*;
 import lombok.*;
-import com.project.jfb.model.enums.UserRole;
+import com.project.jfb.io.entity.enums.UserRole;
 import com.project.jfb.view.Printable;
 
 import java.sql.Timestamp;
@@ -12,26 +12,29 @@ import java.util.UUID;
 
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-public abstract class User implements Printable {
+@Data
+public class UserEntity {
 
     @Id
-    private UUID id = UUID.randomUUID();
+    @GeneratedValue
+    private long id;
 
+    @Column(nullable = false)
+    private UUID userId = UUID.randomUUID();
+
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private Timestamp creationDate;
 
-    @Column
-    private UserRole role;
+    @Column(nullable = false)
+    //private UserRole role = UserRole.CLIENT;
+    private String userRole = "Client";
 
+/*
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ticket> tickets;
 
-    public void printRole() {}
-
+ */
 }

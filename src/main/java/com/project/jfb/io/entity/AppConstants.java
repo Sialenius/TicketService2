@@ -1,9 +1,8 @@
-package com.project.jfb.model;
+package com.project.jfb.io.entity;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class AppConstants {

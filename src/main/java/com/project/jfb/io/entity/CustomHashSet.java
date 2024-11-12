@@ -1,4 +1,4 @@
-package com.project.jfb.model;
+package com.project.jfb.io.entity;
 
 
 
