@@ -1,5 +1,6 @@
 package com.project.jfb.service.impl;
 
+import com.project.jfb.io.entity.Iteratorable;
 import com.project.jfb.io.entity.UserEntity;
 import com.project.jfb.io.entity.enums.UserRole;
 import com.project.jfb.repository.UserRepository;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,6 +42,17 @@ public class UserServiceImpl implements UserService {
 
         UserDto returnValue = new UserDto();
         BeanUtils.copyProperties(storedUser, returnValue);
+        return returnValue;
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+
+        List<UserEntity> test = (List<UserEntity>) userRepository.findAll();
+        List<UserDto> returnValue = new ArrayList<>();
+
+        BeanUtils.copyProperties(test, returnValue);
+
         return returnValue;
     }
 
