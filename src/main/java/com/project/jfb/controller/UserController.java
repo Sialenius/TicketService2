@@ -34,11 +34,11 @@ public class UserController {
         return returnValue;
     }
 
-    @GetMapping("/{id}")
-    public UserRest getUserById(@PathVariable UUID id) {
+    @GetMapping("/{userId}")
+    public UserRest getUserById(@PathVariable UUID userId) {
 
         UserRest returnValue = new UserRest();
-        BeanUtils.copyProperties(userService.getUserById(id), returnValue);
+        BeanUtils.copyProperties(userService.getUserById(userId), returnValue);
 
         return returnValue;
     }
@@ -76,29 +76,29 @@ public class UserController {
     }
 
 
-    @PutMapping("/{id}/new-id-and-ticket")
-    public String updateUserIaAndCreateTicket(@PathVariable UUID id, @RequestBody UserUpdateIdRequestModel userUpdateIdRequestModel) {
+    @PutMapping("/{userId}/new-id-and-ticket")
+    public String updateUserIaAndCreateTicket(@PathVariable UUID userId, @RequestBody UserUpdateIdRequestModel userUpdateIdRequestModel) {
 
-        UserDto userDto = userService.getUserById(id);
+        UserDto userDto = userService.getUserById(userId);
         userService.updateUserAndCreateNewTicket(userDto, userUpdateIdRequestModel.getNewId());
 
         return "Update user ID and create new ticket was called";
     }
 
 
-    @PutMapping("/{id}")
-    public String updateUser(@PathVariable UUID id,@RequestBody UserUpdateIdRequestModel userUpdateIdRequestModel) {
+    @PutMapping("/{userId}")
+    public String updateUser(@PathVariable UUID userId,@RequestBody UserUpdateIdRequestModel userUpdateIdRequestModel) {
 
-        UserDto userDto = userService.getUserById(id);
+        UserDto userDto = userService.getUserById(userId);
         userService.updateUserId(userDto, userUpdateIdRequestModel.getNewId());
 
         return "Update user was called";
 
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable UUID id) {
-        userService.deleteUserById(id);
+    @DeleteMapping("/{userId}")
+    public String deleteUser(@PathVariable UUID userId) {
+        userService.deleteUserById(userId);
         return "Delete user was called";
     }
 
