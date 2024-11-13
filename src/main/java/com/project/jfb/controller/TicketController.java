@@ -1,5 +1,6 @@
 package com.project.jfb.controller;
 
+import com.project.jfb.io.entity.TicketEntity;
 import com.project.jfb.model.request.TicketDetailsRequestModel;
 import com.project.jfb.model.response.TicketRest;
 import com.project.jfb.service.TicketService;
@@ -8,6 +9,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("tickets") //http://localhost:8081/tickets
 public class TicketController {
@@ -15,9 +18,17 @@ public class TicketController {
     @Autowired
     TicketService ticketService;
 
-    @GetMapping
+    /*@GetMapping("/tickets/{id}")
     public String getTicket() {
         return "get ticket was called from TicketService";
+    }
+
+     */
+
+
+    @GetMapping
+    public TicketDto getTicket( UUID id) {
+        return ticketService.getTicketById(id);
     }
 
     @PostMapping
