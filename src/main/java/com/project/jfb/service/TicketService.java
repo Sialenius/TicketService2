@@ -37,8 +37,16 @@ public class TicketService {
     }
 
     @Transactional
-    public List<TicketEntity> getTicketsByUserId(UUID userId) {
-        return ticketRepository.findByUserId(userId);
+    public List<TicketDto> getTicketsByUserId(UUID userId) {
+        List<TicketDto> allTickets = new ArrayList<>();
+
+        for (TicketEntity t: ticketRepository.findByUserId(userId)) {
+            TicketDto temptTicketDto = new TicketDto();
+            BeanUtils.copyProperties(t, temptTicketDto);
+            allTickets.add(temptTicketDto);
+        }
+        return allTickets;
+
     }
 
     @Transactional

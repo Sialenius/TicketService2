@@ -8,7 +8,6 @@ import java.util.UUID;
 
 @Data
 public class TicketDetailsRequestModel {
-    //private UUID ticketId;
     private UUID userId;
     private TicketType ticketType;
     private Timestamp creationDate;

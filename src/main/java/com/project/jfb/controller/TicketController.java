@@ -45,8 +45,15 @@ public class TicketController {
     }
 
     @GetMapping("/users/{userId}")
-    public List<TicketEntity> getTicketsByUserId(@PathVariable UUID userId) {
-        return ticketService.getTicketsByUserId(userId);
+    public List<TicketRest> getTicketsByUserId(@PathVariable UUID userId) {
+        List<TicketRest> returnValue = new ArrayList<>();
+
+        for (TicketDto t: ticketService.getTicketsByUserId(userId)) {
+            TicketRest temptTicketRest = new TicketRest();
+            BeanUtils.copyProperties(t, temptTicketRest);
+            returnValue.add(temptTicketRest);
+        }
+        return returnValue;
     }
 
     @PostMapping
@@ -66,11 +73,13 @@ public class TicketController {
 
     @PutMapping("/{ticketId}/update-type")
     public void updateTicket(@PathVariable UUID ticketId, @RequestBody TicketDetailsRequestModel ticketDetailsRequestModel) {
+
         ticketService.updateTicketType(ticketId, ticketDetailsRequestModel.getTicketType());
     }
 
     @DeleteMapping("/{ticketId}")
     public void deleteTicket(@PathVariable UUID ticketId) {
+
         ticketService.deleteTicket(ticketId);
     }
 }

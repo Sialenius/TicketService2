@@ -77,29 +77,26 @@ public class UserController {
 
 
     @PutMapping("/{userId}/new-id-and-ticket")
-    public String updateUserIaAndCreateTicket(@PathVariable UUID userId, @RequestBody UserUpdateIdRequestModel userUpdateIdRequestModel) {
+    public void updateUserIaAndCreateTicket(@PathVariable UUID userId, @RequestBody UserUpdateIdRequestModel userUpdateIdRequestModel) {
 
         UserDto userDto = userService.getUserById(userId);
         userService.updateUserAndCreateNewTicket(userDto, userUpdateIdRequestModel.getNewId());
 
-        return "Update user ID and create new ticket was called";
     }
 
 
     @PutMapping("/{userId}")
-    public String updateUser(@PathVariable UUID userId,@RequestBody UserUpdateIdRequestModel userUpdateIdRequestModel) {
+    public void updateUser(@PathVariable UUID userId,@RequestBody UserUpdateIdRequestModel userUpdateIdRequestModel) {
 
         UserDto userDto = userService.getUserById(userId);
         userService.updateUserId(userDto, userUpdateIdRequestModel.getNewId());
 
-        return "Update user was called";
-
     }
 
     @DeleteMapping("/{userId}")
-    public String deleteUser(@PathVariable UUID userId) {
+    public void deleteUser(@PathVariable UUID userId) {
+
         userService.deleteUserById(userId);
-        return "Delete user was called";
     }
 
 
