@@ -23,14 +23,19 @@ public class TicketService {
 
     @Transactional
     public TicketDto saveTicket(TicketDto ticketDto) {
+
         TicketEntity ticketEntity = new TicketEntity();
-        BeanUtils.copyProperties(ticketDto,ticketEntity);
+
+        if (ticketDto.getTicketType() == null) {
+            BeanUtils.copyProperties(ticketDto, ticketEntity, "ticketType");
+        } else {
+            BeanUtils.copyProperties(ticketDto,ticketEntity);
+        }
 
         ticketEntity.setCreationDate(Timestamp.valueOf(LocalDateTime.now()));
-        ticketEntity.setTicketType(TicketType.YEAR);
-        ticketEntity.setUserId(new UserEntity().getId());
 
         TicketEntity createdTicket = ticketRepository.save(ticketEntity);
+
         TicketDto returnValue = new TicketDto();
         BeanUtils.copyProperties(createdTicket, returnValue);
 

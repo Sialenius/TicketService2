@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 public class UserRest {
-    private UUID userId;
+    private UUID id;
     private String name;
     private Timestamp creationDate;
     private UserRole userRole;

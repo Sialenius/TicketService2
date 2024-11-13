@@ -10,6 +10,7 @@ import com.project.jfb.view.Printable;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static com.project.jfb.io.entity.AppConstants.UNSPECIFIED_DATE_TIME;
@@ -33,7 +34,7 @@ public class TicketEntity implements Printable {
     private TicketType ticketType = TicketType.NOT_SPECIFIED;
 
     @Column(nullable = false)
-    private Timestamp creationDate;
+    private Timestamp creationDate = Timestamp.valueOf(LocalDateTime.now());
 
 
     @Transient

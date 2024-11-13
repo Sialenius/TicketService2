@@ -1,6 +1,7 @@
 package com.project.jfb.controller;
 
 import com.project.jfb.io.entity.TicketEntity;
+import com.project.jfb.io.entity.UserEntity;
 import com.project.jfb.io.entity.enums.TicketType;
 import com.project.jfb.model.request.TicketDetailsRequestModel;
 import com.project.jfb.model.response.TicketRest;
@@ -21,10 +22,17 @@ public class TicketController {
     TicketService ticketService;
 
     @GetMapping
-    public String getTicket() {
-        return ticketService.getAllTickets().toString();
-        //return "The get ticket was called";
+    public String getAllTickets() {
+        String returnValue = "";
+
+        for (TicketEntity ticketEntity: ticketService.getAllTickets()) {
+            returnValue += ticketEntity;
+            returnValue += '\n';
+        }
+
+        return returnValue;
     }
+
 
     @GetMapping("/{id}")
     public TicketEntity getTicketById(@PathVariable UUID ticketId) {
@@ -41,8 +49,6 @@ public class TicketController {
 
         TicketDto ticketDto = new TicketDto();
         BeanUtils.copyProperties(ticketDetails, ticketDto);
-
-
 
         TicketDto createTicket = ticketService.saveTicket(ticketDto);
 

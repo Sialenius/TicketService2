@@ -15,6 +15,7 @@ import java.util.UUID;
 @Data
 @Table(name="users_info")
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity {
 
     @Id
@@ -31,7 +32,7 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.CLIENT;
 
-   // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Transient
     private List<TicketEntity> tickets;
 
