@@ -1,15 +1,17 @@
 package com.project.jfb.controller;
 
+import com.project.jfb.io.entity.TicketEntity;
+import com.project.jfb.io.entity.enums.TicketType;
 import com.project.jfb.model.request.TicketDetailsRequestModel;
-import com.project.jfb.model.request.UserDetailsRequestModel;
 import com.project.jfb.model.response.TicketRest;
-import com.project.jfb.model.response.UserRest;
 import com.project.jfb.service.TicketService;
 import com.project.jfb.shared.dto.TicketDto;
-import com.project.jfb.shared.dto.UserDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("tickets") //http://localhost:8081/tickets
@@ -18,31 +20,45 @@ public class TicketController {
     @Autowired
     TicketService ticketService;
 
+    @GetMapping
+    public String getTicket() {
+        return ticketService.getAllTickets().toString();
+        //return "The get ticket was called";
+    }
+
     @GetMapping("/{id}")
-    public String getTicketById() {
-        return "get ticket was called from TicketService";
+    public TicketEntity getTicketById(@PathVariable UUID ticketId) {
+        return ticketService.getTicket(ticketId);
+    }
+
+    @GetMapping("/users/{userId}")
+    public List<TicketEntity> getTicketsByUserId(@PathVariable UUID userId) {
+        return ticketService.getTicketsByUserId(userId);
     }
 
     @PostMapping
     public TicketRest createTicket(@RequestBody TicketDetailsRequestModel ticketDetails) {
-        TicketRest returnValue = new TicketRest();
 
         TicketDto ticketDto = new TicketDto();
         BeanUtils.copyProperties(ticketDetails, ticketDto);
 
+
+
         TicketDto createTicket = ticketService.saveTicket(ticketDto);
-        BeanUtils.copyProperties(ticketDto, returnValue);
+
+        TicketRest returnValue = new TicketRest();
+        BeanUtils.copyProperties(createTicket, returnValue);
 
         return returnValue;
     }
 
-    @PutMapping
-    public String updateTicket() {
-        return "update ticket was called";
+    @PutMapping("/{id}/update-type")
+    public void updateTicket(@PathVariable UUID ticketId, @RequestBody TicketType newticketType) {
+        ticketService.updateTicketType(ticketId, newticketType);
     }
 
-    @DeleteMapping
-    public String deleteTicket() {
-        return "delete ticket was called";
+    @DeleteMapping("/{id}")
+    public void deleteTicket(@PathVariable UUID ticketId) {
+        ticketService.deleteTicket(ticketId);
     }
 }

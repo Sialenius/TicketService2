@@ -25,6 +25,9 @@ public class TicketEntity implements Printable {
     @Setter(AccessLevel.NONE)
     private UUID ticketId = UUID.randomUUID();
 
+    @Column(name="user_id", nullable = false)
+    private UUID userId;
+
     @Column(name="ticket_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private TicketType ticketType = TicketType.NOT_SPECIFIED;
@@ -32,8 +35,6 @@ public class TicketEntity implements Printable {
     @Column(nullable = false)
     private Timestamp creationDate;
 
-    @Column(nullable = false)
-    private UUID userID;
 
     @Transient
     private  ConcertHall concertHall = ConcertHall.NOT_SPECIFIED;
@@ -76,9 +77,9 @@ public class TicketEntity implements Printable {
 
     }
 
-    public TicketEntity(UUID userID, TicketType ticketType, Timestamp creationDate) {
+    public TicketEntity(UUID userId, TicketType ticketType, Timestamp creationDate) {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
-        this.userID = userID;
+        this.userId = userId;
         this.ticketType = ticketType;
         this.creationDate = creationDate;
     }

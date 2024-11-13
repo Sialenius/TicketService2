@@ -14,11 +14,11 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name="users_info")
+@NoArgsConstructor
 public class UserEntity {
 
     @Id
     @Column(nullable = false)
-    @Setter(AccessLevel.NONE)
     private UUID id = UUID.randomUUID();
 
     @Column(nullable = false)
@@ -31,9 +31,8 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.CLIENT;
 
-/*
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Ticket> tickets;
+   // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Transient
+    private List<TicketEntity> tickets;
 
- */
 }

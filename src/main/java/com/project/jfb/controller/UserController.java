@@ -1,7 +1,7 @@
 package com.project.jfb.controller;
 
+import com.project.jfb.io.entity.UserEntity;
 import com.project.jfb.model.request.UserDetailsRequestModel;
-import com.project.jfb.model.request.UserIdRequestModel;
 import com.project.jfb.model.response.UserRest;
 import com.project.jfb.service.UserService;
 import com.project.jfb.shared.dto.UserDto;
@@ -36,11 +36,16 @@ public class UserController {
      */
 
     @GetMapping
-    public String getUser() {
-        return "get user was called";
+    public String getAllUsers() {
+        String returnValue = "";
 
+        for (UserEntity userEntity: userService.getAllUsers()) {
+            returnValue += userEntity;
+            returnValue += '\n';
+        }
+
+        return returnValue;
     }
-
 
     @PostMapping
     public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
