@@ -4,22 +4,18 @@ import com.project.jfb.io.entity.TicketEntity;
 import com.project.jfb.io.entity.UserEntity;
 import com.project.jfb.io.entity.enums.TicketType;
 import com.project.jfb.io.entity.enums.UserRole;
+import com.project.jfb.model.response.UserRest;
 import com.project.jfb.repository.TicketRepository;
 import com.project.jfb.repository.UserRepository;
 import com.project.jfb.shared.dto.UserDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import static java.util.stream.Collectors.toCollection;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -41,8 +37,17 @@ public class UserService {
         return returnValue;
     }
 
-    public List<UserEntity> getAllUsers() {
-        return (List<UserEntity>) userRepository.findAll();
+    public List<UserDto> getAllUsers() {
+
+        List<UserDto> allUsers = new ArrayList<>();
+
+        for (UserEntity u: userRepository.findAll()) {
+            UserDto tempDto = new UserDto();
+            BeanUtils.copyProperties(u, tempDto);
+            allUsers.add(tempDto);
+        }
+
+        return allUsers;
     }
 
 

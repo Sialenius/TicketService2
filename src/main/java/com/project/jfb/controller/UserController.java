@@ -10,6 +10,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -20,14 +22,15 @@ public class UserController {
     UserService userService;
 
     @GetMapping
-    public String getAllUsers() {
-        String returnValue = "";
+    public List<UserRest> getAllUsers() {
 
-        for (UserEntity userEntity: userService.getAllUsers()) {
-            returnValue += userEntity;
-            returnValue += '\n';
+        List<UserRest> returnValue = new ArrayList<>();
+
+        for (UserDto u: userService.getAllUsers()) {
+            UserRest tempUserRest = new UserRest();
+            BeanUtils.copyProperties(u, tempUserRest);
+            returnValue.add(tempUserRest);
         }
-
         return returnValue;
     }
 
