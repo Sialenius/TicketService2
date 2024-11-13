@@ -18,13 +18,13 @@ public class TicketController {
     @Autowired
     TicketService ticketService;
 
-    @GetMapping
-    public String getTicket() {
+    @GetMapping("/{id}")
+    public String getTicketById() {
         return "get ticket was called from TicketService";
     }
 
     @PostMapping
-    public TicketRest saveTicket(@RequestBody TicketDetailsRequestModel ticketDetails) {
+    public TicketRest createTicket(@RequestBody TicketDetailsRequestModel ticketDetails) {
         TicketRest returnValue = new TicketRest();
 
         TicketDto ticketDto = new TicketDto();
