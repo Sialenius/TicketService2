@@ -8,6 +8,7 @@ import com.project.jfb.model.response.UserRest;
 import com.project.jfb.repository.TicketRepository;
 import com.project.jfb.repository.UserRepository;
 import com.project.jfb.shared.dto.UserDto;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +19,12 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
 
     public UserDto getUserById(UUID userId) {
 

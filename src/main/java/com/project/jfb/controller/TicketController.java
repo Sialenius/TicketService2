@@ -1,14 +1,10 @@
 package com.project.jfb.controller;
 
-import com.project.jfb.io.entity.TicketEntity;
-import com.project.jfb.io.entity.UserEntity;
-import com.project.jfb.io.entity.enums.TicketType;
 import com.project.jfb.model.request.TicketDetailsRequestModel;
 import com.project.jfb.model.response.TicketRest;
-import com.project.jfb.model.response.UserRest;
 import com.project.jfb.service.TicketService;
 import com.project.jfb.shared.dto.TicketDto;
-import com.project.jfb.shared.dto.UserDto;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +15,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/tickets") //http://localhost:8081/tickets
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class TicketController {
 
 
     private final TicketService ticketService;
-
-    @Autowired
-    public TicketController(TicketService ticketService) {
-        this.ticketService = ticketService;
-    }
 
     @GetMapping
     public List<TicketRest> getAllTickets() {

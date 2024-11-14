@@ -6,6 +6,7 @@ import com.project.jfb.model.request.UserUpdateIdRequestModel;
 import com.project.jfb.model.response.UserRest;
 import com.project.jfb.service.UserService;
 import com.project.jfb.shared.dto.UserDto;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +17,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/users") //http://localhost:8081/users
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping
     public List<UserRest> getAllUsers() {

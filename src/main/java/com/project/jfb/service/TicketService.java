@@ -6,6 +6,7 @@ import com.project.jfb.io.entity.enums.TicketType;
 import com.project.jfb.repository.TicketRepository;
 import com.project.jfb.shared.dto.TicketDto;
 import com.project.jfb.shared.dto.UserDto;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class TicketService {
 
-    @Autowired
-    TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
 
     @Transactional
     public TicketDto getTicket(UUID id) {
