@@ -8,12 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan
 public class ThisIsMyFirstConditionalBean {
-
+    
     @Bean
     @ConditionalOnProperty(name = "isConditionalBeanAvailable", havingValue = "true")
-    public String useMyConditionalBean() {
-
-        return "Conditional bean is available";
+    public ThisIsMyFirstConditionalBean thisIsMyFirstConditionalBean() {
+        return new ThisIsMyFirstConditionalBean();
     }
 }
-
