@@ -1,11 +1,10 @@
 package com.project.jfb.controller;
 
 import com.project.jfb.model.request.TicketDetailsRequestModel;
-import com.project.jfb.model.response.TicketRest;
+import com.project.jfb.model.request.TicketTypeUpdateRequestModel;
 import com.project.jfb.service.TicketService;
 import com.project.jfb.shared.dto.TicketDto;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,60 +17,34 @@ import java.util.UUID;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class TicketController {
 
-
     private final TicketService ticketService;
 
     @GetMapping
-    public List<TicketRest> getAllTickets() {
-        List<TicketRest> returnValue = new ArrayList<>();
-
-        for (TicketDto t: ticketService.getAllTickets()) {
-            TicketRest temptTicketRest = new TicketRest();
-            BeanUtils.copyProperties(t, temptTicketRest);
-            returnValue.add(temptTicketRest);
-        }
-        return returnValue;
+    public List<TicketDto> getAllTickets() {
+        return ticketService.getAllTickets();
     }
 
     @GetMapping("/{ticketId}")
-    public TicketRest getTicketById(@PathVariable UUID ticketId) {
-        TicketRest returnValue = new TicketRest();
-        BeanUtils.copyProperties(ticketService.getTicket(ticketId), returnValue);
-
-        return returnValue;
+    public TicketDto getTicketById(@PathVariable UUID ticketId) {
+        return ticketService.getTicket(ticketId);
     }
 
     @GetMapping("/users/{userId}")
-    public List<TicketRest> getTicketsByUserId(@PathVariable UUID userId) {
-        List<TicketRest> returnValue = new ArrayList<>();
+    public List<TicketDto> getTicketsByUserId(@PathVariable UUID userId) {
 
-        for (TicketDto t: ticketService.getTicketsByUserId(userId)) {
-            TicketRest temptTicketRest = new TicketRest();
-            BeanUtils.copyProperties(t, temptTicketRest);
-            returnValue.add(temptTicketRest);
-        }
-        return returnValue;
+        return ticketService.getTicketsByUserId(userId);
     }
 
     @PostMapping
-    public TicketRest createTicket(@RequestBody TicketDetailsRequestModel ticketDetails) {
+    public TicketDto createTicket(@RequestBody TicketDto ticketDto) {
 
-        TicketDto ticketDto = new TicketDto();
-        BeanUtils.copyProperties(ticketDetails, ticketDto);
-        System.out.println("USER ID: " + ticketDto.getUserId());
-
-        TicketDto createTicket = ticketService.saveTicket(ticketDto);
-
-        TicketRest returnValue = new TicketRest();
-        BeanUtils.copyProperties(createTicket, returnValue);
-
-        return returnValue;
+        return ticketService.saveTicket(ticketDto);
     }
 
     @PutMapping("/{ticketId}/type")
-    public void updateTicket(@PathVariable UUID ticketId, @RequestBody TicketDetailsRequestModel ticketDetailsRequestModel) {
+    public void updateTicket(@PathVariable UUID ticketId, @RequestBody TicketTypeUpdateRequestModel ticketTypeUpdateRequestModel) {
 
-        ticketService.updateTicketType(ticketId, ticketDetailsRequestModel.getTicketType());
+        ticketService.updateTicketType(ticketId, ticketTypeUpdateRequestModel.getNewType());
     }
 
     @DeleteMapping("/{ticketId}")

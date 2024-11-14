@@ -66,7 +66,6 @@ public class TicketService {
     public TicketDto saveTicket(TicketDto ticketDto) {
 
         TicketEntity ticketEntity = new TicketEntity();
-
         if (ticketDto.getTicketType() == null) {
             BeanUtils.copyProperties(ticketDto, ticketEntity, "ticketType");
         } else {

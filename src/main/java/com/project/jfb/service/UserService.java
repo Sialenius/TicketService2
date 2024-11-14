@@ -56,16 +56,22 @@ public class UserService {
         UserEntity userEntity = new UserEntity();
         BeanUtils.copyProperties(userDto, userEntity);
 
-        userEntity.setId(UUID.fromString("00000000-0000-0000-0000-000000000000"));
-        userEntity.setCreationDate(Timestamp.valueOf(LocalDateTime.now()));
-        userEntity.setRole(UserRole.CLIENT);
-
         UserEntity storedUserDetails = userRepository.save(userEntity);
 
         UserDto returnValue = new UserDto();
         BeanUtils.copyProperties(storedUserDetails, returnValue);
 
         return returnValue;
+    }
+
+    public UserDto saveSpecifiedUser() {
+        UserDto userDto = new UserDto();
+        userDto.setId(UUID.fromString("00000000-0000-0000-0000-000000000000"));
+        userDto.setName("TEST");
+        userDto.setCreationDate(Timestamp.valueOf(LocalDateTime.now()));
+        userDto.setUserRole(UserRole.CLIENT);
+
+        return saveUser(userDto);
     }
 
     @Transactional

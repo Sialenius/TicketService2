@@ -11,7 +11,7 @@ public class TicketDto {
 
     private UUID ticketId;
     private UUID userId;
-    private TicketType ticketType = TicketType.DAY;
+    private TicketType ticketType;
     private Timestamp creationDate;
 
 }
