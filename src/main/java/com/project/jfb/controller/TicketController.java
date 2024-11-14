@@ -18,11 +18,16 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("tickets") //http://localhost:8081/tickets
+@RequestMapping("/tickets") //http://localhost:8081/tickets
 public class TicketController {
 
+
+    private final TicketService ticketService;
+
     @Autowired
-    TicketService ticketService;
+    public TicketController(TicketService ticketService) {
+        this.ticketService = ticketService;
+    }
 
     @GetMapping
     public List<TicketRest> getAllTickets() {
@@ -71,7 +76,7 @@ public class TicketController {
         return returnValue;
     }
 
-    @PutMapping("/{ticketId}/update-type")
+    @PutMapping("/{ticketId}/type")
     public void updateTicket(@PathVariable UUID ticketId, @RequestBody TicketDetailsRequestModel ticketDetailsRequestModel) {
 
         ticketService.updateTicketType(ticketId, ticketDetailsRequestModel.getTicketType());
