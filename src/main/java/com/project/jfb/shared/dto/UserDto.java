@@ -19,6 +19,6 @@ public class UserDto {
     private UUID id;
     private String name;
     private Timestamp creationDate;
-    private UserRole userRole = UserRole.CLIENT;
+    private UserRole role;
 
 }

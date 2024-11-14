@@ -1,6 +1,5 @@
 package com.project.jfb.controller;
 
-import com.project.jfb.model.request.TicketDetailsRequestModel;
 import com.project.jfb.model.request.TicketTypeUpdateRequestModel;
 import com.project.jfb.service.TicketService;
 import com.project.jfb.shared.dto.TicketDto;
@@ -8,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

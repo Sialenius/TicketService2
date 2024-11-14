@@ -7,6 +7,7 @@ import com.project.jfb.io.entity.enums.UserRole;
 import com.project.jfb.view.Printable;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class UserEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false)
     private UUID id = UUID.randomUUID();
 
@@ -26,7 +28,7 @@ public class UserEntity {
     private String name;
 
     @Column(nullable = false)
-    private Timestamp creationDate;
+    private Timestamp creationDate = Timestamp.valueOf(LocalDateTime.now());
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

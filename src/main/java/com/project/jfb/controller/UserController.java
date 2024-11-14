@@ -39,7 +39,7 @@ public class UserController {
     @PostMapping("/new")
     public UserDto createSpecifiedUser() {
 
-        return userService.saveSpecifiedUser();
+        return userService.saveDefaultUser();
     }
 
     @PutMapping("/{userId}/new-id-and-ticket")

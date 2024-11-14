@@ -8,7 +8,6 @@ import java.util.UUID;
 
 @Data
 public class UserDetailsRequestModel {
-    private UUID id;
     private String name;
     private Timestamp creationDate;
     private UserRole userRole;
