@@ -123,8 +123,10 @@ public class UserService {
     public void deleteUserById(UUID userId) {
         UserDto deletedUserDto = getUserById(userId);
 
-        userRepository.deleteById(userId);
-        log.info("USER WITH ID: " + deletedUserDto.getId() + "AND HIS TICKETS WERE DELETED.");
+        if(deletedUserDto != null) {
+            userRepository.deleteById(userId);
+            log.info("USER WITH ID: " + deletedUserDto.getId() + "AND HIS TICKETS WERE DELETED.");
+        }
 
     }
 
