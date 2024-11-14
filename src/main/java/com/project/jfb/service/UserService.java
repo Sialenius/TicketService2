@@ -3,7 +3,6 @@ package com.project.jfb.service;
 import com.project.jfb.io.entity.TicketEntity;
 import com.project.jfb.io.entity.UserEntity;
 import com.project.jfb.io.entity.enums.TicketType;
-import com.project.jfb.io.entity.enums.UserRole;
 import com.project.jfb.repository.TicketRepository;
 import com.project.jfb.repository.UserRepository;
 import com.project.jfb.shared.dto.TicketDto;
@@ -15,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.UUID;
+import java.util.List;
+import java.util.ArrayList;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -125,7 +124,7 @@ public class UserService {
         UserDto deletedUserDto = getUserById(userId);
 
         userRepository.deleteById(userId);
-        log.info("USER WITH ID: " + deletedUserDto.getId() + " WAS DELETED.");
+        log.info("USER WITH ID: " + deletedUserDto.getId() + "AND HIS TICKETS WERE DELETED.");
 
     }
 
