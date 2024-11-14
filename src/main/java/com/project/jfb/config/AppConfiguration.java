@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfiguration {
 
     @Bean
-    @ConditionalOnProperty(name = "app.allowConditionalBean", havingValue = "true")
+    @ConditionalOnProperty(name = "isConditionalBeanAvailable", havingValue = "true")
     public ThisIsMyFirstConditionalBean thisIsMyFirstConditionalBean() {
         return new ThisIsMyFirstConditionalBean();
     }
