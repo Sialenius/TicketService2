@@ -1,3 +1,4 @@
+<<<<<<<< HEAD:src/main/java/com/project/jfb/model/Ticket.java
 package com.project.jfb.model;
 
 
@@ -9,33 +10,50 @@ import lombok.ToString;
 import com.project.jfb.model.enums.ConcertHall;
 import com.project.jfb.model.enums.StadiumSector;
 import com.project.jfb.model.enums.TicketType;
+========
+package com.project.jfb.io.entity;
+
+
+import jakarta.persistence.*;
+import lombok.*;
+import com.project.jfb.io.entity.enums.ConcertHall;
+import com.project.jfb.io.entity.enums.StadiumSector;
+import com.project.jfb.io.entity.enums.TicketType;
+>>>>>>>> JFB-12.Spring_Boot1.2:src/main/java/com/project/jfb/io/entity/TicketEntity.java
 import com.project.jfb.view.Printable;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
+<<<<<<<< HEAD:src/main/java/com/project/jfb/model/Ticket.java
 import static com.project.jfb.model.AppConstants.UNSPECIFIED_DATE_TIME;
+========
+import static com.project.jfb.io.entity.AppConstants.UNSPECIFIED_DATE_TIME;
+>>>>>>>> JFB-12.Spring_Boot1.2:src/main/java/com/project/jfb/io/entity/TicketEntity.java
 
 
 @Entity
-@Getter
-@Setter
+@Data
+@Table(name="tickets_info")
 @NoArgsConstructor
-@ToString
-public class Ticket implements Printable {
+public class TicketEntity implements Printable {
 
     @Id
-    private UUID id = UUID.randomUUID();
+    @Setter(AccessLevel.NONE)
+    private UUID ticketId = UUID.randomUUID();
 
-    @Column
+    @Column(name="user_id", nullable = false)
+    private UUID userId;
+
+    @Column(name="ticket_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private TicketType ticketType = TicketType.NOT_SPECIFIED;
 
-    @Column
-    private Timestamp creationDate;
+    @Column(nullable = false)
+    private Timestamp creationDate = Timestamp.valueOf(LocalDateTime.now());
 
-    @Column
-    private UUID userID;
 
     @Transient
     private  ConcertHall concertHall = ConcertHall.NOT_SPECIFIED;
@@ -59,13 +77,13 @@ public class Ticket implements Printable {
     private  BigDecimal price = BigDecimal.ZERO;
 
 
-    public Ticket(ConcertHall concertHall, int eventCode, Timestamp eventTime) {
+    public TicketEntity(ConcertHall concertHall, int eventCode, Timestamp eventTime) {
         this(concertHall, eventCode, eventTime, false, StadiumSector.NOT_SPECIFIED, 0, 0);
         ticketType = TicketType.NOT_SPECIFIED;
 
     }
 
-    public Ticket(ConcertHall concertHall, int eventCode, Timestamp eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight, double price ) {
+    public TicketEntity(ConcertHall concertHall, int eventCode, Timestamp eventTime, boolean isPromo, StadiumSector stadiumSector, double backpackAllowedWeight, double price ) {
 
         this.concertHall = concertHall;
         this.eventCode = eventCode;
@@ -78,17 +96,9 @@ public class Ticket implements Printable {
 
     }
 
-    public Ticket (UUID userID, TicketType ticketType, Timestamp creationDate) {
+    public TicketEntity(UUID userId, TicketType ticketType, Timestamp creationDate) {
         this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
-        this.userID = userID;
-        this.ticketType = ticketType;
-        this.creationDate = creationDate;
-    }
-
-    public Ticket (UUID ticketID, UUID userID, TicketType ticketType, Timestamp creationDate) {
-        this(ConcertHall.NOT_SPECIFIED, 3, UNSPECIFIED_DATE_TIME, false, StadiumSector.NOT_SPECIFIED, 0, 0);
-        this.setId(ticketID);
-        this.userID = userID;
+        this.userId = userId;
         this.ticketType = ticketType;
         this.creationDate = creationDate;
     }
@@ -99,7 +109,7 @@ public class Ticket implements Printable {
             return false;
         }
 
-        if (!(object instanceof Ticket)) {
+        if (!(object instanceof TicketEntity)) {
             return false;
         }
 
@@ -107,13 +117,13 @@ public class Ticket implements Printable {
             return true;
         }
 
-        if (concertHall == ((Ticket) object).concertHall &&
-                eventCode == ((Ticket) object).eventCode &&
-                eventTime.equals(((Ticket) object).eventTime) &&
-                isPromo == ((Ticket) object).isPromo &&
-                stadiumSector == ((Ticket) object).stadiumSector &&
-                backpackAllowedWeight == ((Ticket) object).backpackAllowedWeight &&
-               price.equals(((Ticket) object).price)) {
+        if (concertHall == ((TicketEntity) object).concertHall &&
+                eventCode == ((TicketEntity) object).eventCode &&
+                eventTime.equals(((TicketEntity) object).eventTime) &&
+                isPromo == ((TicketEntity) object).isPromo &&
+                stadiumSector == ((TicketEntity) object).stadiumSector &&
+                backpackAllowedWeight == ((TicketEntity) object).backpackAllowedWeight &&
+               price.equals(((TicketEntity) object).price)) {
             return true;
         }
         else {
@@ -122,17 +132,17 @@ public class Ticket implements Printable {
     }
 
     public void share(PhoneNumber phoneNumber) {
-        System.out.println("Ticket "  + getId() + " was shared by " + phoneNumber);
+        System.out.println("Ticket "  + getTicketId() + " was shared by " + phoneNumber);
     }
 
     public void share(PhoneNumber phoneNumber, Email email) {
-        System.out.println("Ticket " + getId() + " was shared by " + phoneNumber + " and " + email);
+        System.out.println("Ticket " + getTicketId() + " was shared by " + phoneNumber + " and " + email);
 
     }
 
   @Override
     public int hashCode() {
-      int result = 31 * this.getId().hashCode();
+      int result = 31 * this.getTicketId().hashCode();
       result += 31 * concertHall.hashCode();
       result += 31 * eventCode;
       result += 31 * eventTime.hashCode();

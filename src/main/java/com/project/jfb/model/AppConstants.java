@@ -1,9 +1,12 @@
+<<<<<<<< HEAD:src/main/java/com/project/jfb/model/AppConstants.java
 package com.project.jfb.model;
+========
+package com.project.jfb.io.entity;
+>>>>>>>> JFB-12.Spring_Boot1.2:src/main/java/com/project/jfb/io/entity/AppConstants.java
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class AppConstants {

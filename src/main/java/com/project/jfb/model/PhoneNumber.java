@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/main/java/com/project/jfb/model/PhoneNumber.java
 package com.project.jfb.model;
+========
+package com.project.jfb.io.entity;
+>>>>>>>> JFB-12.Spring_Boot1.2:src/main/java/com/project/jfb/io/entity/PhoneNumber.java
 
 
 import com.project.jfb.view.Printable;

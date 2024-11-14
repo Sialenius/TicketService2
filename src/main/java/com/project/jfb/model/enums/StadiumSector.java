@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/main/java/com/project/jfb/model/enums/StadiumSector.java
 package com.project.jfb.model.enums;
+========
+package com.project.jfb.io.entity.enums;
+>>>>>>>> JFB-12.Spring_Boot1.2:src/main/java/com/project/jfb/io/entity/enums/StadiumSector.java
 
 public enum StadiumSector {
     A("A"),

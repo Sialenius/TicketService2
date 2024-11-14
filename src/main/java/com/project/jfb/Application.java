@@ -1,39 +1,16 @@
 package com.project.jfb;
 
-import com.project.jfb.DAO.TicketDAO;
-import com.project.jfb.DAO.UserDAO;
-import com.project.jfb.config.MyApplicationContextConfiguration;
-import com.project.jfb.model.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import com.project.jfb.service.ApplicationService;
-import com.project.jfb.model.enums.ConcertHall;
-import com.project.jfb.model.enums.StadiumSector;
-import com.project.jfb.model.enums.TicketType;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import com.project.jfb.service.TicketDataReader;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 
 @SpringBootApplication
 public class Application {
-
-    public static void main(String[] args) throws Exception {
-
-
+    public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        System.out.println("QQQQQQ");
-
-        show11Task();
-
     }
 
+/*
     private static void show11Task() throws IllegalAccessException {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(MyApplicationContextConfiguration.class);
         ApplicationService applicationService = ctx.getBean(ApplicationService.class);
@@ -253,10 +230,11 @@ public class Application {
             System.out.print(customIterator.iterate() + " ");
         }
 
-        */
+
 
 
     }
+
 
     private static void showOOPTask() {
         Ticket ticket1 = new Ticket();
@@ -270,6 +248,8 @@ public class Application {
         ticket2.printInformation();
         ticket3.printInformation();
     }
+
+ */
 
     @Override
     public String toString() {
